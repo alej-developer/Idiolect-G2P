@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Idiolect-G2P — Sistema de Desambiguación Fonológica Dialectal y Diacrónica Inversa en Lingüística Computacional y Forense">
     <title>Idiolect-G2P — Desambiguación Fonológica e Inferencia Dialectal Inversa</title>
     <link rel="stylesheet" href="/static/style.css">
@@ -12,7 +12,7 @@
     <header class="app-header">
         <div class="brand-container">
             <h1 class="brand-title">Idiolect-G2P</h1>
-            <span class="brand-badge">Lingüística Computacional</span>
+            <span class="brand-badge">Lingüística Computacional & Forense</span>
         </div>
         <div class="header-actions">
             <span id="api-status-badge" class="badge badge-emerald">API Conectada</span>
@@ -23,13 +23,13 @@
     <!-- Main Container -->
     <main class="container">
         <!-- Navigation Tabs -->
-        <nav class="nav-tabs" role="tablist">
-            <button id="tab-btn-profiler" class="tab-button active" role="tab" aria-selected="true" data-tab="tab-profiler">Perfilador Idiolectal Bayesiano</button>
+        <nav class="nav-tabs" role="tablist" aria-label="Módulos del Sistema">
+            <button id="tab-btn-profiler" class="tab-button active" role="tab" aria-selected="true" data-tab="tab-profiler">Perfilador Bayesiano</button>
             <button id="tab-btn-transcribe" class="tab-button" role="tab" aria-selected="false" data-tab="tab-transcribe">Transcriptor G2P & Síntesis AFI</button>
             <button id="tab-btn-meter" class="tab-button" role="tab" aria-selected="false" data-tab="tab-meter">Escansión Métrica</button>
             <button id="tab-btn-reports" class="tab-button" role="tab" aria-selected="false" data-tab="tab-reports">Informes Multi-Formato</button>
             <button id="tab-btn-dialects" class="tab-button" role="tab" aria-selected="false" data-tab="tab-dialects">Catálogo de Dialectos</button>
-            <button id="tab-btn-corpus" class="tab-button" role="tab" aria-selected="false" data-tab="tab-corpus">Corpus de Ejemplos</button>
+            <button id="tab-btn-corpus" class="tab-button" role="tab" aria-selected="false" data-tab="tab-corpus">Corpus Histórico</button>
         </nav>
 
         <!-- ===================================================================
@@ -41,12 +41,12 @@
                 <div class="card">
                     <h2 class="card-title">
                         Texto de Análisis & Restricciones Métricas
-                        <span class="badge badge-indigo">Inferencia Inversa</span>
+                        <span class="badge badge-oxford">Inferencia Inversa</span>
                     </h2>
                     
                     <div class="form-group">
                         <label for="profiler-case-id" class="form-label">Identificador de Expediente / Caso:</label>
-                        <input type="text" id="profiler-case-id" class="form-control" value="CASE-FORENSIC-2026" placeholder="Identificador único">
+                        <input type="text" id="profiler-case-id" class="form-control" value="EXP-FORENSE-2026" placeholder="Identificador único">
                     </div>
 
                     <div class="form-group">
@@ -67,14 +67,14 @@
 
                     <div class="form-group">
                         <label for="profiler-text-input" class="form-label">Texto Poético o Corpus Versal:</label>
-                        <textarea id="profiler-text-input" class="form-control" style="min-height: 200px;" placeholder="Ingrese los versos o estrofas a perfilar...">En este dulce abrazo
+                        <textarea id="profiler-text-input" class="form-control" rows="7" placeholder="Ingrese los versos o estrofas a perfilar...">En este dulce abrazo
 yo sigo cada paso
 unido por el lazo
 en este nuevo caso.</textarea>
                     </div>
 
-                    <div style="display: flex; gap: 0.75rem;">
-                        <button id="btn-run-profiling" class="btn btn-primary" style="flex: 1;">Ejecutar Inferencia Bayesiana</button>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button id="btn-run-profiling" class="btn btn-primary" style="flex: 1; min-width: 200px;">Ejecutar Inferencia Bayesiana</button>
                         <button id="btn-load-sample-profiler" class="btn btn-secondary">Cargar Ejemplo</button>
                     </div>
                 </div>
@@ -86,21 +86,19 @@ en este nuevo caso.</textarea>
                         <span id="profiler-confidence-badge" class="badge badge-emerald">Confianza: --</span>
                     </h2>
 
-                    <div id="profiler-primary-result" style="margin-bottom: 1.5rem; background: var(--bg-secondary); padding: 1.25rem; border-radius: var(--radius-md); border: 1px solid var(--border-subtle);">
-                        <div style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700;">Variante Óptima de Máxima Verosimilitud (D̂):</div>
-                        <div id="profiler-predicted-name" style="font-size: 1.35rem; font-weight: 800; color: var(--accent-indigo); margin: 0.3rem 0;">Esperando análisis...</div>
-                        <div id="profiler-predicted-region" style="font-size: 0.9rem; color: var(--text-secondary);">Macrorregión: --</div>
+                    <div id="profiler-primary-result" class="verdict-box">
+                        <div class="verdict-header">Variante Óptima de Máxima Verosimilitud (D̂):</div>
+                        <div id="profiler-predicted-name" class="verdict-title">Esperando análisis...</div>
+                        <div id="profiler-predicted-region" class="verdict-subtitle">Macrorregión: --</div>
                     </div>
 
-                    <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-secondary);">Distribución Posterior P(D | T, R)</h3>
+                    <h3 style="font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem; color: var(--text-muted);">Distribución Posterior P(D | T, R)</h3>
                     <div id="profiler-ranking-bars" style="max-height: 240px; overflow-y: auto; margin-bottom: 1.5rem;">
-                        <!-- Injected via app.js -->
                         <div style="color: var(--text-muted); font-size: 0.85rem;">Ejecute la inferencia para visualizar el ranking probabilístico.</div>
                     </div>
 
-                    <h3 style="font-size: 0.95rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--text-secondary);">Evidencias Fonológicas Discriminantes</h3>
+                    <h3 style="font-size: 0.88rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.75rem; color: var(--text-muted);">Evidencias Fonológicas Discriminantes</h3>
                     <div id="profiler-evidences-container" style="max-height: 200px; overflow-y: auto;">
-                        <!-- Injected via app.js -->
                         <div style="color: var(--text-muted); font-size: 0.85rem;">Las evidencias de rima y alofonía aparecerán aquí.</div>
                     </div>
                 </div>
@@ -108,7 +106,7 @@ en este nuevo caso.</textarea>
         </section>
 
         <!-- ===================================================================
-             TAB 2: TRANSCRIPTAR G2P & SÍNTESIS ACÚSTICA AFI
+             TAB 2: TRANSCRIPTOR G2P & SÍNTESIS ACÚSTICA AFI
              =================================================================== -->
         <section id="tab-transcribe" class="tab-panel" role="tabpanel">
             <div class="grid-2">
@@ -124,11 +122,11 @@ en este nuevo caso.</textarea>
 
                     <div class="form-group">
                         <label for="transcribe-text-input" class="form-label">Texto en Ortografía Estándar:</label>
-                        <textarea id="transcribe-text-input" class="form-control" placeholder="Ingrese el texto a transcribir...">Los cazadores llegaron a la casa del puerto.</textarea>
+                        <textarea id="transcribe-text-input" class="form-control" rows="5" placeholder="Ingrese el texto a transcribir...">Los cazadores llegaron a la casa del puerto.</textarea>
                     </div>
 
-                    <div style="display: flex; gap: 0.75rem;">
-                        <button id="btn-run-transcribe" class="btn btn-primary" style="flex: 1;">Transcribir a AFI</button>
+                    <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <button id="btn-run-transcribe" class="btn btn-primary" style="flex: 1; min-width: 180px;">Transcribir a AFI</button>
                         <button id="btn-synthesize-audio" class="btn btn-secondary">Escuchar Pronunciación</button>
                     </div>
                 </div>
@@ -136,22 +134,24 @@ en este nuevo caso.</textarea>
                 <div class="card">
                     <h2 class="card-title">
                         Transcripción Fonética Estructurada
-                        <span id="transcribe-word-count-badge" class="badge badge-blue">0 Palabras</span>
+                        <span id="transcribe-word-count-badge" class="badge badge-oxford">0 Palabras</span>
                     </h2>
 
                     <div class="form-group">
                         <label class="form-label">Representación AFI Continua:</label>
-                        <div id="transcribe-full-ipa" class="ipa-box">/esperando transcripción.../</div>
+                        <div class="ipa-display-box">
+                            <div id="transcribe-full-ipa" class="ipa-string">/esperando transcripción.../</div>
+                        </div>
                     </div>
 
                     <div class="form-group">
                         <label class="form-label">Segmentación Silábica & Acento Prosódico (ˈ):</label>
-                        <div id="transcribe-syllables-container" style="display: flex; flex-wrap: wrap; gap: 0.4rem; padding: 0.75rem; background: var(--bg-secondary); border-radius: var(--radius-md); border: 1px solid var(--border-subtle); min-height: 80px;">
-                            <!-- Injected pills -->
+                        <div id="transcribe-syllables-container" class="syllables-container" style="min-height: 80px; background: var(--bg-tertiary); padding: 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">
+                            <!-- Injected badges -->
                         </div>
                     </div>
 
-                    <div style="margin-top: 1rem; display: flex; align-items: center; justify-content: space-between;">
+                    <div style="margin-top: 1rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;">
                         <span id="audio-playback-status" style="font-size: 0.85rem; color: var(--text-muted);">Audio listo para sintetizar.</span>
                         <button id="btn-replay-audio" class="btn btn-outline btn-sm" style="display: none;">Repetir Audio</button>
                     </div>
@@ -169,7 +169,7 @@ en este nuevo caso.</textarea>
 
                     <div class="form-group">
                         <label for="meter-poem-input" class="form-label">Poema o Estrofas:</label>
-                        <textarea id="meter-poem-input" class="form-control" style="min-height: 240px;" placeholder="Ingrese el poema...">Hombres necios que acusáis
+                        <textarea id="meter-poem-input" class="form-control" rows="8" placeholder="Ingrese el poema...">Hombres necios que acusáis
 a la mujer sin razón,
 sin ver que sois la ocasión
 de lo mismo que culpáis.</textarea>
@@ -181,22 +181,22 @@ de lo mismo que culpáis.</textarea>
                 <div class="card">
                     <h2 class="card-title">
                         Estructura Versal Detectada
-                        <span id="meter-stanza-type-badge" class="badge badge-purple">--</span>
+                        <span id="meter-stanza-type-badge" class="badge badge-oxford">--</span>
                     </h2>
 
-                    <div style="margin-bottom: 1.25rem; display: flex; gap: 1rem; flex-wrap: wrap;">
-                        <div style="background: var(--bg-secondary); padding: 0.6rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Esquema Global:</span>
-                            <div id="meter-scheme-display" style="font-weight: 700; font-family: var(--font-mono); color: var(--accent-blue);">--</div>
+                    <div style="margin-bottom: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                        <div style="background: var(--bg-tertiary); padding: 0.5rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); flex: 1;">
+                            <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Esquema Global:</span>
+                            <div id="meter-scheme-display" style="font-weight: 700; font-family: var(--font-mono); color: var(--accent-oxford); font-size: 1.05rem;">--</div>
                         </div>
-                        <div style="background: var(--bg-secondary); padding: 0.6rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-subtle);">
-                            <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase;">Rima Consonante:</span>
-                            <div id="meter-consonant-display" style="font-weight: 700;">--</div>
+                        <div style="background: var(--bg-tertiary); padding: 0.5rem 0.85rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); flex: 1;">
+                            <span style="font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600;">Rima Consonante:</span>
+                            <div id="meter-consonant-display" style="font-weight: 700; font-size: 1.05rem;">--</div>
                         </div>
                     </div>
 
                     <div class="table-responsive">
-                        <table class="data-table">
+                        <table class="academic-table">
                             <thead>
                                 <tr>
                                     <th>Nº</th>
@@ -222,11 +222,11 @@ de lo mismo que culpáis.</textarea>
         <section id="tab-reports" class="tab-panel" role="tabpanel">
             <div class="card" style="margin-bottom: 1.5rem;">
                 <h2 class="card-title">Exportación de Dictamen Pericial e Informe Científico</h2>
-                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
-                    Exporte el dictamen en los estándares formales de la comunidad científica y humanidades digitales:
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                    Seleccione el formato estandarizado para publicación académica, humanidades digitales o peritaje forense:
                 </p>
 
-                <div style="display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 1.5rem;">
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem;">
                     <button class="btn btn-secondary btn-format-select active" data-format="markdown">Markdown (.md)</button>
                     <button class="btn btn-secondary btn-format-select" data-format="latex">LaTeX (.tex / TIPA)</button>
                     <button class="btn btn-secondary btn-format-select" data-format="bibtex">BibTeX (.bib)</button>
@@ -237,7 +237,7 @@ de lo mismo que culpáis.</textarea>
                     <button class="btn btn-secondary btn-format-select" data-format="txt">Texto Plano Pericial (.txt)</button>
                 </div>
 
-                <div style="display: flex; gap: 0.75rem;">
+                <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
                     <button id="btn-generate-selected-report" class="btn btn-primary">Generar Vista Previa</button>
                     <button id="btn-download-report" class="btn btn-secondary">Descargar Archivo</button>
                 </div>
@@ -246,9 +246,9 @@ de lo mismo que culpáis.</textarea>
             <div class="card">
                 <h2 class="card-title">
                     Vista Previa del Informe
-                    <span id="report-format-badge" class="badge badge-indigo">Markdown</span>
+                    <span id="report-format-badge" class="badge badge-oxford">Markdown</span>
                 </h2>
-                <pre id="report-preview-box" class="code-preview">// Seleccione un formato y pulse 'Generar Vista Previa'...</pre>
+                <div id="report-preview-box" class="code-preview-box">// Seleccione un formato y pulse 'Generar Vista Previa'...</div>
             </div>
         </section>
 
@@ -259,15 +259,15 @@ de lo mismo que culpáis.</textarea>
             <div class="card">
                 <h2 class="card-title">
                     Catálogo de Macro-Variantes Panhispánicas y Diacrónicas
-                    <span id="dialects-count-badge" class="badge badge-blue">18 Variantes</span>
+                    <span id="dialects-count-badge" class="badge badge-oxford">18 Variantes</span>
                 </h2>
                 
-                <div class="form-group" style="max-width: 400px; margin-bottom: 1.5rem;">
+                <div class="form-group" style="max-width: 400px; margin-bottom: 1.25rem;">
                     <input type="text" id="dialects-search-input" class="form-control" placeholder="Filtrar por región, nombre o código...">
                 </div>
 
                 <div class="table-responsive">
-                    <table class="data-table">
+                    <table class="academic-table">
                         <thead>
                             <tr>
                                 <th>Código</th>
@@ -294,8 +294,8 @@ de lo mismo que culpáis.</textarea>
         <section id="tab-corpus" class="tab-panel" role="tabpanel">
             <div class="card">
                 <h2 class="card-title">Corpus de Casos Históricos y Periciales de Prueba</h2>
-                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
-                    Seleccione un caso histórico o forense documentado para cargarlo instantáneamente en el perfilador bayesiano:
+                <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                    Seleccione un caso histórico documentado para cargarlo automáticamente en el perfilador bayesiano:
                 </p>
 
                 <div id="corpus-cards-container" class="grid-2">
@@ -306,9 +306,9 @@ de lo mismo que culpáis.</textarea>
     </main>
 
     <!-- App Footer -->
-    <footer class="app-footer">
-        <p><strong>Idiolect-G2P Framework v1.0.0</strong> — Desambiguación Fonológica Dialectal y Diacrónica Inversa en Lingüística Computacional y Forense.</p>
-        <p style="margin-top: 0.3rem;">Desarrollado con rigor científico, Geometría de Rasgos de Clements & Hume (1995) y Estándar AFI.</p>
+    <footer style="background: var(--bg-secondary); border-top: 1px solid var(--border-color); padding: 1.25rem; text-align: center; font-size: 0.82rem; color: var(--text-muted); margin-top: auto;">
+        <p><strong>Idiolect-G2P Framework</strong> — Desambiguación Fonológica Dialectal y Diacrónica Inversa.</p>
+        <p style="margin-top: 0.25rem;">Desarrollado bajo el modelo de Geometría de Rasgos de Clements & Hume (1995) y Estándar AFI.</p>
     </footer>
 
     <!-- Scripts -->

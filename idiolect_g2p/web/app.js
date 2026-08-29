@@ -1,21 +1,48 @@
 /**
- * Idiolect-G2P — Aplicacion Frontend Cientifica
- * Interaccion con la API REST, renderizado reactivo y sintesis acustica.
+ * Idiolect-G2P — Aplicación Web Científica & Editorial
+ * Lingüística Computacional, Fonética Formal y Desambiguación Inversa
+ * Soporte Multi-Dispositivo: Móviles, Tablets, iPhone, Android y Escritorio
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
-    // Estado global de la aplicacion
+    // =========================================================================
+    // Estado Global de la Aplicación
+    // =========================================================================
     const state = {
         dialects: [],
         corpus: [],
         currentAudioBase64: null,
         selectedReportFormat: 'markdown',
         lastProfileResult: null,
-        currentTheme: localStorage.getItem('idiolect_theme') || 'dark'
+        currentTheme: localStorage.getItem('idiolect_theme') || 'light'
     };
 
     // =========================================================================
-    // 1. GESTION DE TEMA (CLARO / OSCURO)
+    // 1. Sistema de Notificaciones Toast
+    // =========================================================================
+    function showToast(message, type = 'info') {
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+
+        const toast = document.createElement('div');
+        toast.className = `toast ${type === 'error' ? 'toast-error' : type === 'success' ? 'toast-success' : ''}`;
+        toast.textContent = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateY(10px)';
+            toast.style.transition = 'all 0.25s ease';
+            setTimeout(() => toast.remove(), 250);
+        }, 3200);
+    }
+
+    // =========================================================================
+    // 2. Gestión de Tema (Claro / Oscuro)
     // =========================================================================
     document.documentElement.setAttribute('data-theme', state.currentTheme);
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -24,11 +51,12 @@ document.addEventListener('DOMContentLoaded', async () => {
             state.currentTheme = state.currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', state.currentTheme);
             localStorage.setItem('idiolect_theme', state.currentTheme);
+            showToast(`Tema ${state.currentTheme === 'dark' ? 'oscuro' : 'claro'} activado.`);
         });
     }
 
     // =========================================================================
-    // 2. NAVEGACION POR PESTANAS
+    // 3. Navegación por Pestañas Adaptativa
     // =========================================================================
     const tabButtons = document.querySelectorAll('.tab-button');
     const tabPanels = document.querySelectorAll('.tab-panel');
@@ -38,6 +66,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const isActive = btn.getAttribute('data-tab') === tabId;
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            if (isActive) {
+                btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+            }
         });
         tabPanels.forEach(panel => {
             panel.classList.toggle('active', panel.id === tabId);
@@ -52,31 +83,32 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
 
     // =========================================================================
-    // 3. CARGA DEL CATALOGO DE DIALECTOS
+    // 4. Catálogo de Variantes Dialectales
     // =========================================================================
     async function loadDialects() {
         try {
             const res = await fetch('/api/v1/dialects');
-            if (!res.ok) throw new Error('No se pudo cargar el catalogo');
+            if (!res.ok) throw new Error('No se pudo conectar con el catálogo de dialectos.');
             state.dialects = await res.json();
 
-            // Poblar dropdown en Transcriptor
+            // Actualizar selector en módulo G2P
             const selectEl = document.getElementById('transcribe-dialect-select');
             if (selectEl) {
                 selectEl.innerHTML = state.dialects.map(d => 
-                    `<option value="${d.code}">${d.name} (${d.region})</option>`
+                    `<option value="${d.code}">${d.name} — [${d.region}]</option>`
                 ).join('');
             }
 
-            // Poblar tabla de Catalogo
+            // Renderizar tabla de catálogo
             renderDialectsCatalog(state.dialects);
         } catch (err) {
             console.error('Error al inicializar dialectos:', err);
             const statusBadge = document.getElementById('api-status-badge');
             if (statusBadge) {
                 statusBadge.textContent = 'API Desconectada';
-                statusBadge.className = 'badge badge-rose';
+                statusBadge.className = 'badge badge-crimson';
             }
+            showToast('No se pudo sincronizar el catálogo con la API.', 'error');
         }
     }
 
@@ -91,10 +123,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             const iso = d.isogloss_vector || {};
             return `
                 <tr>
-                    <td><code>${d.code}</code></td>
+                    <td><code style="font-size: 0.8rem;">${d.code}</code></td>
                     <td><strong>${d.name}</strong></td>
-                    <td><span class="badge badge-indigo">${d.region}</span></td>
-                    <td style="font-size: 0.85rem; color: var(--text-secondary); max-width: 300px;">${d.description}</td>
+                    <td><span class="badge badge-oxford">${d.region}</span></td>
+                    <td style="font-size: 0.82rem; color: var(--text-secondary); max-width: 280px;">${d.description}</td>
                     <td><strong>${((iso.seseo || 0) * 100).toFixed(0)}%</strong></td>
                     <td>${((iso.aspiration_s || 0) * 100).toFixed(0)}%</td>
                     <td>${((iso.lambdacism || 0) * 100).toFixed(0)}%</td>
@@ -104,11 +136,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }).join('');
     }
 
-    // Buscador interactivo en catalogo
     const dialectSearch = document.getElementById('dialects-search-input');
     if (dialectSearch) {
         dialectSearch.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase();
+            const query = e.target.value.toLowerCase().trim();
             const filtered = state.dialects.filter(d => 
                 d.name.toLowerCase().includes(query) ||
                 d.code.toLowerCase().includes(query) ||
@@ -120,7 +151,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================================================================
-    // 4. CARGA DEL CORPUS DE EJEMPLOS HISTORICOS
+    // 5. Corpus de Casos Históricos y Periciales
     // =========================================================================
     async function loadCorpus() {
         try {
@@ -134,21 +165,20 @@ document.addEventListener('DOMContentLoaded', async () => {
             container.innerHTML = state.corpus.map(item => `
                 <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <h3 style="font-family: var(--font-heading); font-size: 1.05rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">
+                        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-primary);">
                             ${item.title}
                         </h3>
-                        <div style="font-size: 0.8rem; color: var(--accent-indigo); font-weight: 600; margin-bottom: 0.75rem;">
-                            Autor: ${item.author} | Siglo ${item.century}
+                        <div style="font-size: 0.8rem; color: var(--accent-oxford); font-weight: 600; margin-bottom: 0.65rem;">
+                            ${item.author} — Siglo ${item.century || 'N/A'}
                         </div>
-                        <pre style="background: var(--bg-secondary); padding: 0.75rem; border-radius: var(--radius-sm); font-family: var(--font-mono); font-size: 0.8rem; color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 120px; overflow-y: auto;">${item.text}</pre>
+                        <div style="font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.6; background: var(--bg-tertiary); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 140px; overflow-y: auto;">${item.text}</div>
                     </div>
-                    <button class="btn btn-primary btn-sm btn-load-corpus-item" data-id="${item.id}">
+                    <button class="btn btn-secondary btn-sm btn-load-corpus-item" data-id="${item.id}" style="width: 100%;">
                         Cargar en Perfilador Bayesiano
                     </button>
                 </div>
             `).join('');
 
-            // Asignar eventos de carga
             document.querySelectorAll('.btn-load-corpus-item').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const id = btn.getAttribute('data-id');
@@ -159,11 +189,12 @@ document.addEventListener('DOMContentLoaded', async () => {
                         const profilerCentury = document.getElementById('profiler-century-select');
 
                         if (profilerText) profilerText.value = found.text;
-                        if (profilerCase) profilerCase.value = `CASE-${found.id.toUpperCase()}`;
+                        if (profilerCase) profilerCase.value = `EXP-${found.id.toUpperCase()}`;
                         if (profilerCentury) profilerCentury.value = found.century ? found.century.toString() : '';
 
                         switchTab('tab-profiler');
                         runProfiling();
+                        showToast(`Poema de ${found.author} cargado.`);
                     }
                 });
             });
@@ -173,11 +204,28 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================================================================
-    // 5. PERFILADOR IDIOLECTAL BAYESIANO
+    // 6. Perfilador Idiolectal Bayesiano & Lingüística Forense
     // =========================================================================
     const btnRunProfiling = document.getElementById('btn-run-profiling');
+    const btnLoadSampleProfiler = document.getElementById('btn-load-sample-profiler');
+
     if (btnRunProfiling) {
         btnRunProfiling.addEventListener('click', runProfiling);
+    }
+
+    if (btnLoadSampleProfiler) {
+        btnLoadSampleProfiler.addEventListener('click', () => {
+            if (state.corpus.length > 0) {
+                const sample = state.corpus[0];
+                const textInput = document.getElementById('profiler-text-input');
+                const caseId = document.getElementById('profiler-case-id');
+                const century = document.getElementById('profiler-century-select');
+                if (textInput) textInput.value = sample.text;
+                if (caseId) caseId.value = `EXP-${sample.id.toUpperCase()}`;
+                if (century) century.value = sample.century ? sample.century.toString() : '';
+                showToast(`Cargado ejemplo de ${sample.author}`);
+            }
+        });
     }
 
     async function runProfiling() {
@@ -186,13 +234,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         const centurySelect = document.getElementById('profiler-century-select');
 
         if (!textInput || !textInput.value.trim()) {
-            alert('Por favor, ingrese un texto poético para analizar.');
+            showToast('Por favor, ingrese un texto poético para analizar.', 'error');
             return;
         }
 
         const payload = {
             text: textInput.value.trim(),
-            case_identifier: (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'CASE-G2P-001',
+            case_identifier: (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'EXP-G2P-001',
             century_prior: centurySelect && centurySelect.value ? parseInt(centurySelect.value, 10) : null
         };
 
@@ -201,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const rankingContainer = document.getElementById('profiler-ranking-bars');
         const evidencesContainer = document.getElementById('profiler-evidences-container');
 
-        if (predNameEl) predNameEl.textContent = 'Calculando verosimilitudes...';
+        if (predNameEl) predNameEl.textContent = 'Calculando verosimilitudes bayesianas...';
 
         try {
             const res = await fetch('/api/v1/profile-idiolect', {
@@ -218,7 +266,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             const data = await res.json();
             state.lastProfileResult = data;
 
-            // 1. Mostrar prediccion principal
+            // 1. Mostrar predicción principal
             if (predNameEl) predNameEl.textContent = data.predicted_dialect_name;
             const regionEl = document.getElementById('profiler-predicted-region');
             const topRanking = data.dialect_ranking[0];
@@ -227,19 +275,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             const confPct = (data.confidence_score * 100).toFixed(1);
             if (confBadge) confBadge.textContent = `Confianza: ${confPct}%`;
 
-            // 2. Renderizar barras de probabilidad
+            // 2. Renderizar barras de probabilidad calibradas
             if (rankingContainer) {
                 rankingContainer.innerHTML = data.dialect_ranking.slice(0, 7).map((dr, idx) => {
                     const pct = (dr.posterior_probability * 100).toFixed(1);
                     const isTop = idx === 0;
                     return `
-                        <div class="prob-bar-container">
-                            <div class="prob-bar-header">
-                                <span>${dr.name}</span>
-                                <span>${pct}% (d=${dr.phonetic_distance.toFixed(3)})</span>
+                        <div class="prob-item">
+                            <div class="prob-header">
+                                <span class="prob-name">${dr.name}</span>
+                                <span class="prob-value">${pct}% <span style="font-size: 0.75rem; color: var(--text-muted);">(d=${dr.phonetic_distance.toFixed(3)})</span></span>
                             </div>
-                            <div class="prob-bar-track">
-                                <div class="prob-bar-fill ${isTop ? 'highlight' : ''}" style="width: ${pct}%;"></div>
+                            <div class="prob-track">
+                                <div class="prob-fill ${isTop ? 'top-rank' : ''}" style="width: ${pct}%;"></div>
                             </div>
                         </div>
                     `;
@@ -260,22 +308,24 @@ document.addEventListener('DOMContentLoaded', async () => {
                     `).join('');
                 } else {
                     evidencesContainer.innerHTML = `
-                        <div style="font-size: 0.85rem; color: var(--text-muted); padding: 0.5rem 0;">
+                        <div style="font-size: 0.84rem; color: var(--text-muted); padding: 0.5rem 0;">
                             No se detectaron divergencias de rima anómalas. Todas las hipótesis dialectales evaluadas mantienen regularidad estructural.
                         </div>
                     `;
                 }
             }
 
+            showToast('Inferencia bayesiana calculada correctamente.', 'success');
+
         } catch (err) {
-            console.error('Error en inferencia bayesiana:', err);
-            alert(`Error al ejecutar inferencia: ${err.message}`);
+            console.error('Error en inferencia:', err);
+            showToast(`Error al ejecutar inferencia: ${err.message}`, 'error');
             if (predNameEl) predNameEl.textContent = 'Error en el cálculo';
         }
     }
 
     // =========================================================================
-    // 6. TRANSCRIPTOR G2P & SINTESIS AFI
+    // 7. Transcriptor G2P & Síntesis Acústica AFI
     // =========================================================================
     const btnRunTranscribe = document.getElementById('btn-run-transcribe');
     const btnSynthesizeAudio = document.getElementById('btn-synthesize-audio');
@@ -327,29 +377,29 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (fullIpaEl) fullIpaEl.textContent = `/${data.full_ipa_text}/`;
             if (wordCountBadge) wordCountBadge.textContent = `${data.total_words} Palabras`;
 
-            // Renderizar píldoras silábicas
+            // Renderizar píldoras silábicas limpias
             if (syllablesContainer) {
                 syllablesContainer.innerHTML = data.transcriptions.map(word => {
-                    const sylPills = word.syllables.map((s, sIdx) => {
+                    const sylBadges = word.syllables.map((s, sIdx) => {
                         const isStressed = sIdx === word.stress_index;
                         return `
-                            <span class="syllable-pill ${isStressed ? 'stressed' : ''}">
+                            <span class="syllable-badge ${isStressed ? 'stressed' : ''}">
                                 <span>${s}</span>
-                                <span class="syllable-tag">${isStressed ? 'Tónica' : 'Átona'}</span>
+                                <span class="syllable-structure">${isStressed ? 'Tónica' : 'Átona'}</span>
                             </span>
                         `;
                     }).join('');
 
                     return `
-                        <div style="display: flex; flex-direction: column; align-items: center; background: rgba(15, 23, 42, 0.4); padding: 0.4rem; border-radius: var(--radius-sm); margin: 0.2rem;">
-                            <div style="display: flex;">${sylPills}</div>
-                            <div style="font-family: var(--font-mono); font-size: 0.8rem; color: var(--accent-blue); margin-top: 0.2rem;">/${word.syllabified_ipa}/</div>
+                        <div style="display: flex; flex-direction: column; align-items: center; margin: 0.2rem;">
+                            <div style="display: flex; gap: 0.25rem;">${sylBadges}</div>
+                            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-oxford); margin-top: 0.25rem;">/${word.syllabified_ipa}/</div>
                         </div>
                     `;
                 }).join('');
             }
 
-            // Reproduccion de Audio
+            // Reproducción de Audio
             if (data.audio_base64) {
                 state.currentAudioBase64 = data.audio_base64;
                 if (btnReplayAudio) btnReplayAudio.style.display = 'inline-flex';
@@ -363,11 +413,12 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (err) {
             console.error('Error al transcribir:', err);
             if (fullIpaEl) fullIpaEl.textContent = '/error en transcripción/';
+            showToast('Error en la transducción fonética.', 'error');
         }
     }
 
     // =========================================================================
-    // 7. ESCANSION METRICA VERSAL
+    // 8. Escansión Métrica Versal
     // =========================================================================
     const btnRunScansion = document.getElementById('btn-run-scansion');
     if (btnRunScansion) {
@@ -397,7 +448,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (schemeDisplay) schemeDisplay.textContent = data.global_rhyme_scheme || 'Libre';
             if (consonantDisplay) {
                 consonantDisplay.textContent = data.is_consonant_expected ? 'Exigida (Clásica)' : 'Asonante / Libre';
-                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-emerald)' : 'var(--text-secondary)';
+                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-forest)' : 'var(--text-secondary)';
             }
 
             if (tableBody) {
@@ -405,22 +456,25 @@ document.addEventListener('DOMContentLoaded', async () => {
                 tableBody.innerHTML = allVerses.map(v => `
                     <tr>
                         <td><strong>${v.verse_number}</strong></td>
-                        <td style="font-family: var(--font-heading); font-size: 0.95rem;">${v.raw_text}</td>
-                        <td><span class="badge badge-blue">${v.metrical_syllables}</span></td>
+                        <td style="font-family: var(--font-serif); font-size: 1.05rem;">${v.raw_text}</td>
+                        <td><span class="badge badge-oxford">${v.metrical_syllables}</span></td>
                         <td>${v.sinalefas_count}</td>
                         <td>${v.final_stress_compensation > 0 ? `+${v.final_stress_compensation}` : v.final_stress_compensation}</td>
-                        <td><code style="color: var(--accent-amber); font-weight: bold;">-${v.rhyme_segment}</code></td>
+                        <td><code style="color: var(--accent-crimson); font-weight: 600;">-${v.rhyme_segment}</code></td>
                     </tr>
                 `).join('');
             }
 
+            showToast('Escansión métrica completada.', 'success');
+
         } catch (err) {
             console.error('Error al escanear métrica:', err);
+            showToast('Error al analizar la métrica versal.', 'error');
         }
     }
 
     // =========================================================================
-    // 8. GENERADOR DE INFORMES MULTI-FORMATO
+    // 9. Generador de Informes Multi-Formato
     // =========================================================================
     const formatButtons = document.querySelectorAll('.btn-format-select');
     formatButtons.forEach(btn => {
@@ -437,7 +491,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const btnDownloadReport = document.getElementById('btn-download-report');
 
     let currentReportContent = '';
-    let currentReportFilename = 'report.txt';
+    let currentReportFilename = 'dictamen.txt';
     let currentReportMime = 'text/plain';
 
     if (btnGenerateReport) {
@@ -446,7 +500,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (btnDownloadReport) {
         btnDownloadReport.addEventListener('click', () => {
             if (!currentReportContent) {
-                alert('Genere primero la vista previa del informe.');
+                showToast('Genere primero la vista previa del informe.', 'error');
                 return;
             }
             const blob = new Blob([currentReportContent], { type: currentReportMime });
@@ -458,6 +512,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
+            showToast(`Archivo ${currentReportFilename} descargado.`);
         });
     }
 
@@ -468,10 +523,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         const previewBox = document.getElementById('report-preview-box');
 
         const text = (profilerText && profilerText.value.trim()) ? profilerText.value.trim() : 'En este dulce abrazo yo sigo cada paso';
-        const caseId = (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'CASE-G2P-001';
+        const caseId = (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'EXP-G2P-001';
         const century = (centurySelect && centurySelect.value) ? parseInt(centurySelect.value, 10) : null;
 
-        if (previewBox) previewBox.textContent = '// Generando dictamen formal...';
+        if (previewBox) previewBox.textContent = '// Generando dictamen pericial formal...';
 
         try {
             const res = await fetch('/api/v1/generate-report', {
@@ -495,14 +550,16 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (previewBox) {
                 previewBox.textContent = data.content;
             }
+            showToast(`Informe en formato ${data.format.toUpperCase()} generado.`);
 
         } catch (err) {
             console.error('Error al generar informe:', err);
             if (previewBox) previewBox.textContent = `// Error al generar reporte: ${err.message}`;
+            showToast('Error al generar el informe.', 'error');
         }
     }
 
-    // Inicializacion inicial
+    // Inicialización al arrancar
     await loadDialects();
     await loadCorpus();
 });
