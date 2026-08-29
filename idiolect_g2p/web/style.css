@@ -99,8 +99,65 @@ html, body {
     border-radius: 50%;
 }
 
-/* Contenedor Asimétrico Principal */
-.codice-layout {
+/* =========================================
+   SISTEMA DE NAVEGACIÓN GLOBAL
+   ========================================= */
+
+.monastic-nav {
+  /* Se extiende de lado a lado antes de que empiece el grid asimétrico */
+  width: 100%;
+  border-bottom: 1px solid var(--lineas-tinta, #3A332C);
+  background-color: var(--fondo-viewport, #141210);
+  padding: 0 2rem;
+}
+
+.nav-list {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-x: auto; /* Permite scroll horizontal si hay muchas pestañas */
+  scrollbar-width: none;
+}
+
+.nav-list::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  padding: 1rem 0;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-item a {
+  text-decoration: none;
+  color: var(--texto-sepia, #9C9287);
+  font-family: var(--font-cientifica, monospace);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  display: block;
+}
+
+/* Efecto hover: se ilumina como pergamino */
+.nav-item a:hover {
+  color: var(--texto-pergamino, #E6DFD3);
+}
+
+/* Estado Activo: Subrayado sutil con el color de acento */
+.nav-item.active {
+  border-bottom: 2px solid var(--acento-siena, #A65D47);
+}
+
+.nav-item.active a {
+  color: var(--texto-pergamino, #E6DFD3);
+}
+
+/* ==========================================================================
+   2. Arquitectura de Layout: Pantalla Dividida (CSS Grid Asimétrico 55% / 45%)
     display: grid;
     grid-template-columns: 55% 45%;
     flex: 1;

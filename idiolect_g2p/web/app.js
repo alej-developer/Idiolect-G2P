@@ -188,6 +188,16 @@ que no mi entendimiento en las riquezas.`;
         consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/\n/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/\n/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/`;
     }
 
+    // Listeners de Navegación Global
+    const navItems = document.querySelectorAll('.nav-item');
+    navItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            navItems.forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
+
     // Listeners
     btnInferencia.addEventListener('click', ejecutarInferencia);
 
@@ -198,6 +208,6 @@ que no mi entendimiento en las riquezas.`;
         ejecutarInferencia();
     });
 
-    // Ejecución inicial de animación para montar la vista
+    // Animación inicial al montar
     animarCascada();
 });
