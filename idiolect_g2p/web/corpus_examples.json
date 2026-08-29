@@ -1,50 +1,66 @@
 [
   {
+    "id": "cadenas_barquisimeto",
+    "title": "Rafael Cadenas — Ars Poética (Barquisimeto, Venezuela, Siglo XX)",
+    "author": "Rafael Cadenas (Barquisimeto, Venezuela)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_CONTINENTAL",
+    "text": "Que cada palabra lleve lo que dice.\nQue sea como el temblor que la sostiene.\nQue se mantenga como un latido en la noche.\nNo me des palabras que deslumbren,\ndame palabras que amanezcan en la boca."
+  },
+  {
+    "id": "arraiz_barquisimeto",
+    "title": "Antonio Arráiz — Áspero (Barquisimeto, Venezuela, Siglo XX)",
+    "author": "Antonio Arráiz (Barquisimeto, Venezuela)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_CONTINENTAL",
+    "text": "Esta es la tierra brava,\nestos son los hombres recios,\nlos que cantan al viento\ny doman los potros cimarrones\nbajo el sol ardiente del desierto."
+  },
+  {
     "id": "sor_juana_redondilla",
     "title": "Sor Juana Inés de la Cruz — Redondillas (Seseo Novohispano, Siglo XVII)",
-    "author": "Sor Juana Inés de la Cruz",
+    "author": "Sor Juana Inés de la Cruz (México)",
     "century": 17,
     "expected_dialect": "MX_CENTRAL",
     "text": "Hombres necios que acusáis\na la mujer sin razón,\nsin ver que sois la ocasión\nde lo mismo que culpáis.\n\nSi con ansia sin igual\nsolicitáis su desdén,\n¿por qué queréis que obren bien\nsi las incitáis al mal?"
   },
   {
+    "id": "vallejo_peru",
+    "title": "César Vallejo — Los heraldos negros (Andino Tradicional, Siglo XX)",
+    "author": "César Vallejo (Perú)",
+    "century": 20,
+    "expected_dialect": "ANDES_HIGHLAND",
+    "text": "Hay golpes en la vida, tan fuertes... ¡Yo no sé!\nGolpes como del odio de Dios; como si ante ellos,\nla resaca de todo lo sufrido\nse empozara en el alma... ¡Yo no sé!"
+  },
+  {
+    "id": "dario_nicaragua",
+    "title": "Rubén Darío — Canción de otoño en primavera (Modernismo Centroamericano)",
+    "author": "Rubén Darío (Nicaragua)",
+    "century": 19,
+    "expected_dialect": "CENTRAL_AMERICA",
+    "text": "Juventud, divino tesoro,\n¡ya te vas para no volver!\nCuando quiero llorar, no lloro...\ny a veces lloro sin querer."
+  },
+  {
     "id": "gongora_soneto",
-    "title": "Luis de Góngora — Mientras por competir con tu cabello (Distinción Peninsular, Siglo de Oro)",
-    "author": "Luis de Góngora y Argote",
+    "title": "Luis de Góngora — Mientras por competir con tu cabello (Siglo de Oro)",
+    "author": "Luis de Góngora y Argote (España)",
     "century": 17,
     "expected_dialect": "DIACHRONIC_GOLDEN_AGE",
     "text": "Mientras por competir con tu cabello,\noro bruñido al sol relumbra en vano;\nmientras con menosprecio en medio el llano\nmira tu blanca frente el lilio bello;\n\nmientras a cada labio, por cogello,\nsiguen más ojos que al clavel temprano;\ny mientras triunfa con desdén lozano\ndel luciente cristal tu gentil cuello."
   },
   {
-    "id": "guillen_caribbean",
-    "title": "Nicolás Guillén — Motivos de son (Caribeño Lambdacista / Lateralizante)",
-    "author": "Nicolás Guillén",
-    "century": 20,
-    "expected_dialect": "CARIBBEAN_LAMBDACIST",
-    "text": "Por qué te pone tan bravo\ncuando te dicen negro bembón,\nsi tiene la boca santa,\nnegro bembón.\n\nBembón así como ere\ntiene de to;\nCaridad te mantiene,\nte lo da to."
-  },
-  {
     "id": "martin_fierro",
     "title": "José Hernández — Martín Fierro (Rioplatense Tradicional, Siglo XIX)",
-    "author": "José Hernández",
+    "author": "José Hernández (Argentina)",
     "century": 19,
     "expected_dialect": "RIOPLATENSE_ZHEIST",
     "text": "Aquí me pongo a cantar\nal compás de la vigüela,\nque el hombre que lo desvela\nuna pena estraordinaria,\ncomo la ave solitaria\ncon el cantar se consuela."
   },
   {
-    "id": "seseo_forensic_test",
-    "title": "Peritaje Forense — Poema Anónimo con Rima Cruzada Seseante",
-    "author": "Autor Anónimo (Atribución Forense)",
-    "century": 19,
-    "expected_dialect": "MX_CENTRAL",
-    "text": "En este dulce abrazo\nyo sigo cada paso\nunido por el lazo\nen este nuevo caso."
-  },
-  {
-    "id": "caribbean_rhyme_test",
-    "title": "Peritaje Forense — Fragmento Marino con Neutralización de Líquidas",
-    "author": "Autor Anónimo (Área Antillana)",
+    "id": "guillen_caribbean",
+    "title": "Nicolás Guillén — Motivos de son (Caribeño Insular Lambdacista)",
+    "author": "Nicolás Guillén (Cuba)",
     "century": 20,
     "expected_dialect": "CARIBBEAN_LAMBDACIST",
-    "text": "Llegó la barca al puerto\ncon el marinero muelto\nbajo la luz del sol\nbuscando su gran amor."
+    "text": "Por qué te pone tan bravo\ncuando te dicen negro bembón,\nsi tiene la boca santa,\nnegro bembón.\n\nBembón así como ere\ntiene de to;\nCaridad te mantiene,\nte lo da to."
   }
 ]

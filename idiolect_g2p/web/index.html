@@ -241,18 +241,61 @@ Metodología: Inferencia Dialectal Bayesiana P(D|T,R)
                 <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
                     Seleccione un manuscrito histórico para cargar sus versos directamente en el perfilador bayesiano:
                 </p>
-                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                <div id="corpus-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <!-- Rafael Cadenas (Barquisimeto, Venezuela) -->
                     <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
-                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Luis de Góngora</h3>
-                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Soneto Barroco — 1582 (España)</span>
-                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Mientras por competir con tu cabello..."</p>
-                        <button class="btn-sample btn-load-corpus-gongora" type="button">Cargar en Perfilador</button>
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Rafael Cadenas</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Barquisimeto, Venezuela — Siglo XX/XXI (Premio Cervantes)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Que cada palabra lleve lo que dice. Que sea como el temblor que la sostiene..."</p>
+                        <button class="btn-sample btn-load-corpus-cadenas" type="button">Cargar en Perfilador</button>
                     </div>
+
+                    <!-- Antonio Arráiz (Barquisimeto, Venezuela) -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Antonio Arráiz</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Barquisimeto, Venezuela — Siglo XX (Áspero)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Esta es la tierra brava, estos son los hombres recios..."</p>
+                        <button class="btn-sample btn-load-corpus-arraiz" type="button">Cargar en Perfilador</button>
+                    </div>
+
+                    <!-- Sor Juana Inés de la Cruz (México) -->
                     <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
                         <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Sor Juana Inés de la Cruz</h3>
-                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Soneto Novohispano — 1689 (México)</span>
-                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"En perseguirme, Mundo, ¿qué interesas?..."</p>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">México — Siglo XVII (Seseo Novohispano)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Hombres necios que acusáis a la mujer sin razón..."</p>
                         <button class="btn-sample btn-load-corpus-sorjuana" type="button">Cargar en Perfilador</button>
+                    </div>
+
+                    <!-- César Vallejo (Perú) -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">César Vallejo</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Perú — Siglo XX (Andino Tradicional)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Hay golpes en la vida, tan fuertes... ¡Yo no sé!..."</p>
+                        <button class="btn-sample btn-load-corpus-vallejo" type="button">Cargar en Perfilador</button>
+                    </div>
+
+                    <!-- Rubén Darío (Nicaragua) -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Rubén Darío</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Nicaragua — Siglo XIX/XX (Modernismo)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Juventud, divino tesoro, ¡ya te vas para no volver!..."</p>
+                        <button class="btn-sample btn-load-corpus-dario" type="button">Cargar en Perfilador</button>
+                    </div>
+
+                    <!-- José Hernández (Argentina) -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">José Hernández</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Argentina — Siglo XIX (Rioplatense Gauchesco)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Aquí me pongo a cantar al compás de la vigüela..."</p>
+                        <button class="btn-sample btn-load-corpus-hernandez" type="button">Cargar en Perfilador</button>
+                    </div>
+
+                    <!-- Luis de Góngora (España) -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Luis de Góngora</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">España — Siglo XVII (Siglo de Oro)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Mientras por competir con tu cabello..."</p>
+                        <button class="btn-sample btn-load-corpus-gongora" type="button">Cargar en Perfilador</button>
                     </div>
                 </div>
             </div>

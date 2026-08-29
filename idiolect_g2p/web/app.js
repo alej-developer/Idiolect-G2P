@@ -260,31 +260,100 @@ que no mi entendimiento en las riquezas.`;
         });
     }
 
-    // =========================================================================
-    // 5. Corpus Click Handlers
-    // =========================================================================
-    const btnCorpusGongora = document.querySelector('.btn-load-corpus-gongora');
-    const btnCorpusSorJuana = document.querySelector('.btn-load-corpus-sorjuana');
+    // Muestras Literarias Latinoamericanas e Históricas
+    const MUESTRAS_CORPUS = {
+        cadenas: {
+            text: `Que cada palabra lleve lo que dice.
+Que sea como el temblor que la sostiene.
+Que se mantenga como un latido en la noche.
+No me des palabras que deslumbren,
+dame palabras que amanezcan en la boca.`,
+            caseId: 'EXP-CADENAS-BARQUISIMETO-1977',
+            century: '20'
+        },
+        arraiz: {
+            text: `Esta es la tierra brava,
+estos son los hombres recios,
+los que cantan al viento
+y doman los potros cimarrones
+bajo el sol ardiente del desierto.`,
+            caseId: 'EXP-ARRAIZ-BARQUISIMETO-1924',
+            century: '20'
+        },
+        sorjuana: {
+            text: `Hombres necios que acusáis
+a la mujer sin razón,
+sin ver que sois la ocasión
+de lo mismo que culpáis.
 
-    if (btnCorpusGongora) {
-        btnCorpusGongora.addEventListener('click', () => {
-            if (textoInput) textoInput.value = MUESTRA_GONGORA;
-            if (inputExpediente) inputExpediente.value = 'EXP-GONGORA-1582';
-            if (selectPrior) selectPrior.value = '17';
-            cambiarVista('vista-bayesiano');
-            ejecutarInferencia();
-        });
+Si con ansia sin igual
+solicitáis su desdén,
+¿por qué queréis que obren bien
+si las incitáis al mal?`,
+            caseId: 'EXP-SOR_JUANA-1689',
+            century: '17'
+        },
+        vallejo: {
+            text: `Hay golpes en la vida, tan fuertes... ¡Yo no sé!
+Golpes como del odio de Dios; como si ante ellos,
+la resaca de todo lo sufrido
+se empozara en el alma... ¡Yo no sé!`,
+            caseId: 'EXP-VALLEJO-PERU-1918',
+            century: '20'
+        },
+        dario: {
+            text: `Juventud, divino tesoro,
+¡ya te vas para no volver!
+Cuando quiero llorar, no lloro...
+y a veces lloro sin querer.`,
+            caseId: 'EXP-DARIO-NICARAGUA-1905',
+            century: '19'
+        },
+        hernandez: {
+            text: `Aquí me pongo a cantar
+al compás de la vigüela,
+que el hombre que lo desvela
+una pena estraordinaria,
+como la ave solitaria
+con el cantar se consuela.`,
+            caseId: 'EXP-HERNANDEZ-GAUCHESCO-1872',
+            century: '19'
+        },
+        gongora: {
+            text: `Mientras por competir con tu cabello,
+oro bruñido al sol relumbra en vano;
+mientras con menosprecio en medio el llano
+mira tu blanca frente el lilio bello;
+
+mientras a cada labio, por cogello,
+siguen más ojos que al clavel temprano,
+y mientras triunfa con desdén lozano
+del luciente cristal tu gentil cuello.`,
+            caseId: 'EXP-GONGORA-1582',
+            century: '17'
+        }
+    };
+
+    function cargarMuestraEnPerfilador(clave) {
+        const item = MUESTRAS_CORPUS[clave];
+        if (!item) return;
+        if (textoInput) textoInput.value = item.text;
+        if (inputExpediente) inputExpediente.value = item.caseId;
+        if (selectPrior) selectPrior.value = item.century;
+        cambiarVista('vista-bayesiano');
+        ejecutarInferencia();
     }
 
-    if (btnCorpusSorJuana) {
-        btnCorpusSorJuana.addEventListener('click', () => {
-            if (textoInput) textoInput.value = MUESTRA_SOR_JUANA;
-            if (inputExpediente) inputExpediente.value = 'EXP-SOR_JUANA-1689';
-            if (selectPrior) selectPrior.value = '17';
-            cambiarVista('vista-bayesiano');
-            ejecutarInferencia();
+    // Handlers para botones de tarjetas del Corpus
+    document.querySelectorAll('[class*="btn-load-corpus-"]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const className = Array.from(btn.classList).find(c => c.startsWith('btn-load-corpus-'));
+            if (className) {
+                const clave = className.replace('btn-load-corpus-', '');
+                cargarMuestraEnPerfilador(clave);
+            }
         });
-    }
+    });
 
     // =========================================================================
     // 6. Listeners Iniciales
