@@ -24,6 +24,62 @@
     "text": "Hombres necios que acusáis\na la mujer sin razón,\nsin ver que sois la ocasión\nde lo mismo que culpáis.\n\nSi con ansia sin igual\nsolicitáis su desdén,\n¿por qué queréis que obren bien\nsi las incitáis al mal?"
   },
   {
+    "id": "rosalia_de_castro",
+    "title": "Rosalía de Castro — En las orillas del Sar (Galicia / España, Siglo XIX)",
+    "author": "Rosalía de Castro (España)",
+    "century": 19,
+    "expected_dialect": "ES_PENINSULAR",
+    "text": "A través del follaje espeso\nel rayo de la luna brilla,\ny en la fuente la limpia orilla\nbesa el aura con blando beso."
+  },
+  {
+    "id": "gabriela_mistral",
+    "title": "Gabriela Mistral — Piececitos (Chile, Siglo XX, Premio Nobel 1945)",
+    "author": "Gabriela Mistral (Chile)",
+    "century": 20,
+    "expected_dialect": "CHILEAN",
+    "text": "Piececitos de niño,\nazulosos de frío,\n¡cómo os ven y no os cubren,\nDios mío!\n\nPiececitos heridos\npor los guijarros todos,\nultrajados de nieves\ny lodos."
+  },
+  {
+    "id": "santa_teresa",
+    "title": "Santa Teresa de Jesús — Vivo sin vivir en mí (Ávila / España, Siglo XVI)",
+    "author": "Santa Teresa de Jesús (España)",
+    "century": 16,
+    "expected_dialect": "DIACHRONIC_GOLDEN_AGE",
+    "text": "Vivo sin vivir en mí,\ny tan alta vida espero,\nque muero porque no muero.\n\nVivo ya fuera de mí,\ndespués que muero de amor;\nporque vivo en el Señor,\nque me quiso para sí."
+  },
+  {
+    "id": "alfonsina_storni",
+    "title": "Alfonsina Storni — Tú me quieres blanca (Argentina, Siglo XX)",
+    "author": "Alfonsina Storni (Argentina)",
+    "century": 20,
+    "expected_dialect": "RIOPLATENSE_ZHEIST",
+    "text": "Tú me quieres alba,\nme quieres de espumas,\nme quieres de nácar.\nQue sea azucena\nsobre todas, casta.\nDe perfume tenue.\nCorola cerrada."
+  },
+  {
+    "id": "enriqueta_arvelo",
+    "title": "Enriqueta Arvelo Larriva — Canto de la noche (Barinas / Venezuela, Siglo XX)",
+    "author": "Enriqueta Arvelo Larriva (Venezuela)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_CONTINENTAL",
+    "text": "Voz del viento en la llanura,\nrumor hondo de palmares,\nque derramas tus cantares\nen la noche más oscura."
+  },
+  {
+    "id": "gloria_fuertes",
+    "title": "Gloria Fuertes — Poética Urbana (Madrid / España, Siglo XX)",
+    "author": "Gloria Fuertes (España)",
+    "century": 20,
+    "expected_dialect": "ES_PENINSULAR",
+    "text": "Escribo por la noche y por el día,\nescribo para el pueblo que no lee,\npara el que tiene sed de poesía\ny en la palabra humana todavía cree."
+  },
+  {
+    "id": "dulce_maria_loynaz",
+    "title": "Dulce María Loynaz — Poemas de amor (Cuba, Siglo XX, Premio Cervantes)",
+    "author": "Dulce María Loynaz (Cuba)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_LAMBDACIST",
+    "text": "Si me quieres, quiéreme entera,\nno por zonas de luz o sombra...\nSi me quieres, quiéreme negra\ny blanca, y gris, y verde, y rubia."
+  },
+  {
     "id": "vallejo_peru",
     "title": "César Vallejo — Los heraldos negros (Andino Tradicional, Siglo XX)",
     "author": "César Vallejo (Perú)",
@@ -54,13 +110,5 @@
     "century": 19,
     "expected_dialect": "RIOPLATENSE_ZHEIST",
     "text": "Aquí me pongo a cantar\nal compás de la vigüela,\nque el hombre que lo desvela\nuna pena estraordinaria,\ncomo la ave solitaria\ncon el cantar se consuela."
-  },
-  {
-    "id": "guillen_caribbean",
-    "title": "Nicolás Guillén — Motivos de son (Caribeño Insular Lambdacista)",
-    "author": "Nicolás Guillén (Cuba)",
-    "century": 20,
-    "expected_dialect": "CARIBBEAN_LAMBDACIST",
-    "text": "Por qué te pone tan bravo\ncuando te dicen negro bembón,\nsi tiene la boca santa,\nnegro bembón.\n\nBembón así como ere\ntiene de to;\nCaridad te mantiene,\nte lo da to."
   }
 ]

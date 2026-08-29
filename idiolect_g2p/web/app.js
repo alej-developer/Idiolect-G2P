@@ -260,8 +260,89 @@ que no mi entendimiento en las riquezas.`;
         });
     }
 
-    // Muestras Literarias Latinoamericanas e Históricas
+    // Muestras Literarias Latinoamericanas, Españolas e Históricas
     const MUESTRAS_CORPUS = {
+        mistral: {
+            text: `Piececitos de niño,
+azulosos de frío,
+¡cómo os ven y no os cubren,
+Dios mío!
+
+Piececitos heridos
+por los guijarros todos,
+ultrajados de nieves
+y lodos.`,
+            caseId: 'EXP-MISTRAL-CHILE-1922',
+            century: '20'
+        },
+        rosalia: {
+            text: `A través del follaje espeso
+el rayo de la luna brilla,
+y en la fuente la limpia orilla
+besa el aura con blando beso.`,
+            caseId: 'EXP-ROSALIA-GALICIA-1884',
+            century: '19'
+        },
+        sorjuana: {
+            text: `Hombres necios que acusáis
+a la mujer sin razón,
+sin ver que sois la ocasión
+de lo mismo que culpáis.
+
+Si con ansia sin igual
+solicitáis su desdén,
+¿por qué queréis que obren bien
+si las incitáis al mal?`,
+            caseId: 'EXP-SOR_JUANA-1689',
+            century: '17'
+        },
+        teresa: {
+            text: `Vivo sin vivir en mí,
+y tan alta vida espero,
+que muero porque no muero.
+
+Vivo ya fuera de mí,
+después que muero de amor;
+porque vivo en el Señor,
+que me quiso para sí.`,
+            caseId: 'EXP-SANTA_TERESA-1572',
+            century: '16'
+        },
+        storni: {
+            text: `Tú me quieres alba,
+me quieres de espumas,
+me quieres de nácar.
+Que sea azucena
+sobre todas, casta.
+De perfume tenue.
+Corola cerrada.`,
+            caseId: 'EXP-STORNI-ARGENTINA-1918',
+            century: '20'
+        },
+        arvelo: {
+            text: `Voz del viento en la llanura,
+rumor hondo de palmares,
+que derramas tus cantares
+en la noche más oscura.`,
+            caseId: 'EXP-ARVELO-VENEZUELA-1939',
+            century: '20'
+        },
+        fuertes: {
+            text: `Escribo por la noche y por el día,
+escribo para el pueblo que no lee,
+para el que tiene sed de poesía
+y en la palabra humana todavía cree.`,
+            caseId: 'EXP-GLORIA_FUERTES-MADRID-1962',
+            century: '20'
+        },
+        loynaz: {
+            text: `Si me quieres, quiéreme entera,
+no por zonas de luz o sombra...
+Si me quieres, quiéreme negra
+y blanca, y gris, y verde, y rubia.`,
+            caseId: 'EXP-LOYNAZ-CUBA-1953',
+            century: '20'
+        },
         cadenas: {
             text: `Que cada palabra lleve lo que dice.
 Que sea como el temblor que la sostiene.
@@ -279,19 +360,6 @@ y doman los potros cimarrones
 bajo el sol ardiente del desierto.`,
             caseId: 'EXP-ARRAIZ-BARQUISIMETO-1924',
             century: '20'
-        },
-        sorjuana: {
-            text: `Hombres necios que acusáis
-a la mujer sin razón,
-sin ver que sois la ocasión
-de lo mismo que culpáis.
-
-Si con ansia sin igual
-solicitáis su desdén,
-¿por qué queréis que obren bien
-si las incitáis al mal?`,
-            caseId: 'EXP-SOR_JUANA-1689',
-            century: '17'
         },
         vallejo: {
             text: `Hay golpes en la vida, tan fuertes... ¡Yo no sé!
