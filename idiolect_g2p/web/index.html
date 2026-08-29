@@ -261,30 +261,82 @@ en tierra, en humo, en polvo, en sombra, en nada.</textarea>
              VISTA 4: INFORMES MULTI-FORMATO
              =================================================================== -->
         <section id="vista-informes" class="vista-seccion">
-            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
+            <div style="padding: 3.5rem 4rem; max-width: 1300px; margin: 0 auto;">
                 <div class="lab-section-title">
                     <span>Exportación de Dictamen Pericial e Informes Científicos</span>
-                    <span class="lab-metric-highlight">8 Formatos</span>
+                    <span class="lab-metric-highlight">8 Formatos Estructurados</span>
                 </div>
+                
                 <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
-                    Generación de informes estructurados en Markdown, LaTeX (TIPA), TEI-Verse XML, BibTeX, JSON y Matriz CSV.
+                    Generación, previsualización y descarga inmediata de informes periciales forenses en Markdown, LaTeX (TIPA), TEI-Verse XML, BibTeX, JSON, Matriz CSV, HTML y Texto Plano.
                 </p>
-                <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
-                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
-                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">Markdown (.md)</button>
-                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">LaTeX (.tex)</button>
-                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">TEI-XML (.xml)</button>
-                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">JSON (.json)</button>
-                    </div>
-                    <pre class="consola-afi-box"><code class="consola-afi-code"># DICTAMEN PERICIAL FONOLÓGICO FORENSE
-Expediente: EXP-GONGORA-1605
-Fecha: 2026-08-29
-Metodología: Inferencia Dialectal Bayesiana P(D|T,R)
 
-1. SÍNTESIS EJECUTIVA
-- Variante Predicha: Español del Siglo de Oro (DIACHRONIC_GOLDEN_AGE)
-- Nivel de Confianza: 98.4%
-- Distancia Fonética Media: d = 0.000</code></pre>
+                <div style="display: grid; grid-template-columns: 1.1fr 1.25fr; gap: 2rem;">
+                    <!-- Columna Izquierda: Controles y Selección de Formato -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion); display: flex; flex-direction: column;">
+                        <label class="meta-label" style="margin-bottom: 0.75rem; display: block;">Formato de Exportación:</label>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.5rem; margin-bottom: 1.5rem;">
+                            <button class="btn-inferencia btn-report-format active" data-format="markdown" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">Markdown</button>
+                            <button class="btn-inferencia btn-report-format" data-format="latex" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">LaTeX (.tex)</button>
+                            <button class="btn-inferencia btn-report-format" data-format="tei_xml" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">TEI-XML</button>
+                            <button class="btn-inferencia btn-report-format" data-format="json" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">JSON</button>
+                            <button class="btn-inferencia btn-report-format" data-format="csv" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">CSV</button>
+                            <button class="btn-inferencia btn-report-format" data-format="bibtex" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">BibTeX</button>
+                            <button class="btn-inferencia btn-report-format" data-format="html" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">HTML</button>
+                            <button class="btn-inferencia btn-report-format" data-format="txt" type="button" style="padding: 0.5rem 0.25rem; font-size: 0.75rem; justify-content: center;">Texto</button>
+                        </div>
+
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                            <div>
+                                <label for="report-case-id" class="meta-label">ID de Expediente:</label>
+                                <input type="text" id="report-case-id" class="meta-input" value="EXP-PERICIAL-2026" style="width: 100%;">
+                            </div>
+                            <div>
+                                <label for="report-century-prior" class="meta-label">Prior Diacrónico:</label>
+                                <select id="report-century-prior" class="meta-input" style="width: 100%;">
+                                    <option value="">Uniforme (Sin sesgo)</option>
+                                    <option value="16">Siglo XVI</option>
+                                    <option value="17" selected>Siglo XVII</option>
+                                    <option value="18">Siglo XVIII</option>
+                                    <option value="19">Siglo XIX</option>
+                                    <option value="20">Siglo XX</option>
+                                    <option value="21">Siglo XXI</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <label for="report-text-input" class="meta-label" style="margin-bottom: 0.5rem; display: block;">Texto a Dictaminar:</label>
+                        <textarea id="report-text-input" class="manuscrito-textarea" style="min-height: 140px; font-size: 1.05rem; margin-bottom: 1.5rem;" placeholder="Texto para generar el informe pericial...">Mientras por competir con tu cabello,
+oro bruñido al sol relumbra en vano;
+mientras con menosprecio en medio el llano
+mira tu blanca frente el lilio bello;
+
+mientras a cada labio, por cogello,
+siguen más ojos que al clavel temprano,
+y mientras triunfa con desdén lozano
+del luciente cristal tu gentil cuello.</textarea>
+
+                        <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                            <button id="btn-generate-report" class="btn-inferencia" type="button" style="flex: 1.2; justify-content: center;">
+                                Generar Dictamen
+                            </button>
+                            <button id="btn-download-report" class="btn-inferencia" type="button" style="flex: 1; justify-content: center; border-color: var(--acento-liquen); color: var(--acento-liquen);">
+                                Descargar Archivo
+                            </button>
+                            <button id="btn-copy-report" class="btn-sample" type="button" style="width: 100%; text-align: center; margin-top: 0.5rem;">
+                                Copiar Contenido al Portapapeles
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Columna Derecha: Visor de Contenido del Dictamen -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--lineas-tinta); padding-bottom: 0.75rem; margin-bottom: 1rem;">
+                            <span class="meta-label">Visor del Dictamen Generado:</span>
+                            <span id="report-status-badge" style="font-family: var(--font-cientifica); font-size: 0.8rem; color: var(--acento-liquen); font-weight: 600;">Listo para Generar</span>
+                        </div>
+                        <pre class="consola-afi-box" style="flex: 1; min-height: 380px; max-height: 480px; overflow: auto; padding: 1.25rem;"><code id="report-content-code" class="consola-afi-code" style="font-size: 0.85rem; line-height: 1.6;">// Haga clic en 'Generar Dictamen' o seleccione un formato para visualizar el informe pericial.</code></pre>
+                    </div>
                 </div>
             </div>
         </section>

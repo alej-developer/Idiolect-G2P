@@ -349,7 +349,7 @@ select.meta-input option {
     gap: 0.6rem;
 }
 
-.btn-inferencia:hover, .btn-inferencia:focus {
+.btn-inferencia:hover, .btn-inferencia:focus, .btn-inferencia.active {
     background-color: var(--acento-siena);
     color: var(--texto-pergamino);
     border-color: var(--acento-siena);

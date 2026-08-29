@@ -572,7 +572,145 @@ que consumir la vida en vanidades.`;
     }
 
     // =========================================================================
-    // 7. Listeners Iniciales
+    // 7. Módulo de Informes Periciales Multi-Formato (Vista 4)
+    // =========================================================================
+    const btnReportFormats = document.querySelectorAll('.btn-report-format');
+    const reportCaseIdInput = document.getElementById('report-case-id');
+    const reportCenturyPriorSelect = document.getElementById('report-century-prior');
+    const reportTextInput = document.getElementById('report-text-input');
+    const btnGenerateReport = document.getElementById('btn-generate-report');
+    const btnDownloadReport = document.getElementById('btn-download-report');
+    const btnCopyReport = document.getElementById('btn-copy-report');
+    const reportStatusBadge = document.getElementById('report-status-badge');
+    const reportContentCode = document.getElementById('report-content-code');
+
+    let formatoReporteActual = 'markdown';
+    let ultimoReporteGenerado = null;
+
+    async function generarReportePericial(formato) {
+        if (!reportTextInput) return;
+        const texto = reportTextInput.value.trim();
+        if (!texto) return;
+
+        const fmt = formato || formatoReporteActual;
+        const caseId = (reportCaseIdInput && reportCaseIdInput.value.trim()) || 'EXP-PERICIAL-2026';
+        const centuryVal = reportCenturyPriorSelect ? reportCenturyPriorSelect.value : '';
+        const centuryPrior = centuryVal ? parseInt(centuryVal, 10) : null;
+
+        if (btnGenerateReport) {
+            btnGenerateReport.textContent = 'Generando dictamen...';
+            btnGenerateReport.style.opacity = '0.7';
+        }
+        if (reportStatusBadge) {
+            reportStatusBadge.textContent = 'Procesando peritaje...';
+        }
+
+        try {
+            const res = await fetch('/api/v1/generate-report', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: texto,
+                    case_identifier: caseId,
+                    century_prior: centuryPrior,
+                    format_type: fmt
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                ultimoReporteGenerado = data;
+
+                if (reportContentCode) {
+                    reportContentCode.textContent = data.content;
+                }
+                if (reportStatusBadge) {
+                    const byteSize = new Blob([data.content]).size;
+                    reportStatusBadge.textContent = `${data.format_type.toUpperCase()} Listo (${byteSize} B)`;
+                }
+            } else {
+                if (reportContentCode) {
+                    reportContentCode.textContent = `// Error al generar el informe en formato ${fmt}.`;
+                }
+            }
+        } catch (e) {
+            console.error('Error al generar informe:', e);
+            if (reportContentCode) {
+                reportContentCode.textContent = `// Error de conexión al generar el informe.`;
+            }
+        } finally {
+            if (btnGenerateReport) {
+                btnGenerateReport.textContent = 'Generar Dictamen';
+                btnGenerateReport.style.opacity = '1';
+            }
+        }
+    }
+
+    function descargarReporteGenerado() {
+        if (!ultimoReporteGenerado || !ultimoReporteGenerado.content) {
+            generarReportePericial(formatoReporteActual).then(() => {
+                if (ultimoReporteGenerado) ejecutarDescarga(ultimoReporteGenerado);
+            });
+            return;
+        }
+        ejecutarDescarga(ultimoReporteGenerado);
+    }
+
+    function ejecutarDescarga(rep) {
+        const blob = new Blob([rep.content], { type: rep.mime_type || 'text/plain;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = rep.filename || `dictamen_${rep.format_type}.txt`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }
+
+    function copiarReporteAlPortapapeles() {
+        const texto = ultimoReporteGenerado ? ultimoReporteGenerado.content : (reportContentCode ? reportContentCode.textContent : '');
+        if (!texto) return;
+
+        navigator.clipboard.writeText(texto).then(() => {
+            if (btnCopyReport) {
+                const originalText = btnCopyReport.textContent;
+                btnCopyReport.textContent = 'Contenido copiado al portapapeles con éxito';
+                btnCopyReport.style.color = 'var(--acento-liquen)';
+                setTimeout(() => {
+                    btnCopyReport.textContent = originalText;
+                    btnCopyReport.style.color = '';
+                }, 2200);
+            }
+        }).catch(err => {
+            console.error('Error al copiar al portapapeles:', err);
+        });
+    }
+
+    // Listeners de botones de formato
+    btnReportFormats.forEach(btn => {
+        btn.addEventListener('click', () => {
+            btnReportFormats.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            formatoReporteActual = btn.getAttribute('data-format');
+            generarReportePericial(formatoReporteActual);
+        });
+    });
+
+    if (btnGenerateReport) {
+        btnGenerateReport.addEventListener('click', () => generarReportePericial(formatoReporteActual));
+    }
+
+    if (btnDownloadReport) {
+        btnDownloadReport.addEventListener('click', descargarReporteGenerado);
+    }
+
+    if (btnCopyReport) {
+        btnCopyReport.addEventListener('click', copiarReporteAlPortapapeles);
+    }
+
+    // =========================================================================
+    // 8. Listeners Iniciales
     // =========================================================================
     if (btnInferencia) {
         btnInferencia.addEventListener('click', ejecutarInferencia);
@@ -587,7 +725,8 @@ que consumir la vida en vanidades.`;
         });
     }
 
-    // Montaje inicial y escansión métrica del poema por defecto
+    // Montaje inicial, escansión y generación de informe por defecto
     animarCascada();
     ejecutarEscansion();
+    generarReportePericial('markdown');
 });
