@@ -5,21 +5,37 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
+/* =========================================
+   MODO CLARO (Estudio Filológico / Default)
+   ========================================= */
 :root {
-    /* 1. Sistema de Diseño (Variables CSS Requeridas) */
-    --fondo-viewport: #141210;         /* Obsidiana cálida */
-    --fondo-manuscrito: #1C1917;       /* Grafito profundo */
-    --lineas-tinta: #3A332C;           /* Divisores de layout, 1px sólido */
-    --texto-pergamino: #E6DFD3;        /* Texto principal de lectura */
-    --texto-sepia: #9C9287;            /* Datos secundarios y metadatos */
-    --acento-siena: #A65D47;           /* Interacciones y estados de :focus/:hover */
-    --acento-liquen: #5F7362;          /* Métricas de alta confianza */
-    
-    --font-literaria: 'Cormorant Garamond', Georgia, serif;
-    --font-cientifica: 'JetBrains Mono', 'Fira Code', monospace;
-    
-    --radius-encuadernacion: 2px;      /* Cero bordes redondeados excesivos */
-    --transition-suave: 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+  --fondo-viewport: #FAF9F5;          /* Papiro muy claro */
+  --fondo-manuscrito: #F7F6F2;        /* Vitela clara */
+  --lineas-tinta: #EAE5D9;            /* Divisores tenues de tinta */
+  --texto-pergamino: #2C2B29;         /* Carbón oscuro, lectura fácil */
+  --texto-sepia: #5C5853;             /* Tinta sepia / metadatos */
+  --acento-siena: #D9735A;            /* Terracota */
+  --acento-liquen: #7B9E87;           /* Verde salvia */
+  
+  /* Tipografías base */
+  --font-literaria: 'Cormorant Garamond', 'Lora', serif;
+  --font-cientifica: 'JetBrains Mono', 'Fira Code', monospace;
+  
+  --radius-encuadernacion: 2px;
+  --transition-suave: 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* =========================================
+   MODO OSCURO (Scriptorium Monástico)
+   ========================================= */
+[data-theme="dark"] {
+  --fondo-viewport: #141210;          /* Obsidiana cálida */
+  --fondo-manuscrito: #1C1917;        /* Grafito profundo */
+  --lineas-tinta: #3A332C;            /* Divisores de layout, 1px sólido */
+  --texto-pergamino: #E6DFD3;         /* Texto principal de lectura */
+  --texto-sepia: #9C9287;             /* Datos secundarios y metadatos */
+  --acento-siena: #A65D47;            /* Interacciones y estados :focus/:hover */
+  --acento-liquen: #5F7362;           /* Métricas de alta confianza */
 }
 
 /* Reset y Fundamentos */
@@ -38,6 +54,27 @@ html, body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Botón de Alternancia de Tema */
+.btn-tema {
+    background: transparent;
+    border: none;
+    color: var(--texto-sepia);
+    font-family: var(--font-cientifica);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    padding: 0.4rem 0.75rem;
+    border-radius: var(--radius-encuadernacion);
+    transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.btn-tema:hover {
+    color: var(--texto-pergamino);
+    background-color: rgba(166, 93, 71, 0.1);
 }
 
 /* 2. Arquitectura de Layout: Pantalla Dividida (CSS Grid Asimétrico 55% / 45%) */
@@ -58,6 +95,7 @@ html, body {
     align-items: center;
     padding: 0 2rem;
     flex-shrink: 0;
+    transition: background-color 0.4s ease, border-color 0.4s ease;
 }
 
 .codice-brand {

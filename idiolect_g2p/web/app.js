@@ -5,6 +5,36 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // =========================================================================
+    // 0. Lógica de Tema (Claro / Oscuro) con Persistencia Local
+    // =========================================================================
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const htmlElement = document.documentElement;
+
+    const temaGuardado = localStorage.getItem('idiolect-theme') || 'dark';
+    if (temaGuardado === 'dark') {
+        htmlElement.setAttribute('data-theme', 'dark');
+        if (themeToggleBtn) themeToggleBtn.textContent = 'Estudio Lumínico';
+    } else {
+        htmlElement.removeAttribute('data-theme');
+        if (themeToggleBtn) themeToggleBtn.textContent = 'Modo Scriptorium';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            const temaActual = htmlElement.getAttribute('data-theme');
+            if (temaActual === 'dark') {
+                htmlElement.removeAttribute('data-theme');
+                localStorage.setItem('idiolect-theme', 'light');
+                themeToggleBtn.textContent = 'Modo Scriptorium';
+            } else {
+                htmlElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('idiolect-theme', 'dark');
+                themeToggleBtn.textContent = 'Estudio Lumínico';
+            }
+        });
+    }
+
+    // =========================================================================
     // 1. Motor de Intercambio de Vistas Monásticas (Vanilla JS)
     // =========================================================================
     const navLinks = document.querySelectorAll('.nav-item a');
