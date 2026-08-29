@@ -153,9 +153,16 @@ El marco fue sometido a una suite exhaustiva de 54 pruebas automatizadas que eva
 
 Idiolect-G2P demuestra la viabilidad y el rigor de formular la desambiguación fonológica inversa como un problema de inferencia bayesiana multidimensional. El marco proporciona a la comunidad de lingüística computacional, humanidades digitales y ciencias forenses una herramienta reproducible, interoperable y de código abierto para el análisis dialectal, diacrónico y estilométrico del español.
 
+## 8. Declaración de Transparencia, Ética y Co-creación con Inteligencia Artificial
+
+De conformidad con las directrices éticas de la *American Psychological Association* (APA, 7.ª edición) y los comités internacionales de ética en la publicación científica (COPE) respecto al uso de tecnologías de inteligencia artificial generativa:
+
+- **Herramientas y Entorno de Desarrollo Empleados:** Se declara que la implementación del código fuente, el diseño de la suite de pruebas automatizadas y la estructuración de la documentación técnica se desarrollaron con la asistencia del entorno **Antigravity IDE** y el agente autónomo de codificación **Antigravity AI (Google DeepMind)** bajo una dinámica de programación en parejas (*pair-programming*).
+- **Autoría, Supervisión y Validación Humana:** El diseño metodológico, la conceptualización filológica del modelo de isoglosas, la formulación matemática de la verosimilitud bayesiana y la revisión crítica de todos los resultados empíricos y analíticos fueron concebidos, auditados y aprobados íntegramente por los autores humanos, quienes asumen la responsabilidad científica y ética plena sobre el contenido del presente trabajo.
+
 ---
 
-## 8. Referencias Bibliográficas (Normas APA 7.ª Edición)
+## 9. Referencias Bibliográficas (Normas APA 7.ª Edición)
 
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Chela-Flores, G. (1982). Las teorías fonológicas y la sincronía caribeña. *Boletín de Filología de la Universidad de Chile*, 31(1), 255–269.

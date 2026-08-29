@@ -122,9 +122,16 @@ Across 54 automated tests:
 
 Idiolect-G2P provides a mathematically formalized, reproducible, and open-source platform bridging generative phonology, Bayesian statistics, and computational digital humanities.
 
+## 8. AI Ethics, Transparency, and Co-Creation Statement
+
+In accordance with the ethical standards of the *American Psychological Association* (APA, 7th edition) and the Committee on Publication Ethics (COPE) regarding generative artificial intelligence in scholarly research:
+
+- **AI Tools and Development Environment:** The codebase, test suite, and technical documentation were authored via an AI pair-programming workflow utilizing the **Antigravity IDE** and the advanced agentic coding system **Antigravity AI (Google DeepMind)**.
+- **Human Authorship, Supervision, and Accountability:** The linguistic problem formulation, dialectal taxonomy, Bayesian likelihood modeling, and critical review of all computational findings were conceptualized, audited, and approved by the human researcher, who maintains full scientific responsibility and intellectual accountability for the work.
+
 ---
 
-## 8. References (APA 7th Edition)
+## 9. References (APA 7th Edition)
 
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Chela-Flores, G. (1982). Las teorías fonológicas y la sincronía caribeña. *Boletín de Filología de la Universidad de Chile*, 31(1), 255–269.

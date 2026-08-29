@@ -144,3 +144,12 @@ print(informe_latex[:300])
   Conforme a la regla de paroxitonía del verso hispánico (Quilis, 1993), el acento en la última sílaba genera un tiempo acústico equivalente a una sílaba suplementaria (+1).
 - **¿Cómo se calculan las distancias fonéticas?**  
   Se computa la distancia de Levenshtein ponderada sobre la jerarquía de rasgos de Clements y Hume (1995), asignando menores penalizaciones a pares homorgánicos o alófonos que a discrepancias mayores de modo o punto de articulación.
+
+---
+
+## 8. Ética, Transparencia y Asistencia de Inteligencia Artificial
+
+Este framework fue desarrollado bajo un modelo de co-programación transparente:
+- **Entorno de Desarrollo:** [Antigravity IDE](https://deepmind.google/technologies/antigravity/)
+- **Agente de Inteligencia Artificial:** Antigravity AI (Google DeepMind)
+- **Supervisión y Auditoría:** Todos los algoritmos, reglas gramaticales, inventarios de fonemas y suites de prueba fueron formulados, verificados y auditados por el investigador humano responsable.

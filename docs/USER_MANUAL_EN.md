@@ -134,3 +134,12 @@ print(f"Estimated seseo rate: {result.estimated_isogloss_vector['seseo']}")
 latex_content = generate_report(result, format_type=ReportFormat.LATEX, case_id="CASE-2026-EN")
 print(latex_content[:300])
 ```
+
+---
+
+## 7. AI Ethics, Transparency, and Assistance
+
+This framework was engineered following open scientific transparency:
+- **Integrated Development Environment:** [Antigravity IDE](https://deepmind.google/technologies/antigravity/)
+- **AI Coding Agent:** Antigravity AI (Google DeepMind)
+- **Human Oversight and Quality Assurance:** All theoretical models, phonological inventories, and computational modules were supervised, evaluated, and validated by the principal researcher.
