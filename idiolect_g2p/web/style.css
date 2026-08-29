@@ -7,39 +7,39 @@
 
 :root {
     /* ======================================================================
-       Paleta de Colores: Light Academia / Manuscrito Moderno
+       Paleta de Colores: Modo Pergamino / Manuscrito Humanista Diurno
        ====================================================================== */
-    --bg-parchment: #F9F8F6;          /* Fondo general pergamino suave */
-    --bg-paper: #FFFFFF;              /* Fondo blanco papel */
-    --bg-lab: #F0EFEA;                /* Panel de resultados / zona de laboratorio */
-    --bg-lab-subtle: #E8E6DF;         /* Contenedores secundarios de datos */
+    --bg-parchment: #F6F3EB;          /* Pergamino natural cálido */
+    --bg-paper: #FFFEFB;              /* Hoja de papel verjurado / vitela clara */
+    --bg-lab: #EFE9DC;                /* Mesa de scriptorium / zona de laboratorio */
+    --bg-lab-subtle: #E5DFD0;         /* Contenedores secundarios sepia */
     
-    --text-main: #2C2B29;             /* Carbón oscuro para máxima legibilidad */
-    --text-secondary: #595752;        /* Tinta desvaída / grafito medio */
-    --text-muted: #85827A;            /* Tinta gris filológica */
+    --text-main: #2B2621;             /* Tinta ferrogálica / carbón vegetal */
+    --text-secondary: #544B41;        /* Tinta nogalina */
+    --text-muted: #7E7365;            /* Tinta sepia desvaída */
     
-    --border-subtle: #E3E0D8;         /* Líneas finas estilo encuadernación */
-    --border-medium: #D1CDC4;         /* Bordes de división de paneles */
-    --border-focus: #2C2B29;          /* Foco sobrio carbón */
+    --border-subtle: #DFD8CA;         /* Líneas finas estilo encuadernación */
+    --border-medium: #CEC6B4;         /* Bordes de división de paneles */
+    --border-focus: #2B2621;          /* Foco sobrio tinta oscura */
     
-    /* Acentos Orgánicos & Académicos */
-    --accent-charcoal: #2C2B29;       /* Botón principal y títulos de alto impacto */
-    --accent-charcoal-hover: #1A1918;
+    /* Pigmentos Naturales Históricos */
+    --accent-charcoal: #2B2621;       /* Tinta oscura para botones principales */
+    --accent-charcoal-hover: #171411;
     
-    --accent-terracotta: #C06C5A;     /* Terracota para destaques poéticos y rima */
-    --accent-terracotta-subtle: #F7EDE9;
-    --accent-terracotta-border: #E8C2B8;
+    --accent-terracotta: #B85D49;     /* Almagre / Terracota de rúbrica medieval */
+    --accent-terracotta-subtle: #F6EBE7;
+    --accent-terracotta-border: #E4C1B7;
     
-    --accent-sage: #6B8E7B;           /* Verde salvia apagado */
-    --accent-sage-bg: #E4ECE7;        /* Fondo salvia claro para badges */
-    --accent-sage-dark: #2F4D3C;      /* Texto salvia oscuro */
-    --accent-sage-border: #BDD2C5;
+    --accent-sage: #5E7A68;           /* Verde malaquita / salvia monástica */
+    --accent-sage-bg: #E1EAE3;        /* Fondo salvia claro */
+    --accent-sage-dark: #27402F;      /* Texto salvia oscuro */
+    --accent-sage-border: #B7CCBC;
     
-    --accent-oxford: #2B4560;         /* Azul tinta profunda */
-    --accent-oxford-bg: #EAF0F6;
+    --accent-oxford: #2B4560;         /* Azul lapislázuli natural */
+    --accent-oxford-bg: #E7EEF5;
     
-    --accent-amber: #9E7132;          /* Ocre / Ámbar académico */
-    --accent-amber-bg: #F9F4EC;
+    --accent-amber: #946927;          /* Ocre / Cera de abejas */
+    --accent-amber-bg: #F7EFE1;
     
     /* Tipografía */
     --font-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
@@ -54,39 +54,40 @@
 }
 
 /* ==========================================================================
-   Modo Estudio Nocturno (Atenuado / Pizarra Sepia — Sin Neón)
+   Modo Contraste: Scriptorium Nocturno / Vitela a la Luz de las Velas
+   (Tonalidades cálidas de madera de nogal, cuero curtido y pergamino oscuro)
    ========================================================================== */
 [data-theme="dark"] {
-    --bg-parchment: #18191C;
-    --bg-paper: #202227;
-    --bg-lab: #1D1F24;
-    --bg-lab-subtle: #262930;
+    --bg-parchment: #1C1815;          /* Madera de nogal oscura / mesa de scriptorium */
+    --bg-paper: #25201B;              /* Vitela oscura / encuadernación de cuero */
+    --bg-lab: #201B17;                /* Sombra sepia cálida para zona de datos */
+    --bg-lab-subtle: #2B2520;         /* Contenedores secundarios de madera */
     
-    --text-main: #EAE6DF;
-    --text-secondary: #B5B0A6;
-    --text-muted: #7E7B74;
+    --text-main: #EBE4D8;             /* Tinta clara a la luz de las velas */
+    --text-secondary: #C2B9A7;        /* Pergamino iluminado */
+    --text-muted: #8C8270;            /* Tinta sepia atenuada */
     
-    --border-subtle: #2D313A;
-    --border-medium: #383D48;
-    --border-focus: #EAE6DF;
+    --border-subtle: #3A322B;         /* Líneas de costura en cuero */
+    --border-medium: #4A4036;         /* Bordes de folio medieval */
+    --border-focus: #EBE4D8;
     
-    --accent-charcoal: #EAE6DF;
+    --accent-charcoal: #EBE4D8;
     --accent-charcoal-hover: #FFFFFF;
     
-    --accent-terracotta: #D98977;
-    --accent-terracotta-subtle: #2F211F;
-    --accent-terracotta-border: #4A3330;
+    --accent-terracotta: #C96B57;     /* Rúbrica de cinabrio cálido */
+    --accent-terracotta-subtle: #36221E;
+    --accent-terracotta-border: #55352E;
     
-    --accent-sage: #8DB39D;
-    --accent-sage-bg: #1C2B22;
-    --accent-sage-dark: #A3CCA3;
-    --accent-sage-border: #2E4536;
+    --accent-sage: #849C86;           /* Salvia y musgo de monasterio */
+    --accent-sage-bg: #222D24;
+    --accent-sage-dark: #B5CEB7;
+    --accent-sage-border: #364839;
     
-    --accent-oxford: #7D9FBF;
-    --accent-oxford-bg: #1B2530;
+    --accent-oxford: #8FA6BB;         /* Lapislázuli lavado */
+    --accent-oxford-bg: #202C37;
     
-    --accent-amber: #C99C57;
-    --accent-amber-bg: #2C2417;
+    --accent-amber: #D0A358;          /* Cera virgen e iluminación dorada */
+    --accent-amber-bg: #342716;
 }
 
 /* ==========================================================================
