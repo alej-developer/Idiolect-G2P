@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="description" content="Idiolect-G2P — Transcriptor Fonológico e Inferencia Dialectal en Lingüística Computacional">
-    <title>Idiolect-G2P — Códice Dinámico & Inferencia Dialectal Inversa</title>
+    <meta name="description" content="Idiolect-G2P — Transcriptor Fonológico e Inferencia Dialectal en Humanidades Digitales">
+    <title>Idiolect-G2P — Códice Dinámico</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body class="codice-app">
@@ -20,47 +23,50 @@
         </div>
     </header>
 
-    <!-- Navegación Global del Scriptorium -->
+    <!-- 1. Barra de Navegación Global del Scriptorium -->
     <nav class="monastic-nav">
         <ul class="nav-list">
-            <li class="nav-item active"><a href="#tab-profiler" data-tab="tab-profiler">Perfilador Bayesiano</a></li>
-            <li class="nav-item"><a href="#tab-transcriptor" data-tab="tab-transcriptor">Transcriptor G2P & Síntesis</a></li>
-            <li class="nav-item"><a href="#tab-metrica" data-tab="tab-metrica">Escansión Métrica</a></li>
-            <li class="nav-item"><a href="#tab-informes" data-tab="tab-informes">Informes Multi-Formato</a></li>
-            <li class="nav-item"><a href="#tab-corpus" data-tab="tab-corpus">Corpus Histórico</a></li>
+            <li class="nav-item active"><a href="#" data-target="vista-bayesiano">Perfilador Bayesiano</a></li>
+            <li class="nav-item"><a href="#" data-target="vista-transcriptor">Transcriptor G2P & Síntesis</a></li>
+            <li class="nav-item"><a href="#" data-target="vista-metrica">Escansión Métrica</a></li>
+            <li class="nav-item"><a href="#" data-target="vista-informes">Informes Multi-Formato</a></li>
+            <li class="nav-item"><a href="#" data-target="vista-corpus">Corpus Histórico</a></li>
         </ul>
     </nav>
 
-    <!-- Layout Asimétrico de Pantalla Dividida (55% / 45%) -->
-    <main class="codice-layout" id="tab-profiler">
-
+    <!-- Contenedor Principal de las Vistas -->
+    <main class="scriptorium-content" id="tab-profiler">
+        
         <!-- ===================================================================
-             COLUMNA IZQUIERDA (55% ancho) — "El Manuscrito"
+             VISTA 1: PERFILADOR BAYESIANO (Layout Asimétrico 55% / 45%)
              =================================================================== -->
-        <section class="manuscrito-col" aria-label="Texto de Análisis y Manuscrito">
-            
-            <div class="manuscrito-meta">
-                <div class="meta-field">
-                    <label for="input-expediente" class="meta-label">Expediente / Identificador:</label>
-                    <input type="text" id="input-expediente" class="meta-input" value="EXP-GONGORA-1605" autocomplete="off">
-                </div>
-                <div class="meta-field">
-                    <label for="select-prior" class="meta-label">Prior Diacrónico:</label>
-                    <select id="select-prior" class="meta-input">
-                        <option value="">Uniforme (Sin sesgo)</option>
-                        <option value="13">Siglo XIII (Medieval Alfonsí)</option>
-                        <option value="15">Siglo XV (Prerrenacimiento)</option>
-                        <option value="16">Siglo XVI (Siglo de Oro Temprano)</option>
-                        <option value="17" selected>Siglo XVII (Barroco / Siglo de Oro)</option>
-                        <option value="19">Siglo XIX (Romanticismo / Gauchesco)</option>
-                        <option value="20">Siglo XX (Contemporáneo)</option>
-                        <option value="21">Siglo XXI (Sincronía Actual)</option>
-                    </select>
-                </div>
-            </div>
+        <section id="vista-bayesiano" class="vista-seccion activa">
+            <div class="codice-layout">
+                
+                <!-- Columna Izquierda (55% ancho) — "El Manuscrito" -->
+                <div class="manuscrito-col" aria-label="Texto de Análisis y Manuscrito">
+                    <div class="manuscrito-meta">
+                        <div class="meta-field">
+                            <label for="input-expediente" class="meta-label">Expediente / Identificador:</label>
+                            <input type="text" id="input-expediente" class="meta-input" value="EXP-GONGORA-1605" autocomplete="off">
+                        </div>
+                        <div class="meta-field">
+                            <label for="select-prior" class="meta-label">Prior Diacrónico:</label>
+                            <select id="select-prior" class="meta-input">
+                                <option value="">Uniforme (Sin sesgo)</option>
+                                <option value="13">Siglo XIII (Medieval Alfonsí)</option>
+                                <option value="15">Siglo XV (Prerrenacimiento)</option>
+                                <option value="16">Siglo XVI (Siglo de Oro Temprano)</option>
+                                <option value="17" selected>Siglo XVII (Barroco / Siglo de Oro)</option>
+                                <option value="19">Siglo XIX (Romanticismo / Gauchesco)</option>
+                                <option value="20">Siglo XX (Contemporáneo)</option>
+                                <option value="21">Siglo XXI (Sincronía Actual)</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <!-- Textarea amplio y táctil sin bordes intrusivos -->
-            <textarea id="texto-manuscrito" class="manuscrito-textarea" spellcheck="false" placeholder="Escriba o pegue los versos para inferir el idiolecto...">Mientras por competir con tu cabello,
+                    <!-- Textarea amplio sin bordes intrusivos -->
+                    <textarea id="texto-manuscrito" class="manuscrito-textarea" spellcheck="false" placeholder="Escriba o pegue los versos para inferir el idiolecto...">Mientras por competir con tu cabello,
 oro bruñido al sol relumbra en vano;
 mientras con menosprecio en medio el llano
 mira tu blanca frente el lilio bello;
@@ -70,84 +76,191 @@ siguen más ojos que al clavel temprano,
 y mientras triunfa con desdén lozano
 del luciente cristal tu gentil cuello.</textarea>
 
-            <div class="manuscrito-actions">
-                <button id="btn-ejecutar-inferencia" class="btn-inferencia" type="button">
-                    <span>Inferencia Inversa</span>
-                </button>
-                <button id="btn-cargar-muestra" class="btn-sample" type="button">
-                    Cargar muestra de Sor Juana
-                </button>
+                    <div class="manuscrito-actions">
+                        <button id="btn-ejecutar-inferencia" class="btn-inferencia" type="button">
+                            <span>Inferencia Inversa</span>
+                        </button>
+                        <button id="btn-cargar-muestra" class="btn-sample" type="button">
+                            Cargar muestra de Sor Juana
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha (45% ancho) — "Laboratorio Bayesiano" -->
+                <div class="laboratorio-col" aria-label="Resultados y Laboratorio Bayesiano">
+                    <div>
+                        <div class="lab-section-title">
+                            <span>Dictamen Fonológico & Transducción AFI</span>
+                            <span id="metrica-confianza" class="lab-metric-highlight">Confianza: 98.4%</span>
+                        </div>
+
+                        <div class="veredicto-bloque">
+                            <div class="veredicto-nombre" id="veredicto-dialecto">Español del Siglo de Oro</div>
+                            <div class="veredicto-region" id="veredicto-region">Norma Histórica — Siglo XVII (Distinción y Lleísmo)</div>
+                        </div>
+
+                        <pre class="consola-afi-box"><code id="consola-afi" class="consola-afi-code">/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/
+/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/
+/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/
+/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/</code></pre>
+                    </div>
+
+                    <div>
+                        <div class="lab-section-title">
+                            <span>Distribución Posterior P(D | T, R)</span>
+                            <span style="font-size: 0.7rem; color: var(--texto-sepia);">Log-Sum-Exp</span>
+                        </div>
+
+                        <ul id="distribucion-lista" class="distribucion-lista">
+                            <li class="distribucion-fila top-rango">
+                                <span class="fila-nombre">1. Español del Siglo de Oro</span>
+                                <div class="fila-datos">
+                                    <span class="fila-prob">98.4%</span>
+                                    <span class="fila-dist">d = 0.000</span>
+                                </div>
+                            </li>
+                            <li class="distribucion-fila">
+                                <span class="fila-nombre">2. Peninsular Septentrional</span>
+                                <div class="fila-datos">
+                                    <span class="fila-prob">1.2%</span>
+                                    <span class="fila-dist">d = 0.120</span>
+                                </div>
+                            </li>
+                            <li class="distribucion-fila">
+                                <span class="fila-nombre">3. Andino Tradicional</span>
+                                <div class="fila-datos">
+                                    <span class="fila-prob">0.3%</span>
+                                    <span class="fila-dist">d = 0.240</span>
+                                </div>
+                            </li>
+                            <li class="distribucion-fila">
+                                <span class="fila-nombre">4. Mexicano Central</span>
+                                <div class="fila-datos">
+                                    <span class="fila-prob">0.1%</span>
+                                    <span class="fila-dist">d = 0.380</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
             </div>
         </section>
 
         <!-- ===================================================================
-             COLUMNA DERECHA (45% ancho) — "Laboratorio Bayesiano"
+             VISTA 2: TRANSCRIPTOR G2P & SÍNTESIS ACÚSTICA
              =================================================================== -->
-        <section class="laboratorio-col" aria-label="Resultados y Laboratorio Bayesiano">
-
-            <!-- Bloque Superior: Veredicto & Consola del Alfabeto Fonético Internacional (AFI) -->
-            <div>
+        <section id="vista-transcriptor" class="vista-seccion">
+            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
                 <div class="lab-section-title">
-                    <span>Dictamen Fonológico & Transducción AFI</span>
-                    <span id="metrica-confianza" class="lab-metric-highlight">Confianza: 98.4%</span>
+                    <span>Transductor Fonológico G2P & Síntesis Acústica Formántica</span>
+                    <span class="lab-metric-highlight">AFI Formal</span>
                 </div>
-
-                <div class="veredicto-bloque">
-                    <div class="veredicto-nombre" id="veredicto-dialecto">Español del Siglo de Oro</div>
-                    <div class="veredicto-region" id="veredicto-region">Norma Histórica — Siglo XVII (Distinción y Lleísmo)</div>
+                <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
+                    Transducción ortográfica a representación alofónica estrecha según el modelo de geometría de rasgos de Clements & Hume (1995).
+                </p>
+                <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
+                    <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Texto a Transcribir:</label>
+                    <input type="text" id="g2p-quick-input" class="meta-input" style="font-size: 1.15rem; width: 100%; margin-bottom: 1.5rem;" value="Los cazadores llegaron a la casa del puerto.">
+                    <div style="display: flex; gap: 1rem;">
+                        <button id="btn-g2p-quick" class="btn-inferencia" type="button">Transcribir a AFI</button>
+                    </div>
+                    <pre class="consola-afi-box" style="margin-top: 1.5rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.sa.ðo.ɾes ʝe.ɣa.ɾon a la ka.sa ðel pweɾ.to/</code></pre>
                 </div>
-
-                <pre class="consola-afi-box"><code id="consola-afi" class="consola-afi-code">/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/
-/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/
-/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/
-/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/</code></pre>
             </div>
+        </section>
 
-            <!-- Bloque Inferior: Lista No Ordenada para la Distribución Posterior P(D | T, R) -->
-            <div>
+        <!-- ===================================================================
+             VISTA 3: ESCANSIÓN MÉTRICA
+             =================================================================== -->
+        <section id="vista-metrica" class="vista-seccion">
+            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
                 <div class="lab-section-title">
-                    <span>Distribución Posterior P(D | T, R)</span>
-                    <span style="font-size: 0.7rem; color: var(--texto-sepia);">Log-Sum-Exp</span>
+                    <span>Escansión Métrica, Fonotaxis y Detección de Rima</span>
+                    <span class="lab-metric-highlight">Cómputo Silábico</span>
                 </div>
-
-                <ul id="distribucion-lista" class="distribucion-lista">
-                    <!-- Filas inyectadas y animadas vía WAAPI animarCascada() -->
-                    <li class="distribucion-fila top-rango">
-                        <span class="fila-nombre">1. Español del Siglo de Oro</span>
-                        <div class="fila-datos">
-                            <span class="fila-prob">98.4%</span>
-                            <span class="fila-dist">d = 0.000</span>
-                        </div>
-                    </li>
-                    <li class="distribucion-fila">
-                        <span class="fila-nombre">2. Peninsular Septentrional</span>
-                        <div class="fila-datos">
-                            <span class="fila-prob">1.2%</span>
-                            <span class="fila-dist">d = 0.120</span>
-                        </div>
-                    </li>
-                    <li class="distribucion-fila">
-                        <span class="fila-nombre">3. Andino Tradicional</span>
-                        <div class="fila-datos">
-                            <span class="fila-prob">0.3%</span>
-                            <span class="fila-dist">d = 0.240</span>
-                        </div>
-                    </li>
-                    <li class="distribucion-fila">
-                        <span class="fila-nombre">4. Mexicano Central</span>
-                        <div class="fila-datos">
-                            <span class="fila-prob">0.1%</span>
-                            <span class="fila-dist">d = 0.380</span>
-                        </div>
-                    </li>
-                </ul>
+                <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
+                    Análisis cuantitativo de sinalefas, compensación métrica según acento final y detección de esquemas estróficos clásicos.
+                </p>
+                <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
+                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--lineas-tinta); padding-bottom: 0.75rem; margin-bottom: 1rem; font-family: var(--font-cientifica); font-size: 0.8rem; color: var(--texto-sepia);">
+                        <span>Esquema Detectado: <strong style="color: var(--acento-siena);">ABBA ABBA CDC DCD (Soneto Clásico)</strong></span>
+                        <span>Rima: <strong style="color: var(--acento-liquen);">Consonante Exigida</strong></span>
+                    </div>
+                    <p style="font-family: var(--font-literaria); font-size: 1.25rem; color: var(--texto-pergamino); line-height: 1.8;">
+                        Verso 1: "Mientras por competir con tu cabello" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ello)</span><br>
+                        Verso 2: "oro bruñido al sol relumbra en vano" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ano)</span><br>
+                        Verso 3: "mientras con menosprecio en medio el llano" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ano)</span><br>
+                        Verso 4: "mira tu blanca frente el lilio bello" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ello)</span>
+                    </p>
+                </div>
             </div>
+        </section>
 
+        <!-- ===================================================================
+             VISTA 4: INFORMES MULTI-FORMATO
+             =================================================================== -->
+        <section id="vista-informes" class="vista-seccion">
+            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
+                <div class="lab-section-title">
+                    <span>Exportación de Dictamen Pericial e Informes Científicos</span>
+                    <span class="lab-metric-highlight">8 Formatos</span>
+                </div>
+                <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
+                    Generación de informes estructurados en Markdown, LaTeX (TIPA), TEI-Verse XML, BibTeX, JSON y Matriz CSV.
+                </p>
+                <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">Markdown (.md)</button>
+                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">LaTeX (.tex)</button>
+                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">TEI-XML (.xml)</button>
+                        <button class="btn-inferencia" style="padding: 0.5rem 1rem; font-size: 0.78rem;">JSON (.json)</button>
+                    </div>
+                    <pre class="consola-afi-box"><code class="consola-afi-code"># DICTAMEN PERICIAL FONOLÓGICO FORENSE
+Expediente: EXP-GONGORA-1605
+Fecha: 2026-08-29
+Metodología: Inferencia Dialectal Bayesiana P(D|T,R)
+
+1. SÍNTESIS EJECUTIVA
+- Variante Predicha: Español del Siglo de Oro (DIACHRONIC_GOLDEN_AGE)
+- Nivel de Confianza: 98.4%
+- Distancia Fonética Media: d = 0.000</code></pre>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             VISTA 5: CORPUS HISTÓRICO
+             =================================================================== -->
+        <section id="vista-corpus" class="vista-seccion">
+            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
+                <div class="lab-section-title">
+                    <span>Corpus de Manuscritos Históricos y Periciales Documentados</span>
+                    <span class="lab-metric-highlight">Siglos XIII – XXI</span>
+                </div>
+                <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
+                    Seleccione un manuscrito histórico para cargar sus versos directamente en el perfilador bayesiano:
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem;">
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Luis de Góngora</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Soneto Barroco — 1582 (España)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"Mientras por competir con tu cabello..."</p>
+                        <button class="btn-sample btn-load-corpus-gongora" type="button">Cargar en Perfilador</button>
+                    </div>
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 1.5rem; border-radius: var(--radius-encuadernacion);">
+                        <h3 style="font-family: var(--font-literaria); font-size: 1.4rem; color: var(--texto-pergamino);">Sor Juana Inés de la Cruz</h3>
+                        <span style="font-family: var(--font-cientifica); font-size: 0.75rem; color: var(--acento-siena);">Soneto Novohispano — 1689 (México)</span>
+                        <p style="color: var(--texto-sepia); font-size: 0.95rem; margin: 0.75rem 0 1rem 0; font-style: italic;">"En perseguirme, Mundo, ¿qué interesas?..."</p>
+                        <button class="btn-sample btn-load-corpus-sorjuana" type="button">Cargar en Perfilador</button>
+                    </div>
+                </div>
+            </div>
         </section>
 
     </main>
 
-    <!-- Script de Lógica y Web Animations API (WAAPI) -->
+    <!-- Script de Lógica, Navegación de Vistas y Web Animations API (WAAPI) -->
     <script src="/static/app.js"></script>
 </body>
 </html>

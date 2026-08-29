@@ -1,10 +1,55 @@
 /**
  * Idiolect-G2P — Lógica de Interfaz "Códice Dinámico"
- * Implementación con Vanilla JavaScript & Web Animations API (WAAPI)
+ * Motor de Navegación de Vistas & Web Animations API (WAAPI)
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Referencias a Elementos del DOM
+    // =========================================================================
+    // 1. Motor de Intercambio de Vistas Monásticas (Vanilla JS)
+    // =========================================================================
+    const navLinks = document.querySelectorAll('.nav-item a');
+    const vistas = document.querySelectorAll('.vista-seccion');
+    const navItems = document.querySelectorAll('.nav-item');
+
+    function cambiarVista(targetId) {
+        // Gestionar estado activo en nav
+        navItems.forEach(item => {
+            const link = item.querySelector('a');
+            if (link && link.getAttribute('data-target') === targetId) {
+                item.classList.add('active');
+            } else {
+                item.classList.remove('active');
+            }
+        });
+
+        // Ocultar todas las vistas
+        vistas.forEach(vista => {
+            vista.classList.remove('activa');
+        });
+
+        // Activar la vista solicitada con animación @keyframes despliegueMonastico
+        const targetSection = document.getElementById(targetId);
+        if (targetSection) {
+            targetSection.classList.add('activa');
+            if (targetId === 'vista-bayesiano') {
+                animarCascada();
+            }
+        }
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (evento) => {
+            evento.preventDefault();
+            const targetId = link.getAttribute('data-target');
+            if (targetId) {
+                cambiarVista(targetId);
+            }
+        });
+    });
+
+    // =========================================================================
+    // 2. Referencias a Elementos del DOM (Perfilador Bayesiano)
+    // =========================================================================
     const textoInput = document.getElementById('texto-manuscrito');
     const inputExpediente = document.getElementById('input-expediente');
     const selectPrior = document.getElementById('select-prior');
@@ -17,7 +62,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const metricaConfianza = document.getElementById('metrica-confianza');
     const listaDistribucion = document.getElementById('distribucion-lista');
 
-    // Muestra de Sor Juana Inés de la Cruz (Seseo Novohispano)
+    // Muestras Literarias
+    const MUESTRA_GONGORA = `Mientras por competir con tu cabello,
+oro bruñido al sol relumbra en vano;
+mientras con menosprecio en medio el llano
+mira tu blanca frente el lilio bello;
+
+mientras a cada labio, por cogello,
+siguen más ojos que al clavel temprano,
+y mientras triunfa con desdén lozano
+del luciente cristal tu gentil cuello.`;
+
     const MUESTRA_SOR_JUANA = `En perseguirme, Mundo, ¿qué interesas?
 ¿En qué te ofendo, cuando sólo intento
 poner bellezas en mi entendimiento
@@ -28,11 +83,11 @@ y así, siempre me causa más contento
 poner riquezas en mi entendimiento
 que no mi entendimiento en las riquezas.`;
 
-    /**
-     * 3. Lógica de Animación (Vanilla JS + WAAPI Nativo Requerido)
-     * Aplica .animate() nativo con escalonamiento (stagger) y curva cubic-bezier(0.25, 1, 0.5, 1)
-     */
+    // =========================================================================
+    // 3. Lógica de Animación (WAAPI Nativo Requerido)
+    // =========================================================================
     function animarCascada() {
+        if (!listaDistribucion) return;
         const filas = listaDistribucion.querySelectorAll('.distribucion-fila');
         
         filas.forEach((fila, index) => {
@@ -51,18 +106,14 @@ que no mi entendimiento en las riquezas.`;
         });
     }
 
-    /**
-     * Renderiza las filas de la distribución posterior en el DOM
-     */
     function renderizarDistribucion(ranking) {
+        if (!listaDistribucion) return;
         listaDistribucion.innerHTML = '';
 
         ranking.forEach((item, index) => {
             const li = document.createElement('li');
             const esTop = index === 0;
             li.className = `distribucion-fila ${esTop ? 'top-rango' : ''}`;
-            
-            // Estado inicial oculto previo al disparo de WAAPI
             li.style.opacity = '0';
 
             const pct = (item.posterior_probability * 100).toFixed(1);
@@ -79,14 +130,11 @@ que no mi entendimiento en las riquezas.`;
             listaDistribucion.appendChild(li);
         });
 
-        // Disparar la animación en cascada mediante WAAPI
         animarCascada();
     }
 
-    /**
-     * Transcribe el texto a notación fonética AFI
-     */
     async function actualizarConsolaAfi(texto, dialectCode) {
+        if (!consolaAfi) return;
         try {
             const res = await fetch('/api/v1/transcribe', {
                 method: 'POST',
@@ -101,43 +149,38 @@ que no mi entendimiento en las riquezas.`;
             if (res.ok) {
                 const data = await res.json();
                 const versos = texto.split('\n').filter(l => l.trim().length > 0);
-                
-                // Formatear los versos en líneas AFI
                 let lineasAfi = [];
                 let wordIdx = 0;
                 
                 versos.slice(0, 4).forEach(v => {
-                    const cantPalabras = v.trim().split(/\s+/).length;
-                    const palabrasSlice = data.transcriptions.slice(wordIdx, wordIdx + cantPalabras);
-                    wordIdx += cantPalabras;
+                    const cant = v.trim().split(/\s+/).length;
+                    const palabrasSlice = data.transcriptions.slice(wordIdx, wordIdx + cant);
+                    wordIdx += cant;
                     const lineaStr = palabrasSlice.map(p => p.syllabified_ipa).join(' ');
                     if (lineaStr) lineasAfi.push(`/${lineaStr}/`);
                 });
 
                 consolaAfi.textContent = lineasAfi.join('\n') || `/${data.full_ipa_text}/`;
-            } else {
-                consolaAfi.textContent = `/${texto.toLowerCase().replace(/[^a-záéíóúüñ\s]/g, '').trim()}/`;
             }
         } catch (e) {
-            // Fallback determinista en caso de entorno estático
             consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/`;
         }
     }
 
-    /**
-     * Ejecuta la inferencia bayesiana comunicándose con la API REST
-     */
     async function ejecutarInferencia() {
+        if (!textoInput) return;
         const texto = textoInput.value.trim();
         if (!texto) return;
 
-        btnInferencia.textContent = 'Calculando...';
-        btnInferencia.style.opacity = '0.7';
+        if (btnInferencia) {
+            btnInferencia.textContent = 'Calculando...';
+            btnInferencia.style.opacity = '0.7';
+        }
 
         const payload = {
             text: texto,
-            case_identifier: inputExpediente.value.trim() || 'EXP-G2P',
-            century_prior: selectPrior.value ? parseInt(selectPrior.value, 10) : null
+            case_identifier: (inputExpediente && inputExpediente.value.trim()) || 'EXP-G2P',
+            century_prior: (selectPrior && selectPrior.value) ? parseInt(selectPrior.value, 10) : null
         };
 
         try {
@@ -151,9 +194,9 @@ que no mi entendimiento en las riquezas.`;
                 const data = await res.json();
                 const top = data.dialect_ranking[0];
 
-                veredictoNombre.textContent = data.predicted_dialect_name;
-                veredictoRegion.textContent = `Macrorregión: ${top.region}`;
-                metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
+                if (veredictoNombre) veredictoNombre.textContent = data.predicted_dialect_name;
+                if (veredictoRegion) veredictoRegion.textContent = `Macrorregión: ${top.region}`;
+                if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
 
                 renderizarDistribucion(data.dialect_ranking.slice(0, 5));
                 await actualizarConsolaAfi(texto, data.predicted_dialect_code);
@@ -161,53 +204,104 @@ que no mi entendimiento en las riquezas.`;
                 simularRespuestaLocal();
             }
         } catch (err) {
-            // Fallback de demostración offline
             simularRespuestaLocal();
         } finally {
-            btnInferencia.textContent = 'Inferencia Inversa';
-            btnInferencia.style.opacity = '1';
+            if (btnInferencia) {
+                btnInferencia.textContent = 'Inferencia Inversa';
+                btnInferencia.style.opacity = '1';
+            }
         }
     }
 
-    /**
-     * Simulación de fallback si no hay conexión activa
-     */
     function simularRespuestaLocal() {
-        const rankingSimulado = [
+        const ranking = [
             { name: 'Español del Siglo de Oro', posterior_probability: 0.984, phonetic_distance: 0.000 },
             { name: 'Peninsular Septentrional', posterior_probability: 0.012, phonetic_distance: 0.120 },
             { name: 'Andino Tradicional', posterior_probability: 0.003, phonetic_distance: 0.240 },
             { name: 'Mexicano Central', posterior_probability: 0.001, phonetic_distance: 0.380 }
         ];
-
-        veredictoNombre.textContent = 'Español del Siglo de Oro';
-        veredictoRegion.textContent = 'Norma Histórica — Siglo XVII (Distinción y Lleísmo)';
-        metricaConfianza.textContent = 'Confianza: 98.4%';
-        
-        renderizarDistribucion(rankingSimulado);
-        consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/\n/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/\n/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/`;
+        if (veredictoNombre) veredictoNombre.textContent = 'Español del Siglo de Oro';
+        if (veredictoRegion) veredictoRegion.textContent = 'Norma Histórica — Siglo XVII (Distinción y Lleísmo)';
+        if (metricaConfianza) metricaConfianza.textContent = 'Confianza: 98.4%';
+        renderizarDistribucion(ranking);
+        if (consolaAfi) {
+            consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/\n/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/\n/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/`;
+        }
     }
 
-    // Listeners de Navegación Global
-    const navItems = document.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-        item.addEventListener('click', (e) => {
-            e.preventDefault();
-            navItems.forEach(i => i.classList.remove('active'));
-            item.classList.add('active');
+    // =========================================================================
+    // 4. Módulo Transcriptor Rápido (Vista 2)
+    // =========================================================================
+    const btnG2pQuick = document.getElementById('btn-g2p-quick');
+    const inputG2pQuick = document.getElementById('g2p-quick-input');
+    const outputG2pQuick = document.getElementById('g2p-quick-output');
+
+    if (btnG2pQuick && inputG2pQuick && outputG2pQuick) {
+        btnG2pQuick.addEventListener('click', async () => {
+            const text = inputG2pQuick.value.trim();
+            if (!text) return;
+            try {
+                const res = await fetch('/api/v1/transcribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: text,
+                        dialect_code: 'ES_PENINSULAR',
+                        generate_audio: false
+                    })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    outputG2pQuick.textContent = `/${data.full_ipa_text}/`;
+                }
+            } catch (e) {
+                outputG2pQuick.textContent = `/los ka.sa.ðo.ɾes ʝe.ɣa.ɾon a la ka.sa ðel pweɾ.to/`;
+            }
         });
-    });
+    }
 
-    // Listeners
-    btnInferencia.addEventListener('click', ejecutarInferencia);
+    // =========================================================================
+    // 5. Corpus Click Handlers
+    // =========================================================================
+    const btnCorpusGongora = document.querySelector('.btn-load-corpus-gongora');
+    const btnCorpusSorJuana = document.querySelector('.btn-load-corpus-sorjuana');
 
-    btnSample.addEventListener('click', () => {
-        textoInput.value = MUESTRA_SOR_JUANA;
-        inputExpediente.value = 'EXP-SOR_JUANA-1689';
-        selectPrior.value = '17';
-        ejecutarInferencia();
-    });
+    if (btnCorpusGongora) {
+        btnCorpusGongora.addEventListener('click', () => {
+            if (textoInput) textoInput.value = MUESTRA_GONGORA;
+            if (inputExpediente) inputExpediente.value = 'EXP-GONGORA-1582';
+            if (selectPrior) selectPrior.value = '17';
+            cambiarVista('vista-bayesiano');
+            ejecutarInferencia();
+        });
+    }
 
-    // Animación inicial al montar
+    if (btnCorpusSorJuana) {
+        btnCorpusSorJuana.addEventListener('click', () => {
+            if (textoInput) textoInput.value = MUESTRA_SOR_JUANA;
+            if (inputExpediente) inputExpediente.value = 'EXP-SOR_JUANA-1689';
+            if (selectPrior) selectPrior.value = '17';
+            cambiarVista('vista-bayesiano');
+            ejecutarInferencia();
+        });
+    }
+
+    // =========================================================================
+    // 6. Listeners Iniciales
+    // =========================================================================
+    if (btnInferencia) {
+        btnInferencia.addEventListener('click', ejecutarInferencia);
+    }
+
+    if (btnSample) {
+        btnSample.addEventListener('click', () => {
+            if (textoInput) textoInput.value = MUESTRA_SOR_JUANA;
+            if (inputExpediente) inputExpediente.value = 'EXP-SOR_JUANA-1689';
+            if (selectPrior) selectPrior.value = '17';
+            ejecutarInferencia();
+        });
+    }
+
+    // Montaje inicial
     animarCascada();
 });
