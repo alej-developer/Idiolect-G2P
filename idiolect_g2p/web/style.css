@@ -1,111 +1,92 @@
 /* ==========================================================================
-   Idiolect-G2P Master Design System — Editorial Académico & Lingüístico
-   Diseño Científico de Alto Nivel para Lingüística Computacional y Forense
-   Multi-Plataforma: Móviles, Tablets, iPhone (iOS), Android y Escritorio
+   Idiolect-G2P Master Design System — Light Academia & Filología Computacional
+   Estética de Manuscrito Moderno, Tipografía Editorial y Rigor Científico
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
     /* ======================================================================
-       Paleta Cromática: Modo Claro / Lectura Académica (Predeterminado)
-       Inspirado en publicaciones universitarias (Oxford, Cambridge, JSTOR)
+       Paleta de Colores: Light Academia / Manuscrito Moderno
        ====================================================================== */
-    --bg-primary: #f7f5f0;
-    --bg-secondary: #ffffff;
-    --bg-tertiary: #eeeae0;
-    --bg-card: #ffffff;
-    --bg-card-hover: #faf9f6;
+    --bg-parchment: #F9F8F6;          /* Fondo general pergamino suave */
+    --bg-paper: #FFFFFF;              /* Fondo blanco papel */
+    --bg-lab: #F0EFEA;                /* Panel de resultados / zona de laboratorio */
+    --bg-lab-subtle: #E8E6DF;         /* Contenedores secundarios de datos */
     
-    --border-color: #d6d1c4;
-    --border-subtle: #e6e2d8;
-    --border-focus: #1e3a8a;
+    --text-main: #2C2B29;             /* Carbón oscuro para máxima legibilidad */
+    --text-secondary: #595752;        /* Tinta desvaída / grafito medio */
+    --text-muted: #85827A;            /* Tinta gris filológica */
     
-    --text-primary: #1a1a1c;
-    --text-secondary: #42413d;
-    --text-muted: #73716b;
+    --border-subtle: #E3E0D8;         /* Líneas finas estilo encuadernación */
+    --border-medium: #D1CDC4;         /* Bordes de división de paneles */
+    --border-focus: #2C2B29;          /* Foco sobrio carbón */
     
-    --accent-oxford: #1e3a8a;
-    --accent-oxford-hover: #172554;
-    --accent-oxford-subtle: #e8eef9;
+    /* Acentos Orgánicos & Académicos */
+    --accent-charcoal: #2C2B29;       /* Botón principal y títulos de alto impacto */
+    --accent-charcoal-hover: #1A1918;
     
-    --accent-crimson: #831843;
-    --accent-crimson-subtle: #fdf2f8;
+    --accent-terracotta: #C06C5A;     /* Terracota para destaques poéticos y rima */
+    --accent-terracotta-subtle: #F7EDE9;
+    --accent-terracotta-border: #E8C2B8;
     
-    --accent-forest: #14532d;
-    --accent-forest-subtle: #f0fdf4;
+    --accent-sage: #6B8E7B;           /* Verde salvia apagado */
+    --accent-sage-bg: #E4ECE7;        /* Fondo salvia claro para badges */
+    --accent-sage-dark: #2F4D3C;      /* Texto salvia oscuro */
+    --accent-sage-border: #BDD2C5;
     
-    --accent-amber: #92400e;
-    --accent-amber-subtle: #fefce8;
+    --accent-oxford: #2B4560;         /* Azul tinta profunda */
+    --accent-oxford-bg: #EAF0F6;
     
-    --accent-slate: #334155;
-    
-    --meter-track: #e6e2d8;
-    --meter-fill: #1e3a8a;
-    --meter-fill-high: #14532d;
+    --accent-amber: #9E7132;          /* Ocre / Ámbar académico */
+    --accent-amber-bg: #F9F4EC;
     
     /* Tipografía */
-    --font-serif: 'EB Garamond', Georgia, 'Times New Roman', serif;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-    --font-mono: 'Fira Code', 'Courier New', monospace;
+    --font-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     
-    /* Sombras Físicas Sutiles (Sin Neón) */
-    --shadow-xs: 0 1px 2px rgba(26, 26, 28, 0.04);
-    --shadow-sm: 0 1px 3px rgba(26, 26, 28, 0.06), 0 1px 2px rgba(26, 26, 28, 0.04);
-    --shadow-md: 0 4px 6px -1px rgba(26, 26, 28, 0.06), 0 2px 4px -1px rgba(26, 26, 28, 0.04);
-    --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.05);
-    
-    /* Radios de Borde Sobrios */
-    --radius-sm: 4px;
-    --radius-md: 6px;
-    --radius-lg: 8px;
-    --radius-pill: 9999px;
-    
-    /* Transiciones */
-    --transition: 0.18s ease-in-out;
+    /* Radios y Transiciones */
+    --radius-sm: 3px;
+    --radius-md: 4px;
+    --radius-lg: 6px;
+    --transition: 0.15s ease;
 }
 
 /* ==========================================================================
-   Modo Oscuro: Estudio Académico Nocturno (Sin Neón / Pizarra Profunda)
+   Modo Estudio Nocturno (Atenuado / Pizarra Sepia — Sin Neón)
    ========================================================================== */
 [data-theme="dark"] {
-    --bg-primary: #11141a;
-    --bg-secondary: #171b23;
-    --bg-tertiary: #202632;
-    --bg-card: #171b23;
-    --bg-card-hover: #1e232e;
+    --bg-parchment: #18191C;
+    --bg-paper: #202227;
+    --bg-lab: #1D1F24;
+    --bg-lab-subtle: #262930;
     
-    --border-color: #2c3444;
-    --border-subtle: #232a37;
-    --border-focus: #60a5fa;
+    --text-main: #EAE6DF;
+    --text-secondary: #B5B0A6;
+    --text-muted: #7E7B74;
     
-    --text-primary: #f1f5f9;
-    --text-secondary: #cbd5e1;
-    --text-muted: #8896ab;
+    --border-subtle: #2D313A;
+    --border-medium: #383D48;
+    --border-focus: #EAE6DF;
     
-    --accent-oxford: #60a5fa;
-    --accent-oxford-hover: #93c5fd;
-    --accent-oxford-subtle: #1e293b;
+    --accent-charcoal: #EAE6DF;
+    --accent-charcoal-hover: #FFFFFF;
     
-    --accent-crimson: #fb7185;
-    --accent-crimson-subtle: #2d1822;
+    --accent-terracotta: #D98977;
+    --accent-terracotta-subtle: #2F211F;
+    --accent-terracotta-border: #4A3330;
     
-    --accent-forest: #4ade80;
-    --accent-forest-subtle: #132a1e;
+    --accent-sage: #8DB39D;
+    --accent-sage-bg: #1C2B22;
+    --accent-sage-dark: #A3CCA3;
+    --accent-sage-border: #2E4536;
     
-    --accent-amber: #fbbf24;
-    --accent-amber-subtle: #2d2413;
+    --accent-oxford: #7D9FBF;
+    --accent-oxford-bg: #1B2530;
     
-    --accent-slate: #94a3b8;
-    
-    --meter-track: #262e3d;
-    --meter-fill: #60a5fa;
-    --meter-fill-high: #4ade80;
-    
-    --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
-    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.45);
-    --shadow-card: 0 2px 4px rgba(0, 0, 0, 0.3);
+    --accent-amber: #C99C57;
+    --accent-amber-bg: #2C2417;
 }
 
 /* ==========================================================================
@@ -120,396 +101,443 @@
 html {
     font-size: 16px;
     -webkit-text-size-adjust: 100%;
-    scroll-behavior: smooth;
 }
 
 body {
-    font-family: var(--font-sans);
-    background-color: var(--bg-primary);
-    color: var(--text-primary);
-    line-height: 1.6;
+    font-family: var(--font-serif);
+    background-color: var(--bg-parchment);
+    color: var(--text-main);
+    line-height: 1.65;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    transition: background-color var(--transition), color var(--transition);
 }
 
 /* ==========================================================================
-   Cabecera Institucional (App Header)
+   Navegación Superior Editorial (Clean Menu)
    ========================================================================== */
 .app-header {
-    background: var(--bg-secondary);
-    border-bottom: 1px solid var(--border-color);
-    padding: 0.9rem 1.5rem;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    background: var(--bg-paper);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 1.25rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: var(--shadow-xs);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .brand-container {
     display: flex;
     align-items: baseline;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    gap: 1rem;
 }
 
 .brand-title {
     font-family: var(--font-serif);
-    font-size: 1.6rem;
+    font-size: 1.85rem;
     font-weight: 700;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
+    color: var(--text-main);
+    line-height: 1;
 }
 
-.brand-badge {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
+.brand-subtitle {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
     color: var(--text-muted);
-    padding: 0.2rem 0.5rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
+    letter-spacing: 0.01em;
 }
 
-.header-actions {
+.header-meta {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
+    gap: 1.25rem;
+}
+
+.status-indicator {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--accent-sage-dark);
+    background: var(--accent-sage-bg);
+    border: 1px solid var(--accent-sage-border);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+}
+
+.status-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--accent-sage);
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.theme-toggle-btn {
+    background: transparent;
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    padding: 0.35rem 0.65rem;
+    border-radius: var(--radius-sm);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.theme-toggle-btn:hover {
+    background: var(--bg-lab);
+    color: var(--text-main);
+    border-color: var(--border-medium);
 }
 
 /* ==========================================================================
-   Contenedor Principal y Pestañas de Navegación
+   Menú Editorial de Pestañas (Sin cajas, tipografía pura con subrayado)
    ========================================================================== */
-.container {
-    max-width: 1280px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 1.5rem;
-    flex: 1;
+.editorial-nav-wrapper {
+    background: var(--bg-paper);
+    border-bottom: 1px solid var(--border-subtle);
+    padding: 0 2.5rem;
 }
 
-.nav-tabs {
+.editorial-nav {
     display: flex;
-    gap: 0.35rem;
-    border-bottom: 1px solid var(--border-color);
-    margin-bottom: 1.75rem;
+    gap: 2rem;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    padding-bottom: 1px;
 }
 
-.nav-tabs::-webkit-scrollbar {
+.editorial-nav::-webkit-scrollbar {
     display: none;
 }
 
-.tab-button {
-    font-family: var(--font-sans);
-    font-size: 0.88rem;
+.nav-link {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
     font-weight: 500;
     color: var(--text-muted);
     background: transparent;
-    border: 1px solid transparent;
-    border-bottom: none;
-    padding: 0.65rem 1.1rem;
-    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    border: none;
+    border-bottom: 2px solid transparent;
+    padding: 0.85rem 0.1rem;
     cursor: pointer;
     white-space: nowrap;
     transition: all var(--transition);
+    text-decoration: none;
     position: relative;
     bottom: -1px;
 }
 
-.tab-button:hover {
-    color: var(--text-primary);
-    background: var(--bg-tertiary);
+.nav-link:hover {
+    color: var(--text-main);
 }
 
-.tab-button.active {
-    color: var(--accent-oxford);
-    background: var(--bg-secondary);
-    border-color: var(--border-color);
-    border-bottom-color: var(--bg-secondary);
+.nav-link.active {
+    color: var(--text-main);
     font-weight: 600;
+    border-bottom-color: var(--accent-terracotta);
 }
 
 /* ==========================================================================
-   Paneles de Pestañas & Layout Grid
+   Estructura Principal del Entorno Filológico (Workbench)
    ========================================================================== */
+.workbench-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 2rem 2.5rem;
+    flex: 1;
+}
+
 .tab-panel {
     display: none;
-    animation: fadeIn 0.2s ease-in-out;
 }
 
 .tab-panel.active {
     display: block;
 }
 
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(3px); }
-    to { opacity: 1; transform: translateY(0); }
+/* División de Dos Paneles: Izquierda (Lectura/Texto) y Derecha (Laboratorio) */
+.manuscript-grid {
+    display: grid;
+    grid-template-columns: 1.15fr 1fr;
+    border: 1px solid var(--border-medium);
+    border-radius: var(--radius-sm);
+    background: var(--bg-paper);
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
-.grid-2 {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
+/* Panel Izquierdo: Fondo Pergamino para Lectura & Poema */
+.panel-manuscript {
+    background: var(--bg-parchment);
+    padding: 2.25rem;
+    border-right: 1px solid var(--border-medium);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Panel Derecho: Fondo Gris Cálido para Datos & Laboratorio */
+.panel-laboratory {
+    background: var(--bg-lab);
+    padding: 2.25rem;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Encabezados de Sección */
+.section-heading {
+    font-family: var(--font-serif);
+    font-size: 1.45rem;
+    font-weight: 600;
+    color: var(--text-main);
+    letter-spacing: -0.01em;
+    margin-bottom: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--border-subtle);
+    padding-bottom: 0.65rem;
+}
+
+.section-tag {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text-muted);
 }
 
 /* ==========================================================================
-   Tarjetas y Estructura Editorial (Cards)
+   Formularios Estilo Documento Impreso
    ========================================================================== */
-.card {
-    background: var(--bg-card);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 1.5rem;
-    box-shadow: var(--shadow-card);
-    display: flex;
-    flex-direction: column;
+.field-group {
+    margin-bottom: 1.35rem;
+}
+
+.field-label {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+}
+
+/* Inputs con aspecto de formulario impreso (líneas sutiles) */
+.field-input {
+    width: 100%;
+    font-family: var(--font-mono);
+    font-size: 0.9rem;
+    color: var(--text-main);
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.75rem;
+    outline: none;
     transition: border-color var(--transition);
 }
 
-.card-title {
-    font-family: var(--font-serif);
-    font-size: 1.35rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 1.25rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--border-subtle);
-    padding-bottom: 0.6rem;
-}
-
-/* ==========================================================================
-   Formularios y Controles de Entrada
-   ========================================================================== */
-.form-group {
-    margin-bottom: 1.2rem;
-}
-
-.form-label {
-    display: block;
-    font-size: 0.83rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-    margin-bottom: 0.35rem;
-    letter-spacing: 0.01em;
-}
-
-.form-control {
-    width: 100%;
-    font-family: var(--font-sans);
-    font-size: 0.92rem;
-    color: var(--text-primary);
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 0.6rem 0.8rem;
-    transition: border-color var(--transition), box-shadow var(--transition);
-    outline: none;
-}
-
-.form-control:focus {
+.field-input:focus {
     border-color: var(--border-focus);
-    box-shadow: 0 0 0 2px var(--accent-oxford-subtle);
 }
 
-textarea.form-control {
+/* Área de Texto del Poema (Serif amplio, interlineado poético) */
+.poem-textarea {
+    width: 100%;
     font-family: var(--font-serif);
-    font-size: 1.05rem;
-    line-height: 1.7;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--text-main);
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.25rem;
+    min-height: 220px;
     resize: vertical;
+    outline: none;
+    transition: border-color var(--transition);
+}
+
+.poem-textarea:focus {
+    border-color: var(--border-focus);
 }
 
 /* ==========================================================================
-   Botones Académicos
+   Botones Editoriales (Carbón, Terracota y Salvia)
    ========================================================================== */
-.btn {
+.btn-editorial {
     font-family: var(--font-sans);
-    font-size: 0.88rem;
+    font-size: 0.86rem;
     font-weight: 600;
-    padding: 0.6rem 1.1rem;
+    padding: 0.65rem 1.2rem;
     border-radius: var(--radius-sm);
     border: 1px solid transparent;
     cursor: pointer;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.4rem;
+    gap: 0.45rem;
     transition: all var(--transition);
-    white-space: nowrap;
     text-decoration: none;
 }
 
-.btn-primary {
-    background: var(--accent-oxford);
-    color: #ffffff;
-    border-color: var(--accent-oxford);
+.btn-charcoal {
+    background: var(--accent-charcoal);
+    color: var(--bg-parchment);
+    border-color: var(--accent-charcoal);
 }
 
-.btn-primary:hover {
-    background: var(--accent-oxford-hover);
-    border-color: var(--accent-oxford-hover);
+.btn-charcoal:hover {
+    background: var(--accent-charcoal-hover);
+    border-color: var(--accent-charcoal-hover);
 }
 
-.btn-secondary {
-    background: var(--bg-tertiary);
-    color: var(--text-primary);
-    border-color: var(--border-color);
-}
-
-.btn-secondary:hover {
-    background: var(--border-color);
-}
-
-.btn-outline {
+.btn-subtle {
     background: transparent;
-    color: var(--text-primary);
-    border-color: var(--border-color);
+    color: var(--text-secondary);
+    border-color: var(--border-medium);
 }
 
-.btn-outline:hover {
-    background: var(--bg-tertiary);
+.btn-subtle:hover {
+    background: var(--bg-paper);
+    color: var(--text-main);
+    border-color: var(--border-focus);
 }
 
-.btn-sm {
-    padding: 0.35rem 0.7rem;
-    font-size: 0.8rem;
+.btn-terracotta {
+    background: var(--accent-terracotta);
+    color: #FFFFFF;
+    border-color: var(--accent-terracotta);
+}
+
+.btn-terracotta:hover {
+    background: #A95847;
 }
 
 /* ==========================================================================
-   Insignias y Etiquetas (Badges)
+   Panel de Resultados: Dictamen & Bloque de Veredicto
    ========================================================================== */
-.badge {
-    display: inline-flex;
-    align-items: center;
-    font-size: 0.75rem;
+.verdict-blockquote {
+    background: var(--bg-paper);
+    border-left: 3.5px solid var(--accent-terracotta);
+    border-top: 1px solid var(--border-subtle);
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    padding: 1.15rem 1.35rem;
+    margin-bottom: 1.5rem;
+}
+
+.verdict-meta {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
     font-weight: 600;
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid transparent;
-    letter-spacing: 0.02em;
-}
-
-.badge-oxford {
-    background: var(--accent-oxford-subtle);
-    color: var(--accent-oxford);
-    border-color: var(--border-subtle);
-}
-
-.badge-emerald {
-    background: var(--accent-forest-subtle);
-    color: var(--accent-forest);
-    border-color: var(--border-subtle);
-}
-
-.badge-amber {
-    background: var(--accent-amber-subtle);
-    color: var(--accent-amber);
-    border-color: var(--border-subtle);
-}
-
-.badge-crimson {
-    background: var(--accent-crimson-subtle);
-    color: var(--accent-crimson);
-    border-color: var(--border-subtle);
-}
-
-/* ==========================================================================
-   Dictamen Pericial & Tarjeta de Resultados Forenses
-   ========================================================================== */
-.verdict-box {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--accent-oxford);
-    border-radius: var(--radius-sm);
-    padding: 1.1rem 1.3rem;
-    margin-bottom: 1.25rem;
-}
-
-.verdict-header {
-    font-size: 0.75rem;
-    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-muted);
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.25rem;
 }
 
 .verdict-title {
     font-family: var(--font-serif);
-    font-size: 1.45rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 0.25rem;
-}
-
-.verdict-subtitle {
-    font-size: 0.88rem;
-    color: var(--text-secondary);
-}
-
-/* ==========================================================================
-   Medidores Calibrados de Probabilidad Bayesiana
-   ========================================================================== */
-.prob-item {
-    margin-bottom: 0.75rem;
-}
-
-.prob-header {
-    display: flex;
-    justify-content: space-between;
-    font-size: 0.85rem;
-    font-weight: 500;
-    margin-bottom: 0.25rem;
-}
-
-.prob-name {
-    color: var(--text-primary);
-}
-
-.prob-value {
-    font-family: var(--font-mono);
+    font-size: 1.5rem;
     font-weight: 600;
+    color: var(--text-main);
+    line-height: 1.25;
+    margin-bottom: 0.25rem;
+}
+
+.verdict-region {
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
+    font-style: italic;
     color: var(--text-secondary);
 }
 
-.prob-track {
-    height: 8px;
-    background: var(--meter-track);
-    border-radius: var(--radius-pill);
-    overflow: hidden;
-}
-
-.prob-fill {
-    height: 100%;
-    background: var(--meter-fill);
-    border-radius: var(--radius-pill);
-    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.prob-fill.top-rank {
-    background: var(--meter-fill-high);
+/* Badge de Confianza (Salvia Apagado) */
+.badge-confidence {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 600;
+    color: var(--accent-sage-dark);
+    background: var(--accent-sage-bg);
+    border: 1px solid var(--accent-sage-border);
+    padding: 0.2rem 0.55rem;
+    border-radius: var(--radius-sm);
 }
 
 /* ==========================================================================
-   Tarjetas de Evidencia Discriminante
+   Distribución Posterior P(D | T, R) — Salida de Consola Científica en Papel
+   ========================================================================== */
+.posterior-section-title {
+    font-family: var(--font-mono);
+    font-size: 0.76rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    margin-bottom: 0.65rem;
+}
+
+.posterior-console-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--font-mono);
+    font-size: 0.835rem;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm);
+    margin-bottom: 1.5rem;
+}
+
+.posterior-console-table th {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    padding: 0.5rem 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-lab-subtle);
+    text-align: left;
+}
+
+.posterior-console-table td {
+    padding: 0.45rem 0.75rem;
+    border-bottom: 1px solid var(--border-subtle);
+    color: var(--text-main);
+}
+
+.posterior-console-table tr:last-child td {
+    border-bottom: none;
+}
+
+.posterior-console-table tr.top-hypothesis {
+    background: var(--accent-terracotta-subtle);
+    font-weight: 600;
+}
+
+.posterior-console-table tr.top-hypothesis td {
+    color: var(--accent-terracotta);
+}
+
+/* ==========================================================================
+   Evidencias Discriminantes (Tarjetas de Archivo)
    ========================================================================== */
 .evidence-card {
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
     padding: 0.85rem 1rem;
     margin-bottom: 0.65rem;
@@ -518,139 +546,179 @@ textarea.form-control {
 .evidence-header {
     display: flex;
     justify-content: space-between;
-    font-size: 0.82rem;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
     font-weight: 600;
-    color: var(--text-primary);
-    margin-bottom: 0.3rem;
+    color: var(--text-main);
+    margin-bottom: 0.35rem;
+}
+
+.evidence-phenomenon {
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    background: var(--accent-amber-bg);
+    color: var(--accent-amber);
+    padding: 0.15rem 0.45rem;
+    border-radius: var(--radius-sm);
+    border: 1px solid #EADBCE;
 }
 
 .evidence-body {
-    font-size: 0.82rem;
+    font-family: var(--font-serif);
+    font-size: 0.95rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
 
 /* ==========================================================================
-   Visualización Fonética AFI & Píldoras Silábicas
+   Módulo 2: Transcriptor G2P & Síntesis Acústica AFI
    ========================================================================== */
-.ipa-display-box {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+.ipa-display-card {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    padding: 1.25rem;
-    margin-bottom: 1.25rem;
+    padding: 1.5rem;
     text-align: center;
+    margin-bottom: 1.25rem;
 }
 
-.ipa-string {
+.ipa-text {
     font-family: var(--font-mono);
-    font-size: 1.5rem;
+    font-size: 1.55rem;
     font-weight: 500;
-    color: var(--text-primary);
+    color: var(--text-main);
     letter-spacing: 0.04em;
     word-break: break-word;
 }
 
-.syllables-container {
+.syllable-chips {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    margin-top: 1rem;
     justify-content: center;
+    margin-top: 1rem;
 }
 
-.syllable-badge {
+.syllable-chip {
     font-family: var(--font-mono);
-    font-size: 0.88rem;
-    padding: 0.3rem 0.65rem;
-    background: var(--bg-tertiary);
-    border: 1px solid var(--border-color);
+    font-size: 0.85rem;
+    padding: 0.35rem 0.65rem;
+    background: var(--bg-parchment);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    color: var(--text-primary);
+    color: var(--text-main);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-.syllable-badge.stressed {
-    background: var(--accent-crimson-subtle);
-    border-color: var(--accent-crimson);
-    color: var(--accent-crimson);
+.syllable-chip.stressed {
+    background: var(--accent-terracotta-subtle);
+    border-color: var(--accent-terracotta-border);
+    color: var(--accent-terracotta);
     font-weight: 600;
 }
 
-.syllable-structure {
+.syllable-type {
     font-family: var(--font-sans);
-    font-size: 0.65rem;
-    color: var(--text-muted);
+    font-size: 0.62rem;
     text-transform: uppercase;
+    color: var(--text-muted);
     margin-top: 0.15rem;
 }
 
 /* ==========================================================================
-   Tablas Científicas (Estilo Booktabs)
+   Tablas Académicas (Escansión y Catálogo)
    ========================================================================== */
-.table-responsive {
+.table-scroll {
     width: 100%;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    margin-bottom: 1rem;
 }
 
-.academic-table {
+.editorial-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
     text-align: left;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
 }
 
-.academic-table th {
-    font-family: var(--font-sans);
+.editorial-table th {
+    font-family: var(--font-mono);
     font-weight: 600;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: 0.05em;
     color: var(--text-muted);
-    background: var(--bg-tertiary);
-    border-top: 2px solid var(--border-color);
-    border-bottom: 1px solid var(--border-color);
+    background: var(--bg-lab);
+    border-bottom: 1px solid var(--border-medium);
     padding: 0.65rem 0.85rem;
     white-space: nowrap;
 }
 
-.academic-table td {
+.editorial-table td {
     padding: 0.65rem 0.85rem;
     border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-primary);
+    color: var(--text-main);
 }
 
-.academic-table tbody tr:last-child td {
-    border-bottom: 2px solid var(--border-color);
-}
-
-.academic-table tbody tr:hover {
-    background: var(--bg-card-hover);
+.editorial-table tbody tr:hover {
+    background: var(--bg-parchment);
 }
 
 /* ==========================================================================
-   Cajas de Código y Previsualización de Reportes
+   Visor de Código para Informes Multi-Formato
    ========================================================================== */
-.code-preview-box {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
+.report-code-box {
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
     border-radius: var(--radius-sm);
-    padding: 1.1rem;
+    padding: 1.25rem;
     font-family: var(--font-mono);
-    font-size: 0.82rem;
+    font-size: 0.825rem;
     line-height: 1.55;
-    color: var(--text-primary);
+    color: var(--text-main);
     overflow-x: auto;
     max-height: 480px;
     white-space: pre;
 }
 
+.format-btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 1.25rem;
+}
+
+.btn-format {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--bg-paper);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-secondary);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--transition);
+}
+
+.btn-format:hover {
+    border-color: var(--border-medium);
+    color: var(--text-main);
+}
+
+.btn-format.active {
+    background: var(--accent-charcoal);
+    color: var(--bg-parchment);
+    border-color: var(--accent-charcoal);
+    font-weight: 600;
+}
+
 /* ==========================================================================
-   Notificaciones Toast Profesionales
+   Notificaciones Toast
    ========================================================================== */
 .toast-container {
     position: fixed;
@@ -664,175 +732,98 @@ textarea.form-control {
 }
 
 .toast {
-    background: var(--bg-secondary);
-    border: 1px solid var(--border-color);
-    border-left: 4px solid var(--accent-oxford);
+    background: var(--bg-paper);
+    border: 1px solid var(--border-medium);
+    border-left: 3.5px solid var(--accent-charcoal);
     border-radius: var(--radius-sm);
     padding: 0.75rem 1.1rem;
+    font-family: var(--font-sans);
     font-size: 0.84rem;
-    color: var(--text-primary);
-    box-shadow: var(--shadow-md);
+    color: var(--text-main);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     pointer-events: auto;
-    animation: slideUp 0.2s ease-out;
     max-width: 360px;
 }
 
 .toast.toast-error {
-    border-left-color: var(--accent-crimson);
+    border-left-color: var(--accent-terracotta);
 }
 
 .toast.toast-success {
-    border-left-color: var(--accent-forest);
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(8px); }
-    to { opacity: 1; transform: translateY(0); }
+    border-left-color: var(--accent-sage);
 }
 
 /* ==========================================================================
-   Adaptabilidad Multi-Dispositivo (Responsive Design)
-   Smartphones (iOS / Android), Tablets (iPads), Portátiles y Escritorio
+   Adaptabilidad Multi-Dispositivo (Smartphones, Tablets, Laptops)
    ========================================================================== */
-
-/* Tablets & Pantallas Medianas (<= 1024px) */
 @media (max-width: 1024px) {
-    .container {
-        padding: 1.25rem 1rem;
+    .app-header {
+        padding: 1rem 1.5rem;
     }
     
-    .grid-2 {
+    .editorial-nav-wrapper {
+        padding: 0 1.5rem;
+    }
+    
+    .workbench-container {
+        padding: 1.5rem 1rem;
+    }
+    
+    .manuscript-grid {
         grid-template-columns: 1fr;
-        gap: 1.25rem;
+    }
+    
+    .panel-manuscript {
+        border-right: none;
+        border-bottom: 1px solid var(--border-medium);
+        padding: 1.5rem;
+    }
+    
+    .panel-laboratory {
+        padding: 1.5rem;
     }
 }
 
-/* Móviles & Smartphones iPhone / Android (<= 768px) */
 @media (max-width: 768px) {
     .app-header {
-        padding: 0.75rem 1rem;
+        padding: 0.85rem 1rem;
         flex-direction: column;
         align-items: flex-start;
-        gap: 0.6rem;
+        gap: 0.65rem;
     }
     
-    .header-actions {
+    .header-meta {
         width: 100%;
         justify-content: space-between;
     }
     
-    .brand-title {
-        font-size: 1.35rem;
+    .editorial-nav-wrapper {
+        padding: 0 1rem;
     }
     
-    .container {
-        padding: 1rem 0.75rem;
+    .editorial-nav {
+        gap: 1.25rem;
     }
     
-    .nav-tabs {
-        margin-bottom: 1.25rem;
-        gap: 0.25rem;
+    .nav-link {
+        font-size: 0.95rem;
+        padding: 0.7rem 0.1rem;
     }
     
-    .tab-button {
-        font-size: 0.8rem;
-        padding: 0.5rem 0.75rem;
+    .workbench-container {
+        padding: 1rem 0.5rem;
     }
     
-    .card {
-        padding: 1.1rem;
+    .panel-manuscript, .panel-laboratory {
+        padding: 1.15rem;
     }
     
-    .card-title {
-        font-size: 1.15rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.4rem;
+    .poem-textarea {
+        font-size: 1rem;
+        padding: 0.75rem;
     }
     
-    .verdict-title {
-        font-size: 1.2rem;
-    }
-    
-    .ipa-string {
-        font-size: 1.25rem;
-    }
-    
-    .btn {
+    .btn-editorial {
         width: 100%;
-        padding: 0.65rem 1rem;
-    }
-    
-    .toast-container {
-        left: 1rem;
-        right: 1rem;
-        bottom: 1rem;
-    }
-    
-    .toast {
-        max-width: 100%;
-    }
-}
-
-/* Dispositivos Pequeños (<= 480px) */
-@media (max-width: 480px) {
-    .brand-container {
-        flex-direction: column;
-        gap: 0.25rem;
-    }
-    
-    .tab-button {
-        font-size: 0.76rem;
-        padding: 0.45rem 0.65rem;
-    }
-}
-
-/* ==========================================================================
-   Estilos para Exportación e Impresión a PDF (@media print)
-   ========================================================================== */
-@media print {
-    body {
-        background: #ffffff !important;
-        color: #000000 !important;
-        font-size: 11pt;
-    }
-    
-    .app-header, .nav-tabs, .btn, #theme-toggle-btn, .toast-container {
-        display: none !important;
-    }
-    
-    .container {
-        max-width: 100% !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    }
-    
-    .tab-panel {
-        display: block !important;
-    }
-    
-    .card {
-        border: 1px solid #000000 !important;
-        box-shadow: none !important;
-        page-break-inside: avoid;
-        margin-bottom: 1.5cm;
-    }
-    
-    .verdict-box {
-        border: 1px solid #000000 !important;
-        border-left: 4pt solid #000000 !important;
-        background: #fdfdfd !important;
-    }
-    
-    .academic-table th {
-        border-top: 1.5pt solid #000000 !important;
-        border-bottom: 1pt solid #000000 !important;
-        background: transparent !important;
-        color: #000000 !important;
-    }
-    
-    .academic-table td {
-        border-bottom: 0.5pt solid #cccccc !important;
-        color: #000000 !important;
     }
 }

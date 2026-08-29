@@ -1,7 +1,6 @@
 /**
- * Idiolect-G2P — Aplicación Web Científica & Editorial
- * Lingüística Computacional, Fonética Formal y Desambiguación Inversa
- * Soporte Multi-Dispositivo: Móviles, Tablets, iPhone, Android y Escritorio
+ * Idiolect-G2P — Aplicación Web de Filología Computacional & Fonética Forense
+ * Estética: Light Academia / Manuscrito Moderno y Rigor Estadístico
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -18,7 +17,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     };
 
     // =========================================================================
-    // 1. Sistema de Notificaciones Toast
+    // 1. Sistema de Notificaciones Toast Editorial
     // =========================================================================
     function showToast(message, type = 'info') {
         let container = document.querySelector('.toast-container');
@@ -35,14 +34,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         setTimeout(() => {
             toast.style.opacity = '0';
-            toast.style.transform = 'translateY(10px)';
+            toast.style.transform = 'translateY(8px)';
             toast.style.transition = 'all 0.25s ease';
             setTimeout(() => toast.remove(), 250);
         }, 3200);
     }
 
     // =========================================================================
-    // 2. Gestión de Tema (Claro / Oscuro)
+    // 2. Gestión de Tema y Contraste
     // =========================================================================
     document.documentElement.setAttribute('data-theme', state.currentTheme);
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -51,18 +50,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             state.currentTheme = state.currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', state.currentTheme);
             localStorage.setItem('idiolect_theme', state.currentTheme);
-            showToast(`Tema ${state.currentTheme === 'dark' ? 'oscuro' : 'claro'} activado.`);
+            themeToggleBtn.textContent = state.currentTheme === 'dark' ? 'Modo Pergamino' : 'Contraste';
+            showToast(`Modo ${state.currentTheme === 'dark' ? 'estudio nocturno' : 'pergamino claro'} activado.`);
         });
+        if (state.currentTheme === 'dark') {
+            themeToggleBtn.textContent = 'Modo Pergamino';
+        }
     }
 
     // =========================================================================
-    // 3. Navegación por Pestañas Adaptativa
+    // 3. Navegación Editorial por Pestañas (Pura Tipografía)
     // =========================================================================
-    const tabButtons = document.querySelectorAll('.tab-button');
+    const navLinks = document.querySelectorAll('.nav-link');
     const tabPanels = document.querySelectorAll('.tab-panel');
 
     function switchTab(tabId) {
-        tabButtons.forEach(btn => {
+        navLinks.forEach(btn => {
             const isActive = btn.getAttribute('data-tab') === tabId;
             btn.classList.toggle('active', isActive);
             btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
@@ -75,7 +78,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
-    tabButtons.forEach(btn => {
+    navLinks.forEach(btn => {
         btn.addEventListener('click', () => {
             const targetTab = btn.getAttribute('data-tab');
             switchTab(targetTab);
@@ -88,7 +91,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadDialects() {
         try {
             const res = await fetch('/api/v1/dialects');
-            if (!res.ok) throw new Error('No se pudo conectar con el catálogo de dialectos.');
+            if (!res.ok) throw new Error('No se pudo cargar el catálogo de dialectos.');
             state.dialects = await res.json();
 
             // Actualizar selector en módulo G2P
@@ -105,10 +108,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Error al inicializar dialectos:', err);
             const statusBadge = document.getElementById('api-status-badge');
             if (statusBadge) {
-                statusBadge.textContent = 'API Desconectada';
-                statusBadge.className = 'badge badge-crimson';
+                statusBadge.innerHTML = '<span class="status-dot" style="background: var(--accent-terracotta);"></span> Desconectada';
+                statusBadge.style.color = 'var(--accent-terracotta)';
             }
-            showToast('No se pudo sincronizar el catálogo con la API.', 'error');
+            showToast('No se pudo conectar con el catálogo de la API.', 'error');
         }
     }
 
@@ -123,14 +126,14 @@ document.addEventListener('DOMContentLoaded', async () => {
             const iso = d.isogloss_vector || {};
             return `
                 <tr>
-                    <td><code style="font-size: 0.8rem;">${d.code}</code></td>
-                    <td><strong>${d.name}</strong></td>
-                    <td><span class="badge badge-oxford">${d.region}</span></td>
-                    <td style="font-size: 0.82rem; color: var(--text-secondary); max-width: 280px;">${d.description}</td>
-                    <td><strong>${((iso.seseo || 0) * 100).toFixed(0)}%</strong></td>
-                    <td>${((iso.aspiration_s || 0) * 100).toFixed(0)}%</td>
-                    <td>${((iso.lambdacism || 0) * 100).toFixed(0)}%</td>
-                    <td>${((iso.lleismo || 0) * 100).toFixed(0)}%</td>
+                    <td><code style="font-family: var(--font-mono); font-size: 0.78rem;">${d.code}</code></td>
+                    <td><strong style="font-family: var(--font-serif); font-size: 1rem;">${d.name}</strong></td>
+                    <td><span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-oxford); font-weight: 600;">${d.region}</span></td>
+                    <td style="font-family: var(--font-serif); font-size: 0.9rem; color: var(--text-secondary); max-width: 280px;">${d.description}</td>
+                    <td style="font-family: var(--font-mono); font-size: 0.82rem;"><strong>${((iso.seseo || 0) * 100).toFixed(0)}%</strong></td>
+                    <td style="font-family: var(--font-mono); font-size: 0.82rem;">${((iso.aspiration_s || 0) * 100).toFixed(0)}%</td>
+                    <td style="font-family: var(--font-mono); font-size: 0.82rem;">${((iso.lambdacism || 0) * 100).toFixed(0)}%</td>
+                    <td style="font-family: var(--font-mono); font-size: 0.82rem;">${((iso.lleismo || 0) * 100).toFixed(0)}%</td>
                 </tr>
             `;
         }).join('');
@@ -151,7 +154,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================================================================
-    // 5. Corpus de Casos Históricos y Periciales
+    // 5. Corpus de Casos Históricos y Periciales Documentados
     // =========================================================================
     async function loadCorpus() {
         try {
@@ -163,17 +166,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!container) return;
 
             container.innerHTML = state.corpus.map(item => `
-                <div class="card" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="background: var(--bg-parchment); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.35rem; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <h3 style="font-family: var(--font-serif); font-size: 1.2rem; font-weight: 600; margin-bottom: 0.35rem; color: var(--text-primary);">
+                        <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem;">
                             ${item.title}
                         </h3>
-                        <div style="font-size: 0.8rem; color: var(--accent-oxford); font-weight: 600; margin-bottom: 0.65rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-terracotta); font-weight: 600; margin-bottom: 0.75rem;">
                             ${item.author} — Siglo ${item.century || 'N/A'}
                         </div>
-                        <div style="font-family: var(--font-serif); font-size: 0.95rem; line-height: 1.6; background: var(--bg-tertiary); padding: 0.75rem 1rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color); color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 140px; overflow-y: auto;">${item.text}</div>
+                        <div style="font-family: var(--font-serif); font-size: 0.98rem; line-height: 1.6; background: var(--bg-paper); padding: 0.85rem 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 140px; overflow-y: auto;">${item.text}</div>
                     </div>
-                    <button class="btn btn-secondary btn-sm btn-load-corpus-item" data-id="${item.id}" style="width: 100%;">
+                    <button class="btn-editorial btn-subtle btn-load-corpus-item" data-id="${item.id}" style="width: 100%; font-size: 0.82rem;">
                         Cargar en Perfilador Bayesiano
                     </button>
                 </div>
@@ -194,7 +197,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
                         switchTab('tab-profiler');
                         runProfiling();
-                        showToast(`Poema de ${found.author} cargado.`);
+                        showToast(`Manuscrito de ${found.author} cargado.`);
                     }
                 });
             });
@@ -223,7 +226,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 if (textInput) textInput.value = sample.text;
                 if (caseId) caseId.value = `EXP-${sample.id.toUpperCase()}`;
                 if (century) century.value = sample.century ? sample.century.toString() : '';
-                showToast(`Cargado ejemplo de ${sample.author}`);
+                showToast(`Cargado soneto de ${sample.author}`);
             }
         });
     }
@@ -246,7 +249,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const predNameEl = document.getElementById('profiler-predicted-name');
         const confBadge = document.getElementById('profiler-confidence-badge');
-        const rankingContainer = document.getElementById('profiler-ranking-bars');
+        const posteriorTableBody = document.getElementById('posterior-table-body');
         const evidencesContainer = document.getElementById('profiler-evidences-container');
 
         if (predNameEl) predNameEl.textContent = 'Calculando verosimilitudes bayesianas...';
@@ -275,21 +278,17 @@ document.addEventListener('DOMContentLoaded', async () => {
             const confPct = (data.confidence_score * 100).toFixed(1);
             if (confBadge) confBadge.textContent = `Confianza: ${confPct}%`;
 
-            // 2. Renderizar barras de probabilidad calibradas
-            if (rankingContainer) {
-                rankingContainer.innerHTML = data.dialect_ranking.slice(0, 7).map((dr, idx) => {
+            // 2. Renderizar tabla limpia de consola científica para la distribución posterior
+            if (posteriorTableBody) {
+                posteriorTableBody.innerHTML = data.dialect_ranking.slice(0, 7).map((dr, idx) => {
                     const pct = (dr.posterior_probability * 100).toFixed(1);
                     const isTop = idx === 0;
                     return `
-                        <div class="prob-item">
-                            <div class="prob-header">
-                                <span class="prob-name">${dr.name}</span>
-                                <span class="prob-value">${pct}% <span style="font-size: 0.75rem; color: var(--text-muted);">(d=${dr.phonetic_distance.toFixed(3)})</span></span>
-                            </div>
-                            <div class="prob-track">
-                                <div class="prob-fill ${isTop ? 'top-rank' : ''}" style="width: ${pct}%;"></div>
-                            </div>
-                        </div>
+                        <tr class="${isTop ? 'top-hypothesis' : ''}">
+                            <td><strong>${dr.name}</strong></td>
+                            <td style="font-weight: 600;">${pct}%</td>
+                            <td style="color: var(--text-muted);">d = ${dr.phonetic_distance.toFixed(3)}</td>
+                        </tr>
                     `;
                 }).join('');
             }
@@ -301,21 +300,21 @@ document.addEventListener('DOMContentLoaded', async () => {
                         <div class="evidence-card">
                             <div class="evidence-header">
                                 <span>Versos ${ev.verse_1} y ${ev.verse_2} ('${ev.word_1}' / '${ev.word_2}')</span>
-                                <span class="badge badge-amber">${ev.phenomenon.split('(')[0]}</span>
+                                <span class="evidence-phenomenon">${ev.phenomenon.split('(')[0]}</span>
                             </div>
                             <div class="evidence-body">${ev.description}</div>
                         </div>
                     `).join('');
                 } else {
                     evidencesContainer.innerHTML = `
-                        <div style="font-size: 0.84rem; color: var(--text-muted); padding: 0.5rem 0;">
-                            No se detectaron divergencias de rima anómalas. Todas las hipótesis dialectales evaluadas mantienen regularidad estructural.
+                        <div style="font-family: var(--font-serif); font-size: 0.95rem; color: var(--text-muted); padding: 0.5rem 0; font-style: italic;">
+                            No se detectaron divergencias fonéticas anómalas. Todas las hipótesis dialectales evaluadas mantienen regularidad estructural.
                         </div>
                     `;
                 }
             }
 
-            showToast('Inferencia bayesiana calculada correctamente.', 'success');
+            showToast('Inferencia filológica calculada exitosamente.', 'success');
 
         } catch (err) {
             console.error('Error en inferencia:', err);
@@ -383,17 +382,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                     const sylBadges = word.syllables.map((s, sIdx) => {
                         const isStressed = sIdx === word.stress_index;
                         return `
-                            <span class="syllable-badge ${isStressed ? 'stressed' : ''}">
+                            <span class="syllable-chip ${isStressed ? 'stressed' : ''}">
                                 <span>${s}</span>
-                                <span class="syllable-structure">${isStressed ? 'Tónica' : 'Átona'}</span>
+                                <span class="syllable-type">${isStressed ? 'Tónica' : 'Átona'}</span>
                             </span>
                         `;
                     }).join('');
 
                     return `
-                        <div style="display: flex; flex-direction: column; align-items: center; margin: 0.2rem;">
+                        <div style="display: flex; flex-direction: column; align-items: center; margin: 0.25rem;">
                             <div style="display: flex; gap: 0.25rem;">${sylBadges}</div>
-                            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-oxford); margin-top: 0.25rem;">/${word.syllabified_ipa}/</div>
+                            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-terracotta); margin-top: 0.25rem;">/${word.syllabified_ipa}/</div>
                         </div>
                     `;
                 }).join('');
@@ -448,19 +447,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (schemeDisplay) schemeDisplay.textContent = data.global_rhyme_scheme || 'Libre';
             if (consonantDisplay) {
                 consonantDisplay.textContent = data.is_consonant_expected ? 'Exigida (Clásica)' : 'Asonante / Libre';
-                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-forest)' : 'var(--text-secondary)';
+                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-sage-dark)' : 'var(--text-secondary)';
             }
 
             if (tableBody) {
                 const allVerses = data.stanzas.flatMap(s => s.verses);
                 tableBody.innerHTML = allVerses.map(v => `
                     <tr>
-                        <td><strong>${v.verse_number}</strong></td>
-                        <td style="font-family: var(--font-serif); font-size: 1.05rem;">${v.raw_text}</td>
-                        <td><span class="badge badge-oxford">${v.metrical_syllables}</span></td>
-                        <td>${v.sinalefas_count}</td>
-                        <td>${v.final_stress_compensation > 0 ? `+${v.final_stress_compensation}` : v.final_stress_compensation}</td>
-                        <td><code style="color: var(--accent-crimson); font-weight: 600;">-${v.rhyme_segment}</code></td>
+                        <td><strong style="font-family: var(--font-mono); font-size: 0.82rem;">${v.verse_number}</strong></td>
+                        <td style="font-family: var(--font-serif); font-size: 1.08rem;">${v.raw_text}</td>
+                        <td><span class="badge-confidence">${v.metrical_syllables}</span></td>
+                        <td style="font-family: var(--font-mono);">${v.sinalefas_count}</td>
+                        <td style="font-family: var(--font-mono);">${v.final_stress_compensation > 0 ? `+${v.final_stress_compensation}` : v.final_stress_compensation}</td>
+                        <td><code style="font-family: var(--font-mono); color: var(--accent-terracotta); font-weight: 600;">-${v.rhyme_segment}</code></td>
                     </tr>
                 `).join('');
             }
@@ -523,7 +522,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         const previewBox = document.getElementById('report-preview-box');
 
         const text = (profilerText && profilerText.value.trim()) ? profilerText.value.trim() : 'En este dulce abrazo yo sigo cada paso';
-        const caseId = (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'EXP-G2P-001';
+        const caseId = (caseIdInput && caseIdInput.value.trim()) ? caseIdInput.value.trim() : 'CASE-G2P-001';
         const century = (centurySelect && centurySelect.value) ? parseInt(centurySelect.value, 10) : null;
 
         if (previewBox) previewBox.textContent = '// Generando dictamen pericial formal...';
