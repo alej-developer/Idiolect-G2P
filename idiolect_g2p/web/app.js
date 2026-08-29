@@ -437,7 +437,112 @@ te lo da to.`,
     });
 
     // =========================================================================
-    // 6. Listeners Iniciales
+    // 6. Módulo de Escansión Métrica Integral (Vista 3)
+    // =========================================================================
+    const poemMeterInput = document.getElementById('meter-poem-input');
+    const btnRunScansion = document.getElementById('btn-run-scansion');
+    const btnSampleMeterSorJuana = document.getElementById('btn-sample-meter-sorjuana');
+    const meterTotalVersesBadge = document.getElementById('meter-total-verses-badge');
+    const meterFormDisplay = document.getElementById('meter-form-display');
+    const meterSchemeDisplay = document.getElementById('meter-scheme-display');
+    const meterTableBody = document.getElementById('meter-table-body');
+
+    const SONETO_SOR_JUANA_COMPLETO = `En perseguirme, Mundo, ¿qué interesas?
+¿En qué te ofendo, cuando sólo intento
+poner bellezas en mi entendimiento
+y no mi entendimiento en las bellezas?
+
+Yo no estimo tesoros ni riquezas;
+y así, siempre me causa más contento
+poner riquezas en mi entendimiento
+que no mi entendimiento en las riquezas.
+
+Y no estimo hermosura que, vencida,
+es despojo civil de las edades,
+ni riqueza me agrada fementida,
+
+teniendo por mejor, en mis verdades,
+consumir vanidades de la vida
+que consumir la vida en vanidades.`;
+
+    async function ejecutarEscansion() {
+        if (!poemMeterInput) return;
+        const poemText = poemMeterInput.value.trim();
+        if (!poemText) return;
+
+        if (btnRunScansion) {
+            btnRunScansion.textContent = 'Analizando métrica...';
+            btnRunScansion.style.opacity = '0.7';
+        }
+
+        try {
+            const res = await fetch('/api/v1/analyze-poem', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ poem_text: poemText })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+
+                if (meterTotalVersesBadge) {
+                    meterTotalVersesBadge.textContent = `${data.total_verses} Versos Analizados`;
+                }
+                if (meterFormDisplay) {
+                    meterFormDisplay.textContent = `${data.detected_stanza_type} (${data.total_verses} versos)`;
+                }
+                if (meterSchemeDisplay) {
+                    meterSchemeDisplay.textContent = data.global_rhyme_scheme || 'Libre / Asonante';
+                }
+
+                if (meterTableBody) {
+                    let rowsHtml = '';
+                    data.stanzas.forEach((stanza, sIdx) => {
+                        stanza.verses.forEach(v => {
+                            const compStr = v.final_stress_compensation > 0 
+                                ? `+${v.final_stress_compensation}` 
+                                : `${v.final_stress_compensation}`;
+
+                            rowsHtml += `
+                                <tr>
+                                    <td style="color: var(--texto-sepia); font-weight: 600;">${v.verse_number}</td>
+                                    <td style="font-family: var(--font-literaria); font-size: 1.12rem; color: var(--texto-pergamino);">${v.raw_text}</td>
+                                    <td style="color: var(--acento-liquen); font-weight: 600; text-align: center;">${v.metrical_syllables}</td>
+                                    <td style="color: var(--texto-sepia); text-align: center;">${v.sinalefas_count}</td>
+                                    <td style="color: var(--texto-sepia); text-align: center;">${compStr}</td>
+                                    <td style="text-align: right;"><span style="color: var(--acento-siena); font-weight: 600;">-${v.rhyme_segment}</span></td>
+                                </tr>
+                            `;
+                        });
+                    });
+                    meterTableBody.innerHTML = rowsHtml;
+                }
+            }
+        } catch (e) {
+            console.error('Error al analizar métrica:', e);
+        } finally {
+            if (btnRunScansion) {
+                btnRunScansion.textContent = 'Escanear Poema Completo';
+                btnRunScansion.style.opacity = '1';
+            }
+        }
+    }
+
+    if (btnRunScansion) {
+        btnRunScansion.addEventListener('click', ejecutarEscansion);
+    }
+
+    if (btnSampleMeterSorJuana) {
+        btnSampleMeterSorJuana.addEventListener('click', () => {
+            if (poemMeterInput) {
+                poemMeterInput.value = SONETO_SOR_JUANA_COMPLETO;
+                ejecutarEscansion();
+            }
+        });
+    }
+
+    // =========================================================================
+    // 7. Listeners Iniciales
     // =========================================================================
     if (btnInferencia) {
         btnInferencia.addEventListener('click', ejecutarInferencia);
@@ -452,6 +557,7 @@ te lo da to.`,
         });
     }
 
-    // Montaje inicial
+    // Montaje inicial y escansión métrica del poema por defecto
     animarCascada();
+    ejecutarEscansion();
 });

@@ -174,26 +174,81 @@ del luciente cristal tu gentil cuello.</textarea>
              VISTA 3: ESCANSIÓN MÉTRICA
              =================================================================== -->
         <section id="vista-metrica" class="vista-seccion">
-            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
+            <div style="padding: 3.5rem 4rem; max-width: 1300px; margin: 0 auto;">
                 <div class="lab-section-title">
-                    <span>Escansión Métrica, Fonotaxis y Detección de Rima</span>
-                    <span class="lab-metric-highlight">Cómputo Silábico</span>
+                    <span>Escansión Métrica Formal & Análisis Rítmico</span>
+                    <span id="meter-total-verses-badge" class="lab-metric-highlight">14 Versos Analizados</span>
                 </div>
+                
                 <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
-                    Análisis cuantitativo de sinalefas, compensación métrica según acento final y detección de esquemas estróficos clásicos.
+                    Cómputo silábico métrico verso a verso, resolución de sinalefas, compensación por acentuación final y clasificación estrófica global.
                 </p>
-                <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
-                    <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--lineas-tinta); padding-bottom: 0.75rem; margin-bottom: 1rem; font-family: var(--font-cientifica); font-size: 0.8rem; color: var(--texto-sepia);">
-                        <span>Esquema Detectado: <strong style="color: var(--acento-siena);">ABBA ABBA CDC DCD (Soneto Clásico)</strong></span>
-                        <span>Rima: <strong style="color: var(--acento-liquen);">Consonante Exigida</strong></span>
+
+                <div style="display: grid; grid-template-columns: 1fr 1.35fr; gap: 2rem;">
+                    <!-- Columna Izquierda: Entrada del Poema Completo -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion); display: flex; flex-direction: column;">
+                        <label for="meter-poem-input" class="meta-label" style="margin-bottom: 0.75rem; display: block;">Poema Completo (Múltiples Estrofas):</label>
+                        <textarea id="meter-poem-input" class="manuscrito-textarea" style="min-height: 320px; font-size: 1.15rem; margin-bottom: 1.5rem;" placeholder="Pegue aquí el poema completo...">Mientras por competir con tu cabello,
+oro bruñido al sol relumbra en vano;
+mientras con menosprecio en medio el llano
+mira tu blanca frente el lilio bello;
+
+mientras a cada labio, por cogello,
+siguen más ojos que al clavel temprano,
+y mientras triunfa con desdén lozano
+del luciente cristal tu gentil cuello;
+
+goza cuello, cabello, labio y frente,
+antes que lo que fue en tu edad dorada
+oro, lilio, clavel, cristal luciente,
+
+no sólo en plata o viola troncada
+se vuelva, mas tú y ello juntamente
+en tierra, en humo, en polvo, en sombra, en nada.</textarea>
+
+                        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                            <button id="btn-run-scansion" class="btn-inferencia" type="button" style="flex: 1;">
+                                Escanear Poema Completo
+                            </button>
+                            <button id="btn-sample-meter-sorjuana" class="btn-sample" type="button">
+                                Cargar Soneto de Sor Juana
+                            </button>
+                        </div>
                     </div>
-                    <p style="font-family: var(--font-literaria); font-size: 1.25rem; color: var(--texto-pergamino); line-height: 1.8;">
-                        Verso 1: "Mientras por competir con tu cabello" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ello)</span><br>
-                        Verso 2: "oro bruñido al sol relumbra en vano" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ano)</span><br>
-                        Verso 3: "mientras con menosprecio en medio el llano" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ano)</span><br>
-                        Verso 4: "mira tu blanca frente el lilio bello" — <span style="font-family: var(--font-cientifica); font-size: 0.85rem; color: var(--acento-liquen);">11 sílabas métricas (-ello)</span>
-                    </p>
+
+                    <!-- Columna Derecha: Resultados Verso a Verso del Poema Completo -->
+                    <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion); display: flex; flex-direction: column;">
+                        <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid var(--lineas-tinta); padding-bottom: 0.75rem; margin-bottom: 1.25rem;">
+                            <div>
+                                <span class="meta-label">Estructura Estrófica:</span>
+                                <div id="meter-form-display" style="font-family: var(--font-literaria); font-size: 1.35rem; font-weight: 700; color: var(--texto-pergamino);">Soneto Clásico</div>
+                            </div>
+                            <div style="text-align: right;">
+                                <span class="meta-label">Esquema Rímico:</span>
+                                <div id="meter-scheme-display" style="font-family: var(--font-cientifica); font-size: 1.05rem; font-weight: 600; color: var(--acento-siena);">ABBA ABBA CDC DCD</div>
+                            </div>
+                        </div>
+
+                        <div style="overflow-x: auto; max-height: 480px; overflow-y: auto;">
+                            <table class="scriptorium-table">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 40px;">#</th>
+                                        <th>Verso Completo</th>
+                                        <th style="width: 70px;">Sil. Met.</th>
+                                        <th style="width: 70px;">Sinalefas</th>
+                                        <th style="width: 60px;">Comp.</th>
+                                        <th style="width: 70px;">Rima</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="meter-table-body">
+                                    <!-- Inyectado dinámicamente -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
+
             </div>
         </section>
 
