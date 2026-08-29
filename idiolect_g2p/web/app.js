@@ -8,34 +8,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // 0. Lógica del Tema (Claro / Oscuro) con Persistencia en localStorage
     // =========================================================================
     const themeToggleBtn = document.getElementById('theme-toggle');
+    const statusIndicator = document.getElementById('codice-status-indicator');
     const htmlElement = document.documentElement; // Aplica al tag <html>
+
+    function aplicarTema(tema) {
+        if (tema === 'dark') {
+            htmlElement.setAttribute('data-theme', 'dark');
+            if (themeToggleBtn) themeToggleBtn.textContent = 'Estudio Lumínico';
+            if (statusIndicator) statusIndicator.innerHTML = '<span class="status-dot"></span> Scriptorium Activo';
+        } else {
+            htmlElement.removeAttribute('data-theme');
+            if (themeToggleBtn) themeToggleBtn.textContent = 'Modo Scriptorium';
+            if (statusIndicator) statusIndicator.innerHTML = '<span class="status-dot"></span> Estudio Lumínico Activo';
+        }
+    }
 
     // 1. Revisar si el usuario ya tenía una preferencia guardada (por defecto: claro)
     const temaGuardado = localStorage.getItem('idiolect-theme');
-    if (temaGuardado === 'dark') {
-        htmlElement.setAttribute('data-theme', 'dark');
-        if (themeToggleBtn) themeToggleBtn.textContent = 'Estudio Lumínico';
-    } else {
-        htmlElement.removeAttribute('data-theme');
-        if (themeToggleBtn) themeToggleBtn.textContent = 'Modo Scriptorium';
-    }
+    aplicarTema(temaGuardado === 'dark' ? 'dark' : 'light');
 
     // 2. Evento de click para alternar suavemente
     if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-            const temaActual = htmlElement.getAttribute('data-theme');
-            
-            if (temaActual === 'dark') {
-                // Cambiar a Claro (Estudio Filológico)
-                htmlElement.removeAttribute('data-theme');
-                localStorage.setItem('idiolect-theme', 'light');
-                themeToggleBtn.textContent = 'Modo Scriptorium';
-            } else {
-                // Cambiar a Oscuro (Scriptorium Monástico)
-                htmlElement.setAttribute('data-theme', 'dark');
-                localStorage.setItem('idiolect-theme', 'dark');
-                themeToggleBtn.textContent = 'Estudio Lumínico';
-            }
+            const esOscuro = htmlElement.getAttribute('data-theme') === 'dark';
+            const nuevoTema = esOscuro ? 'light' : 'dark';
+            localStorage.setItem('idiolect-theme', nuevoTema);
+            aplicarTema(nuevoTema);
         });
     }
 
