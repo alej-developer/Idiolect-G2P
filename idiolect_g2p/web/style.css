@@ -1,93 +1,85 @@
 /* ==========================================================================
-   Idiolect-G2P Master Design System — Light Academia & Filología Computacional
-   Estética de Manuscrito Moderno, Tipografía Editorial y Rigor Científico
+   Idiolect-G2P — Scriptorium Monástico & Humanidades Digitales
+   Estética: Cuero Envejecido, Pigmentos Minerales Mates y Tinta Ferrogálica
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=IBM+Plex+Mono:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@400;500;600&display=swap');
 
 :root {
     /* ======================================================================
-       Paleta de Colores: Modo Pergamino / Manuscrito Humanista Diurno
+       Modo Claro (Diurno): Pergamino Natural & Tinta de Nuez de Agalla
        ====================================================================== */
-    --bg-parchment: #F6F3EB;          /* Pergamino natural cálido */
-    --bg-paper: #FFFEFB;              /* Hoja de papel verjurado / vitela clara */
-    --bg-lab: #EFE9DC;                /* Mesa de scriptorium / zona de laboratorio */
-    --bg-lab-subtle: #E5DFD0;         /* Contenedores secundarios sepia */
+    --bg-main: #F5F1E8;               /* Vitela / Pergamino natural cálido */
+    --bg-panel: #FAF7F0;              /* Hoja de papel verjurado */
+    --bg-lab: #EDE6D8;                /* Scriptorium / Mesa de trabajo */
+    --bg-input: #FFFFFF;              /* Fondo de inputs */
     
-    --text-main: #2B2621;             /* Tinta ferrogálica / carbón vegetal */
-    --text-secondary: #544B41;        /* Tinta nogalina */
-    --text-muted: #7E7365;            /* Tinta sepia desvaída */
+    --text-primary: #2C2621;          /* Tinta ferrogálica oscura */
+    --text-secondary: #5C5349;        /* Tinta nogalina */
+    --text-muted: #8C8072;            /* Tinta sepia tenue */
     
-    --border-subtle: #DFD8CA;         /* Líneas finas estilo encuadernación */
-    --border-medium: #CEC6B4;         /* Bordes de división de paneles */
-    --border-focus: #2B2621;          /* Foco sobrio tinta oscura */
+    --border-divider: #DCD4C4;        /* Líneas de regla y encuadernación */
+    --border-input: #C4B9A5;          /* Línea inferior de formulario */
+    --border-focus: #2C2621;
     
-    /* Pigmentos Naturales Históricos */
-    --accent-charcoal: #2B2621;       /* Tinta oscura para botones principales */
-    --accent-charcoal-hover: #171411;
+    /* Pigmentos Minerales Históricos */
+    --accent-iron-oxide: #8C4C3E;     /* Óxido de hierro / Almagre */
+    --accent-iron-oxide-hover: #753E32;
+    --accent-iron-oxide-subtle: #F6ECE9;
     
-    --accent-terracotta: #B85D49;     /* Almagre / Terracota de rúbrica medieval */
-    --accent-terracotta-subtle: #F6EBE7;
-    --accent-terracotta-border: #E4C1B7;
+    --accent-verdigris: #5A735C;      /* Cardenillo / Salvia monástica */
+    --accent-verdigris-subtle: #EBF2EC;
     
-    --accent-sage: #5E7A68;           /* Verde malaquita / salvia monástica */
-    --accent-sage-bg: #E1EAE3;        /* Fondo salvia claro */
-    --accent-sage-dark: #27402F;      /* Texto salvia oscuro */
-    --accent-sage-border: #B7CCBC;
+    --accent-lapis: #3B4E61;          /* Lapislázuli apagado */
+    --accent-lapis-subtle: #E8EEF5;
     
-    --accent-oxford: #2B4560;         /* Azul lapislázuli natural */
-    --accent-oxford-bg: #E7EEF5;
-    
-    --accent-amber: #946927;          /* Ocre / Cera de abejas */
-    --accent-amber-bg: #F7EFE1;
+    --accent-ochre: #8E6B32;          /* Ocre dorado / Cera virgen */
+    --accent-ochre-subtle: #F7EFE1;
     
     /* Tipografía */
-    --font-serif: 'Crimson Pro', Georgia, 'Times New Roman', serif;
-    --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
-    --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-serif: 'EB Garamond', 'Alegreya', Georgia, serif;
+    --font-heading: 'Alegreya', 'EB Garamond', Georgia, serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+    --font-sans: 'Inter', sans-serif;
     
-    /* Radios y Transiciones */
-    --radius-sm: 3px;
-    --radius-md: 4px;
-    --radius-lg: 6px;
+    --radius-sharp: 2px;
     --transition: 0.15s ease;
 }
 
 /* ==========================================================================
-   Modo Contraste: Scriptorium Nocturno / Vitela a la Luz de las Velas
-   (Tonalidades cálidas de madera de nogal, cuero curtido y pergamino oscuro)
+   Modo Oscuro: Scriptorium Medieval Temprano / Monástico Sobrio
+   (Cuero oscuro envejecido, tinta ferrogálica y pigmentos minerales)
    ========================================================================== */
 [data-theme="dark"] {
-    --bg-parchment: #1C1815;          /* Madera de nogal oscura / mesa de scriptorium */
-    --bg-paper: #25201B;              /* Vitela oscura / encuadernación de cuero */
-    --bg-lab: #201B17;                /* Sombra sepia cálida para zona de datos */
-    --bg-lab-subtle: #2B2520;         /* Contenedores secundarios de madera */
+    /* Fondos Orgánicos y Cuero (Cero Negro Puro / Cero Grises Fríos) */
+    --bg-main: #1E1A17;               /* Marrón carbón profundo / Cuero curtido */
+    --bg-panel: #28241F;              /* Vitela oscura / Área de trabajo */
+    --bg-lab: #231E1B;                /* Zona de laboratorio / Scriptorium tenue */
+    --bg-input: #161311;              /* Fondo plano oscurecido para campos */
     
-    --text-main: #EBE4D8;             /* Tinta clara a la luz de las velas */
-    --text-secondary: #C2B9A7;        /* Pergamino iluminado */
-    --text-muted: #8C8270;            /* Tinta sepia atenuada */
+    /* Textos Orgánicos (Cero Blanco Puro / Cero Efecto Linterna) */
+    --text-primary: #E6DFC8;          /* Color hueso / Lana cruda / Pergamino */
+    --text-secondary: #C4BAA7;        /* Tinta iluminada por velas */
+    --text-muted: #958D82;            /* Tinta descolorida / Ceniza sepia */
     
-    --border-subtle: #3A322B;         /* Líneas de costura en cuero */
-    --border-medium: #4A4036;         /* Bordes de folio medieval */
-    --border-focus: #EBE4D8;
+    /* Divisores y Bordes Orgánicos */
+    --border-divider: #423D36;        /* Divisor vertical sólido de 1px */
+    --border-input: #685A48;          /* Línea inferior en ocre muy apagado */
+    --border-focus: #E6DFC8;          /* Foco color hueso */
     
-    --accent-charcoal: #EBE4D8;
-    --accent-charcoal-hover: #FFFFFF;
+    /* Acentos Minerales Mates (Cero Neón) */
+    --accent-iron-oxide: #8C4C3E;     /* Óxido de hierro / Ladrillo pálido */
+    --accent-iron-oxide-hover: #A05748;
+    --accent-iron-oxide-subtle: #33201D;
     
-    --accent-terracotta: #C96B57;     /* Rúbrica de cinabrio cálido */
-    --accent-terracotta-subtle: #36221E;
-    --accent-terracotta-border: #55352E;
+    --accent-verdigris: #6A806C;      /* Verde cardenillo mate / Salvia oscura */
+    --accent-verdigris-subtle: #202A21;
     
-    --accent-sage: #849C86;           /* Salvia y musgo de monasterio */
-    --accent-sage-bg: #222D24;
-    --accent-sage-dark: #B5CEB7;
-    --accent-sage-border: #364839;
+    --accent-lapis: #4B5B6B;          /* Lapislázuli apagado */
+    --accent-lapis-subtle: #1C242C;
     
-    --accent-oxford: #8FA6BB;         /* Lapislázuli lavado */
-    --accent-oxford-bg: #202C37;
-    
-    --accent-amber: #D0A358;          /* Cera virgen e iluminación dorada */
-    --accent-amber-bg: #342716;
+    --accent-ochre: #B88B46;          /* Ocre apagado / Cera de abeja */
+    --accent-ochre-subtle: #2C2214;
 }
 
 /* ==========================================================================
@@ -106,23 +98,24 @@ html {
 
 body {
     font-family: var(--font-serif);
-    background-color: var(--bg-parchment);
-    color: var(--text-main);
+    background-color: var(--bg-main);
+    color: var(--text-primary);
     line-height: 1.65;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background-color var(--transition), color var(--transition);
 }
 
 /* ==========================================================================
-   Navegación Superior Editorial (Clean Menu)
+   Cabecera Editorial & Navegación
    ========================================================================== */
 .app-header {
-    background: var(--bg-paper);
-    border-bottom: 1px solid var(--border-subtle);
-    padding: 1.25rem 2.5rem;
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-divider);
+    padding: 1.1rem 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -138,12 +131,11 @@ body {
 }
 
 .brand-title {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     font-size: 1.85rem;
     font-weight: 700;
-    letter-spacing: -0.02em;
-    color: var(--text-main);
-    line-height: 1;
+    letter-spacing: -0.01em;
+    color: var(--text-primary);
 }
 
 .brand-subtitle {
@@ -151,7 +143,6 @@ body {
     font-size: 0.95rem;
     font-style: italic;
     color: var(--text-muted);
-    letter-spacing: 0.01em;
 }
 
 .header-meta {
@@ -163,48 +154,44 @@ body {
 .status-indicator {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--accent-sage-dark);
-    background: var(--accent-sage-bg);
-    border: 1px solid var(--accent-sage-border);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-sm);
+    color: var(--accent-verdigris);
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 0.4rem;
 }
 
 .status-dot {
     width: 6px;
     height: 6px;
-    background: var(--accent-sage);
+    background: var(--accent-verdigris);
     border-radius: 50%;
     display: inline-block;
 }
 
 .theme-toggle-btn {
     background: transparent;
-    border: 1px solid var(--border-subtle);
+    border: 1px solid var(--border-input);
     color: var(--text-secondary);
-    padding: 0.35rem 0.65rem;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: var(--radius-sharp);
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
     cursor: pointer;
     transition: all var(--transition);
 }
 
 .theme-toggle-btn:hover {
     background: var(--bg-lab);
-    color: var(--text-main);
-    border-color: var(--border-medium);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
 }
 
 /* ==========================================================================
-   Menú Editorial de Pestañas (Sin cajas, tipografía pura con subrayado)
+   Menú Editorial de Pestañas (Tipografía Pura)
    ========================================================================== */
 .editorial-nav-wrapper {
-    background: var(--bg-paper);
-    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border-divider);
     padding: 0 2.5rem;
 }
 
@@ -221,7 +208,7 @@ body {
 }
 
 .nav-link {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     font-size: 1.05rem;
     font-weight: 500;
     color: var(--text-muted);
@@ -232,23 +219,22 @@ body {
     cursor: pointer;
     white-space: nowrap;
     transition: all var(--transition);
-    text-decoration: none;
     position: relative;
     bottom: -1px;
 }
 
 .nav-link:hover {
-    color: var(--text-main);
+    color: var(--text-primary);
 }
 
 .nav-link.active {
-    color: var(--text-main);
+    color: var(--text-primary);
     font-weight: 600;
-    border-bottom-color: var(--accent-terracotta);
+    border-bottom-color: var(--accent-iron-oxide);
 }
 
 /* ==========================================================================
-   Estructura Principal del Entorno Filológico (Workbench)
+   Estructura Principal del Scriptorium (Workbench)
    ========================================================================== */
 .workbench-container {
     max-width: 1400px;
@@ -266,27 +252,27 @@ body {
     display: block;
 }
 
-/* División de Dos Paneles: Izquierda (Lectura/Texto) y Derecha (Laboratorio) */
-.manuscript-grid {
+/* Split-Screen: Poema a la Izquierda / Resultados a la Derecha */
+.scriptorium-grid {
     display: grid;
     grid-template-columns: 1.15fr 1fr;
-    border: 1px solid var(--border-medium);
-    border-radius: var(--radius-sm);
-    background: var(--bg-paper);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
+    background: var(--bg-panel);
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
 
 /* Panel Izquierdo: Fondo Pergamino para Lectura & Poema */
 .panel-manuscript {
-    background: var(--bg-parchment);
+    background: var(--bg-panel);
     padding: 2.25rem;
-    border-right: 1px solid var(--border-medium);
+    border-right: 1px solid var(--border-divider);
     display: flex;
     flex-direction: column;
 }
 
-/* Panel Derecho: Fondo Gris Cálido para Datos & Laboratorio */
+/* Panel Derecho: Fondo Gris Cálido / Mesa de Datos */
 .panel-laboratory {
     background: var(--bg-lab);
     padding: 2.25rem;
@@ -296,16 +282,15 @@ body {
 
 /* Encabezados de Sección */
 .section-heading {
-    font-family: var(--font-serif);
+    font-family: var(--font-heading);
     font-size: 1.45rem;
     font-weight: 600;
-    color: var(--text-main);
-    letter-spacing: -0.01em;
+    color: var(--text-primary);
     margin-bottom: 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    border-bottom: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-divider);
     padding-bottom: 0.65rem;
 }
 
@@ -319,7 +304,7 @@ body {
 }
 
 /* ==========================================================================
-   Formularios Estilo Documento Impreso
+   Inputs y Formularios: Línea Inferior Ocre & Fondo Oscurecido
    ========================================================================== */
 .field-group {
     margin-bottom: 1.35rem;
@@ -329,61 +314,66 @@ body {
     display: block;
     font-family: var(--font-mono);
     font-size: 0.76rem;
-    font-weight: 600;
+    font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
     color: var(--text-secondary);
     margin-bottom: 0.4rem;
 }
 
-/* Inputs con aspecto de formulario impreso (líneas sutiles) */
+/* Inputs planos con línea inferior (Cero cajas gruesas) */
 .field-input {
     width: 100%;
     font-family: var(--font-mono);
     font-size: 0.9rem;
-    color: var(--text-main);
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 0.55rem 0.75rem;
+    color: var(--text-primary);
+    background: var(--bg-input);
+    border: none;
+    border-bottom: 1px solid var(--border-input);
+    border-radius: var(--radius-sharp);
+    padding: 0.6rem 0.75rem;
     outline: none;
-    transition: border-color var(--transition);
+    transition: background-color var(--transition), border-color var(--transition);
 }
 
 .field-input:focus {
-    border-color: var(--border-focus);
+    background: #1D1917;
+    border-bottom-color: var(--border-focus);
 }
 
-/* Área de Texto del Poema (Serif amplio, interlineado poético) */
+/* Área de Texto del Poema (Serif amplio, interlineado generoso) */
 .poem-textarea {
     width: 100%;
     font-family: var(--font-serif);
-    font-size: 1.125rem;
-    line-height: 1.75;
-    color: var(--text-main);
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 1rem 1.25rem;
+    font-size: 1.15rem;
+    line-height: 1.8;
+    color: var(--text-primary);
+    background: var(--bg-input);
+    border: none;
+    border-bottom: 1px solid var(--border-input);
+    border-radius: var(--radius-sharp);
+    padding: 1rem 1.15rem;
     min-height: 220px;
     resize: vertical;
     outline: none;
-    transition: border-color var(--transition);
+    transition: background-color var(--transition), border-color var(--transition);
 }
 
 .poem-textarea:focus {
-    border-color: var(--border-focus);
+    background: #1D1917;
+    border-bottom-color: var(--border-focus);
 }
 
 /* ==========================================================================
-   Botones Editoriales (Carbón, Terracota y Salvia)
+   Botones de Scriptorium (Óxido de Hierro & Bordes Netos)
    ========================================================================== */
 .btn-editorial {
-    font-family: var(--font-sans);
-    font-size: 0.86rem;
+    font-family: var(--font-mono);
+    font-size: 0.84rem;
     font-weight: 600;
-    padding: 0.65rem 1.2rem;
-    border-radius: var(--radius-sm);
+    letter-spacing: 0.02em;
+    padding: 0.65rem 1.25rem;
+    border-radius: var(--radius-sharp);
     border: 1px solid transparent;
     cursor: pointer;
     display: inline-flex;
@@ -394,49 +384,40 @@ body {
     text-decoration: none;
 }
 
-.btn-charcoal {
-    background: var(--accent-charcoal);
-    color: var(--bg-parchment);
-    border-color: var(--accent-charcoal);
+/* Botón Óxido de Hierro (Llamada Principal) */
+.btn-iron-oxide {
+    background: var(--accent-iron-oxide);
+    color: #E6DFC8;
+    border-color: var(--accent-iron-oxide);
 }
 
-.btn-charcoal:hover {
-    background: var(--accent-charcoal-hover);
-    border-color: var(--accent-charcoal-hover);
+.btn-iron-oxide:hover {
+    background: var(--accent-iron-oxide-hover);
+    border-color: var(--accent-iron-oxide-hover);
 }
 
 .btn-subtle {
     background: transparent;
     color: var(--text-secondary);
-    border-color: var(--border-medium);
+    border-color: var(--border-input);
 }
 
 .btn-subtle:hover {
-    background: var(--bg-paper);
-    color: var(--text-main);
-    border-color: var(--border-focus);
-}
-
-.btn-terracotta {
-    background: var(--accent-terracotta);
-    color: #FFFFFF;
-    border-color: var(--accent-terracotta);
-}
-
-.btn-terracotta:hover {
-    background: #A95847;
+    background: var(--bg-lab);
+    color: var(--text-primary);
+    border-color: var(--text-primary);
 }
 
 /* ==========================================================================
-   Panel de Resultados: Dictamen & Bloque de Veredicto
+   Panel Derecho: Bloque de Veredicto & Dictamen
    ========================================================================== */
 .verdict-blockquote {
-    background: var(--bg-paper);
-    border-left: 3.5px solid var(--accent-terracotta);
-    border-top: 1px solid var(--border-subtle);
-    border-right: 1px solid var(--border-subtle);
-    border-bottom: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    background: var(--bg-panel);
+    border-left: 3px solid var(--accent-iron-oxide);
+    border-top: 1px solid var(--border-divider);
+    border-right: 1px solid var(--border-divider);
+    border-bottom: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
     padding: 1.15rem 1.35rem;
     margin-bottom: 1.5rem;
 }
@@ -452,10 +433,10 @@ body {
 }
 
 .verdict-title {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 600;
-    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--text-primary);
     line-height: 1.25;
     margin-bottom: 0.25rem;
 }
@@ -467,81 +448,90 @@ body {
     color: var(--text-secondary);
 }
 
-/* Badge de Confianza (Salvia Apagado) */
-.badge-confidence {
+/* Métrica de Confianza: Cardenillo Mate Integrado en Texto */
+.confidence-metric {
     font-family: var(--font-mono);
-    font-size: 0.76rem;
+    font-size: 0.8rem;
     font-weight: 600;
-    color: var(--accent-sage-dark);
-    background: var(--accent-sage-bg);
-    border: 1px solid var(--accent-sage-border);
-    padding: 0.2rem 0.55rem;
-    border-radius: var(--radius-sm);
+    color: var(--accent-verdigris);
 }
 
 /* ==========================================================================
-   Distribución Posterior P(D | T, R) — Salida de Consola Científica en Papel
+   Distribución Posterior P(D | T, R) — Índice de Libro Antiguo
    ========================================================================== */
 .posterior-section-title {
     font-family: var(--font-mono);
     font-size: 0.76rem;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.06em;
     color: var(--text-muted);
     margin-bottom: 0.65rem;
 }
 
-.posterior-console-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-family: var(--font-mono);
-    font-size: 0.835rem;
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+.posterior-index-list {
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
+    padding: 0.5rem 0;
     margin-bottom: 1.5rem;
 }
 
-.posterior-console-table th {
-    font-size: 0.72rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--text-muted);
-    padding: 0.5rem 0.75rem;
-    border-bottom: 1px solid var(--border-subtle);
-    background: var(--bg-lab-subtle);
-    text-align: left;
+.posterior-index-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-mono);
+    font-size: 0.835rem;
+    border-bottom: 1px solid var(--border-divider);
 }
 
-.posterior-console-table td {
-    padding: 0.45rem 0.75rem;
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-main);
-}
-
-.posterior-console-table tr:last-child td {
+.posterior-index-row:last-child {
     border-bottom: none;
 }
 
-.posterior-console-table tr.top-hypothesis {
-    background: var(--accent-terracotta-subtle);
+.posterior-index-row.top-hypothesis {
+    background: var(--accent-iron-oxide-subtle);
     font-weight: 600;
 }
 
-.posterior-console-table tr.top-hypothesis td {
-    color: var(--accent-terracotta);
+.posterior-index-row.top-hypothesis .hyp-name {
+    color: var(--accent-iron-oxide);
+}
+
+.posterior-index-row.top-hypothesis .hyp-pct {
+    color: var(--accent-iron-oxide);
+}
+
+.hyp-name {
+    color: var(--text-primary);
+}
+
+.hyp-data {
+    display: flex;
+    gap: 1.25rem;
+}
+
+.hyp-pct {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.hyp-dist {
+    color: var(--text-muted);
+    font-size: 0.76rem;
 }
 
 /* ==========================================================================
    Evidencias Discriminantes (Tarjetas de Archivo)
    ========================================================================== */
 .evidence-card {
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    padding: 0.85rem 1rem;
-    margin-bottom: 0.65rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
+    padding: 0.85rem 1.1rem;
+    margin-bottom: 0.75rem;
 }
 
 .evidence-header {
@@ -551,23 +541,23 @@ body {
     font-family: var(--font-mono);
     font-size: 0.78rem;
     font-weight: 600;
-    color: var(--text-main);
+    color: var(--text-primary);
     margin-bottom: 0.35rem;
 }
 
 .evidence-phenomenon {
     font-family: var(--font-mono);
     font-size: 0.72rem;
-    background: var(--accent-amber-bg);
-    color: var(--accent-amber);
-    padding: 0.15rem 0.45rem;
-    border-radius: var(--radius-sm);
-    border: 1px solid #EADBCE;
+    color: var(--accent-ochre);
+    background: var(--accent-ochre-subtle);
+    padding: 0.1rem 0.45rem;
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
 }
 
 .evidence-body {
     font-family: var(--font-serif);
-    font-size: 0.95rem;
+    font-size: 0.96rem;
     color: var(--text-secondary);
     line-height: 1.5;
 }
@@ -576,9 +566,9 @@ body {
    Módulo 2: Transcriptor G2P & Síntesis Acústica AFI
    ========================================================================== */
 .ipa-display-card {
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
     padding: 1.5rem;
     text-align: center;
     margin-bottom: 1.25rem;
@@ -588,7 +578,7 @@ body {
     font-family: var(--font-mono);
     font-size: 1.55rem;
     font-weight: 500;
-    color: var(--text-main);
+    color: var(--text-primary);
     letter-spacing: 0.04em;
     word-break: break-word;
 }
@@ -605,24 +595,24 @@ body {
     font-family: var(--font-mono);
     font-size: 0.85rem;
     padding: 0.35rem 0.65rem;
-    background: var(--bg-parchment);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
-    color: var(--text-main);
+    background: var(--bg-main);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
+    color: var(--text-primary);
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
 .syllable-chip.stressed {
-    background: var(--accent-terracotta-subtle);
-    border-color: var(--accent-terracotta-border);
-    color: var(--accent-terracotta);
+    background: var(--accent-iron-oxide-subtle);
+    border-color: var(--accent-iron-oxide);
+    color: var(--accent-iron-oxide);
     font-weight: 600;
 }
 
 .syllable-type {
-    font-family: var(--font-sans);
+    font-family: var(--font-mono);
     font-size: 0.62rem;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -630,7 +620,7 @@ body {
 }
 
 /* ==========================================================================
-   Tablas Académicas (Escansión y Catálogo)
+   Tablas Editoriales de Scriptorium
    ========================================================================== */
 .table-scroll {
     width: 100%;
@@ -643,8 +633,8 @@ body {
     border-collapse: collapse;
     font-size: 0.92rem;
     text-align: left;
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
 }
 
 .editorial-table th {
@@ -655,33 +645,33 @@ body {
     letter-spacing: 0.05em;
     color: var(--text-muted);
     background: var(--bg-lab);
-    border-bottom: 1px solid var(--border-medium);
+    border-bottom: 1px solid var(--border-divider);
     padding: 0.65rem 0.85rem;
     white-space: nowrap;
 }
 
 .editorial-table td {
     padding: 0.65rem 0.85rem;
-    border-bottom: 1px solid var(--border-subtle);
-    color: var(--text-main);
+    border-bottom: 1px solid var(--border-divider);
+    color: var(--text-primary);
 }
 
 .editorial-table tbody tr:hover {
-    background: var(--bg-parchment);
+    background: var(--bg-lab);
 }
 
 /* ==========================================================================
    Visor de Código para Informes Multi-Formato
    ========================================================================== */
 .report-code-box {
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
-    border-radius: var(--radius-sm);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
+    border-radius: var(--radius-sharp);
     padding: 1.25rem;
     font-family: var(--font-mono);
     font-size: 0.825rem;
     line-height: 1.55;
-    color: var(--text-main);
+    color: var(--text-primary);
     overflow-x: auto;
     max-height: 480px;
     white-space: pre;
@@ -698,23 +688,23 @@ body {
     font-family: var(--font-mono);
     font-size: 0.8rem;
     padding: 0.4rem 0.75rem;
-    background: var(--bg-paper);
-    border: 1px solid var(--border-subtle);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
     color: var(--text-secondary);
-    border-radius: var(--radius-sm);
+    border-radius: var(--radius-sharp);
     cursor: pointer;
     transition: all var(--transition);
 }
 
 .btn-format:hover {
-    border-color: var(--border-medium);
-    color: var(--text-main);
+    border-color: var(--border-input);
+    color: var(--text-primary);
 }
 
 .btn-format.active {
-    background: var(--accent-charcoal);
-    color: var(--bg-parchment);
-    border-color: var(--accent-charcoal);
+    background: var(--accent-iron-oxide);
+    color: #E6DFC8;
+    border-color: var(--accent-iron-oxide);
     font-weight: 600;
 }
 
@@ -733,29 +723,29 @@ body {
 }
 
 .toast {
-    background: var(--bg-paper);
-    border: 1px solid var(--border-medium);
-    border-left: 3.5px solid var(--accent-charcoal);
-    border-radius: var(--radius-sm);
+    background: var(--bg-panel);
+    border: 1px solid var(--border-divider);
+    border-left: 3px solid var(--accent-iron-oxide);
+    border-radius: var(--radius-sharp);
     padding: 0.75rem 1.1rem;
-    font-family: var(--font-sans);
-    font-size: 0.84rem;
-    color: var(--text-main);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
     pointer-events: auto;
     max-width: 360px;
 }
 
 .toast.toast-error {
-    border-left-color: var(--accent-terracotta);
+    border-left-color: var(--accent-iron-oxide);
 }
 
 .toast.toast-success {
-    border-left-color: var(--accent-sage);
+    border-left-color: var(--accent-verdigris);
 }
 
 /* ==========================================================================
-   Adaptabilidad Multi-Dispositivo (Smartphones, Tablets, Laptops)
+   Adaptabilidad Multi-Dispositivo
    ========================================================================== */
 @media (max-width: 1024px) {
     .app-header {
@@ -770,13 +760,13 @@ body {
         padding: 1.5rem 1rem;
     }
     
-    .manuscript-grid {
+    .scriptorium-grid {
         grid-template-columns: 1fr;
     }
     
     .panel-manuscript {
         border-right: none;
-        border-bottom: 1px solid var(--border-medium);
+        border-bottom: 1px solid var(--border-divider);
         padding: 1.5rem;
     }
     
@@ -820,7 +810,7 @@ body {
     }
     
     .poem-textarea {
-        font-size: 1rem;
+        font-size: 1.05rem;
         padding: 0.75rem;
     }
     

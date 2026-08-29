@@ -1,6 +1,6 @@
 /**
- * Idiolect-G2P — Aplicación Web de Filología Computacional & Fonética Forense
- * Estética: Light Academia / Manuscrito Moderno y Rigor Estadístico
+ * Idiolect-G2P — Scriptorium Monástico & Filología Computacional
+ * Estética: Cuero Envejecido, Pigmentos Minerales Mates y Tinta Ferrogálica
  */
 
 document.addEventListener('DOMContentLoaded', async () => {
@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         currentAudioBase64: null,
         selectedReportFormat: 'markdown',
         lastProfileResult: null,
-        currentTheme: localStorage.getItem('idiolect_theme') || 'light'
+        currentTheme: localStorage.getItem('idiolect_theme') || 'dark'
     };
 
     // =========================================================================
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     // =========================================================================
-    // 2. Gestión de Tema y Contraste
+    // 2. Gestión de Tema (Scriptorium / Pergamino)
     // =========================================================================
     document.documentElement.setAttribute('data-theme', state.currentTheme);
     const themeToggleBtn = document.getElementById('theme-toggle-btn');
@@ -50,12 +50,10 @@ document.addEventListener('DOMContentLoaded', async () => {
             state.currentTheme = state.currentTheme === 'dark' ? 'light' : 'dark';
             document.documentElement.setAttribute('data-theme', state.currentTheme);
             localStorage.setItem('idiolect_theme', state.currentTheme);
-            themeToggleBtn.textContent = state.currentTheme === 'dark' ? 'Modo Pergamino' : 'Contraste';
-            showToast(`Modo ${state.currentTheme === 'dark' ? 'estudio nocturno' : 'pergamino claro'} activado.`);
+            themeToggleBtn.textContent = state.currentTheme === 'dark' ? 'Modo Pergamino' : 'Modo Scriptorium';
+            showToast(`Activado ${state.currentTheme === 'dark' ? 'Scriptorium Nocturno' : 'Pergamino Diurno'}.`);
         });
-        if (state.currentTheme === 'dark') {
-            themeToggleBtn.textContent = 'Modo Pergamino';
-        }
+        themeToggleBtn.textContent = state.currentTheme === 'dark' ? 'Modo Pergamino' : 'Modo Scriptorium';
     }
 
     // =========================================================================
@@ -108,8 +106,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             console.error('Error al inicializar dialectos:', err);
             const statusBadge = document.getElementById('api-status-badge');
             if (statusBadge) {
-                statusBadge.innerHTML = '<span class="status-dot" style="background: var(--accent-terracotta);"></span> Desconectada';
-                statusBadge.style.color = 'var(--accent-terracotta)';
+                statusBadge.innerHTML = '<span class="status-dot" style="background: var(--accent-iron-oxide);"></span> Desconectada';
+                statusBadge.style.color = 'var(--accent-iron-oxide)';
             }
             showToast('No se pudo conectar con el catálogo de la API.', 'error');
         }
@@ -128,7 +126,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                 <tr>
                     <td><code style="font-family: var(--font-mono); font-size: 0.78rem;">${d.code}</code></td>
                     <td><strong style="font-family: var(--font-serif); font-size: 1rem;">${d.name}</strong></td>
-                    <td><span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-oxford); font-weight: 600;">${d.region}</span></td>
+                    <td><span style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-lapis); font-weight: 600;">${d.region}</span></td>
                     <td style="font-family: var(--font-serif); font-size: 0.9rem; color: var(--text-secondary); max-width: 280px;">${d.description}</td>
                     <td style="font-family: var(--font-mono); font-size: 0.82rem;"><strong>${((iso.seseo || 0) * 100).toFixed(0)}%</strong></td>
                     <td style="font-family: var(--font-mono); font-size: 0.82rem;">${((iso.aspiration_s || 0) * 100).toFixed(0)}%</td>
@@ -166,15 +164,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (!container) return;
 
             container.innerHTML = state.corpus.map(item => `
-                <div style="background: var(--bg-parchment); border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 1.35rem; display: flex; flex-direction: column; justify-content: space-between;">
+                <div style="background: var(--bg-panel); border: 1px solid var(--border-divider); border-radius: var(--radius-sharp); padding: 1.35rem; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <h3 style="font-family: var(--font-serif); font-size: 1.25rem; font-weight: 600; color: var(--text-main); margin-bottom: 0.25rem;">
+                        <h3 style="font-family: var(--font-heading); font-size: 1.25rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.25rem;">
                             ${item.title}
                         </h3>
-                        <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-terracotta); font-weight: 600; margin-bottom: 0.75rem;">
+                        <div style="font-family: var(--font-mono); font-size: 0.76rem; color: var(--accent-iron-oxide); font-weight: 600; margin-bottom: 0.75rem;">
                             ${item.author} — Siglo ${item.century || 'N/A'}
                         </div>
-                        <div style="font-family: var(--font-serif); font-size: 0.98rem; line-height: 1.6; background: var(--bg-paper); padding: 0.85rem 1rem; border: 1px solid var(--border-subtle); border-radius: var(--radius-sm); color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 140px; overflow-y: auto;">${item.text}</div>
+                        <div style="font-family: var(--font-serif); font-size: 0.98rem; line-height: 1.6; background: var(--bg-lab); padding: 0.85rem 1rem; border: 1px solid var(--border-divider); border-radius: var(--radius-sharp); color: var(--text-secondary); white-space: pre-wrap; margin-bottom: 1rem; max-height: 140px; overflow-y: auto;">${item.text}</div>
                     </div>
                     <button class="btn-editorial btn-subtle btn-load-corpus-item" data-id="${item.id}" style="width: 100%; font-size: 0.82rem;">
                         Cargar en Perfilador Bayesiano
@@ -249,7 +247,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const predNameEl = document.getElementById('profiler-predicted-name');
         const confBadge = document.getElementById('profiler-confidence-badge');
-        const posteriorTableBody = document.getElementById('posterior-table-body');
+        const indexContainer = document.getElementById('posterior-index-container');
         const evidencesContainer = document.getElementById('profiler-evidences-container');
 
         if (predNameEl) predNameEl.textContent = 'Calculando verosimilitudes bayesianas...';
@@ -278,17 +276,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             const confPct = (data.confidence_score * 100).toFixed(1);
             if (confBadge) confBadge.textContent = `Confianza: ${confPct}%`;
 
-            // 2. Renderizar tabla limpia de consola científica para la distribución posterior
-            if (posteriorTableBody) {
-                posteriorTableBody.innerHTML = data.dialect_ranking.slice(0, 7).map((dr, idx) => {
+            // 2. Renderizar lista estilo índice de libro antiguo
+            if (indexContainer) {
+                indexContainer.innerHTML = data.dialect_ranking.slice(0, 7).map((dr, idx) => {
                     const pct = (dr.posterior_probability * 100).toFixed(1);
                     const isTop = idx === 0;
                     return `
-                        <tr class="${isTop ? 'top-hypothesis' : ''}">
-                            <td><strong>${dr.name}</strong></td>
-                            <td style="font-weight: 600;">${pct}%</td>
-                            <td style="color: var(--text-muted);">d = ${dr.phonetic_distance.toFixed(3)}</td>
-                        </tr>
+                        <div class="posterior-index-row ${isTop ? 'top-hypothesis' : ''}">
+                            <span class="hyp-name">${idx + 1}. ${dr.name}</span>
+                            <div class="hyp-data">
+                                <span class="hyp-pct">${pct}%</span>
+                                <span class="hyp-dist">d = ${dr.phonetic_distance.toFixed(3)}</span>
+                            </div>
+                        </div>
                     `;
                 }).join('');
             }
@@ -376,7 +376,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (fullIpaEl) fullIpaEl.textContent = `/${data.full_ipa_text}/`;
             if (wordCountBadge) wordCountBadge.textContent = `${data.total_words} Palabras`;
 
-            // Renderizar píldoras silábicas limpias
+            // Renderizar fichas silábicas limpias
             if (syllablesContainer) {
                 syllablesContainer.innerHTML = data.transcriptions.map(word => {
                     const sylBadges = word.syllables.map((s, sIdx) => {
@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     return `
                         <div style="display: flex; flex-direction: column; align-items: center; margin: 0.25rem;">
                             <div style="display: flex; gap: 0.25rem;">${sylBadges}</div>
-                            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-terracotta); margin-top: 0.25rem;">/${word.syllabified_ipa}/</div>
+                            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-iron-oxide); margin-top: 0.25rem;">/${word.syllabified_ipa}/</div>
                         </div>
                     `;
                 }).join('');
@@ -447,7 +447,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (schemeDisplay) schemeDisplay.textContent = data.global_rhyme_scheme || 'Libre';
             if (consonantDisplay) {
                 consonantDisplay.textContent = data.is_consonant_expected ? 'Exigida (Clásica)' : 'Asonante / Libre';
-                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-sage-dark)' : 'var(--text-secondary)';
+                consonantDisplay.style.color = data.is_consonant_expected ? 'var(--accent-verdigris)' : 'var(--text-secondary)';
             }
 
             if (tableBody) {
@@ -456,10 +456,10 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <tr>
                         <td><strong style="font-family: var(--font-mono); font-size: 0.82rem;">${v.verse_number}</strong></td>
                         <td style="font-family: var(--font-serif); font-size: 1.08rem;">${v.raw_text}</td>
-                        <td><span class="badge-confidence">${v.metrical_syllables}</span></td>
+                        <td><span class="confidence-metric">${v.metrical_syllables}</span></td>
                         <td style="font-family: var(--font-mono);">${v.sinalefas_count}</td>
                         <td style="font-family: var(--font-mono);">${v.final_stress_compensation > 0 ? `+${v.final_stress_compensation}` : v.final_stress_compensation}</td>
-                        <td><code style="font-family: var(--font-mono); color: var(--accent-terracotta); font-weight: 600;">-${v.rhyme_segment}</code></td>
+                        <td><code style="font-family: var(--font-mono); color: var(--accent-iron-oxide); font-weight: 600;">-${v.rhyme_segment}</code></td>
                     </tr>
                 `).join('');
             }
