@@ -399,6 +399,19 @@ y mientras triunfa con desdén lozano
 del luciente cristal tu gentil cuello.`,
             caseId: 'EXP-GONGORA-1582',
             century: '17'
+        },
+        guillen: {
+            text: `Por qué te pone tan bravo
+cuando te dicen negro bembón,
+si tiene la boca santa,
+negro bembón.
+
+Bembón así como ere
+tiene de to;
+Caridad te mantiene,
+te lo da to.`,
+            caseId: 'EXP-GUILLEN-CUBA-1930',
+            century: '20'
         }
     };
 

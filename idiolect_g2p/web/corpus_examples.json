@@ -2,26 +2,42 @@
   {
     "id": "cadenas_barquisimeto",
     "title": "Rafael Cadenas — Ars Poética (Barquisimeto, Venezuela, Siglo XX)",
-    "author": "Rafael Cadenas (Barquisimeto, Venezuela)",
+    "author": "Rafael Cadenas (Venezuela)",
     "century": 20,
     "expected_dialect": "CARIBBEAN_CONTINENTAL",
     "text": "Que cada palabra lleve lo que dice.\nQue sea como el temblor que la sostiene.\nQue se mantenga como un latido en la noche.\nNo me des palabras que deslumbren,\ndame palabras que amanezcan en la boca."
   },
   {
-    "id": "arraiz_barquisimeto",
-    "title": "Antonio Arráiz — Áspero (Barquisimeto, Venezuela, Siglo XX)",
-    "author": "Antonio Arráiz (Barquisimeto, Venezuela)",
-    "century": 20,
-    "expected_dialect": "CARIBBEAN_CONTINENTAL",
-    "text": "Esta es la tierra brava,\nestos son los hombres recios,\nlos que cantan al viento\ny doman los potros cimarrones\nbajo el sol ardiente del desierto."
-  },
-  {
     "id": "sor_juana_redondilla",
-    "title": "Sor Juana Inés de la Cruz — Redondillas (Seseo Novohispano, Siglo XVII)",
+    "title": "Sor Juana Inés de la Cruz — Redondillas (México, Siglo XVII)",
     "author": "Sor Juana Inés de la Cruz (México)",
     "century": 17,
     "expected_dialect": "MX_CENTRAL",
     "text": "Hombres necios que acusáis\na la mujer sin razón,\nsin ver que sois la ocasión\nde lo mismo que culpáis.\n\nSi con ansia sin igual\nsolicitáis su desdén,\n¿por qué queréis que obren bien\nsi las incitáis al mal?"
+  },
+  {
+    "id": "gongora_soneto",
+    "title": "Luis de Góngora — Mientras por competir con tu cabello (España, Siglo XVII)",
+    "author": "Luis de Góngora (España)",
+    "century": 17,
+    "expected_dialect": "DIACHRONIC_GOLDEN_AGE",
+    "text": "Mientras por competir con tu cabello,\noro bruñido al sol relumbra en vano;\nmientras con menosprecio en medio el llano\nmira tu blanca frente el lilio bello;\n\nmientras a cada labio, por cogello,\nsiguen más ojos que al clavel temprano;\ny mientras triunfa con desdén lozano\ndel luciente cristal tu gentil cuello."
+  },
+  {
+    "id": "gabriela_mistral",
+    "title": "Gabriela Mistral — Piececitos (Chile, Siglo XX)",
+    "author": "Gabriela Mistral (Chile)",
+    "century": 20,
+    "expected_dialect": "CHILEAN",
+    "text": "Piececitos de niño,\nazulosos de frío,\n¡cómo os ven y no os cubren,\nDios mío!\n\nPiececitos heridos\npor los guijarros todos,\nultrajados de nieves\ny lodos."
+  },
+  {
+    "id": "arraiz_barquisimeto",
+    "title": "Antonio Arráiz — Áspero (Barquisimeto, Venezuela, Siglo XX)",
+    "author": "Antonio Arráiz (Venezuela)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_CONTINENTAL",
+    "text": "Esta es la tierra brava,\nestos son los hombres recios,\nlos que cantan al viento\ny doman los potros cimarrones\nbajo el sol ardiente del desierto."
   },
   {
     "id": "rosalia_de_castro",
@@ -32,12 +48,12 @@
     "text": "A través del follaje espeso\nel rayo de la luna brilla,\ny en la fuente la limpia orilla\nbesa el aura con blando beso."
   },
   {
-    "id": "gabriela_mistral",
-    "title": "Gabriela Mistral — Piececitos (Chile, Siglo XX, Premio Nobel 1945)",
-    "author": "Gabriela Mistral (Chile)",
+    "id": "vallejo_peru",
+    "title": "César Vallejo — Los heraldos negros (Perú, Siglo XX)",
+    "author": "César Vallejo (Perú)",
     "century": 20,
-    "expected_dialect": "CHILEAN",
-    "text": "Piececitos de niño,\nazulosos de frío,\n¡cómo os ven y no os cubren,\nDios mío!\n\nPiececitos heridos\npor los guijarros todos,\nultrajados de nieves\ny lodos."
+    "expected_dialect": "ANDES_HIGHLAND",
+    "text": "Hay golpes en la vida, tan fuertes... ¡Yo no sé!\nGolpes como del odio de Dios; como si ante ellos,\nla resaca de todo lo sufrido\nse empozara en el alma... ¡Yo no sé!"
   },
   {
     "id": "santa_teresa",
@@ -48,6 +64,14 @@
     "text": "Vivo sin vivir en mí,\ny tan alta vida espero,\nque muero porque no muero.\n\nVivo ya fuera de mí,\ndespués que muero de amor;\nporque vivo en el Señor,\nque me quiso para sí."
   },
   {
+    "id": "martin_fierro",
+    "title": "José Hernández — Martín Fierro (Argentina, Siglo XIX)",
+    "author": "José Hernández (Argentina)",
+    "century": 19,
+    "expected_dialect": "RIOPLATENSE_ZHEIST",
+    "text": "Aquí me pongo a cantar\nal compás de la vigüela,\nque el hombre que lo desvela\nuna pena estraordinaria,\ncomo la ave solitaria\ncon el cantar se consuela."
+  },
+  {
     "id": "alfonsina_storni",
     "title": "Alfonsina Storni — Tú me quieres blanca (Argentina, Siglo XX)",
     "author": "Alfonsina Storni (Argentina)",
@@ -56,12 +80,28 @@
     "text": "Tú me quieres alba,\nme quieres de espumas,\nme quieres de nácar.\nQue sea azucena\nsobre todas, casta.\nDe perfume tenue.\nCorola cerrada."
   },
   {
+    "id": "dario_nicaragua",
+    "title": "Rubén Darío — Canción de otoño en primavera (Nicaragua, Siglo XIX/XX)",
+    "author": "Rubén Darío (Nicaragua)",
+    "century": 19,
+    "expected_dialect": "CENTRAL_AMERICA",
+    "text": "Juventud, divino tesoro,\n¡ya te vas para no volver!\nCuando quiero llorar, no lloro...\ny a veces lloro sin querer."
+  },
+  {
     "id": "enriqueta_arvelo",
-    "title": "Enriqueta Arvelo Larriva — Canto de la noche (Barinas / Venezuela, Siglo XX)",
+    "title": "Enriqueta Arvelo Larriva — Canto de la noche (Venezuela, Siglo XX)",
     "author": "Enriqueta Arvelo Larriva (Venezuela)",
     "century": 20,
     "expected_dialect": "CARIBBEAN_CONTINENTAL",
     "text": "Voz del viento en la llanura,\nrumor hondo de palmares,\nque derramas tus cantares\nen la noche más oscura."
+  },
+  {
+    "id": "guillen_caribbean",
+    "title": "Nicolás Guillén — Motivos de son (Cuba, Siglo XX)",
+    "author": "Nicolás Guillén (Cuba)",
+    "century": 20,
+    "expected_dialect": "CARIBBEAN_LAMBDACIST",
+    "text": "Por qué te pone tan bravo\ncuando te dicen negro bembón,\nsi tiene la boca santa,\nnegro bembón.\n\nBembón así como ere\ntiene de to;\nCaridad te mantiene,\nte lo da to."
   },
   {
     "id": "gloria_fuertes",
@@ -73,42 +113,10 @@
   },
   {
     "id": "dulce_maria_loynaz",
-    "title": "Dulce María Loynaz — Poemas de amor (Cuba, Siglo XX, Premio Cervantes)",
+    "title": "Dulce María Loynaz — Poemas de amor (Cuba, Siglo XX)",
     "author": "Dulce María Loynaz (Cuba)",
     "century": 20,
     "expected_dialect": "CARIBBEAN_LAMBDACIST",
     "text": "Si me quieres, quiéreme entera,\nno por zonas de luz o sombra...\nSi me quieres, quiéreme negra\ny blanca, y gris, y verde, y rubia."
-  },
-  {
-    "id": "vallejo_peru",
-    "title": "César Vallejo — Los heraldos negros (Andino Tradicional, Siglo XX)",
-    "author": "César Vallejo (Perú)",
-    "century": 20,
-    "expected_dialect": "ANDES_HIGHLAND",
-    "text": "Hay golpes en la vida, tan fuertes... ¡Yo no sé!\nGolpes como del odio de Dios; como si ante ellos,\nla resaca de todo lo sufrido\nse empozara en el alma... ¡Yo no sé!"
-  },
-  {
-    "id": "dario_nicaragua",
-    "title": "Rubén Darío — Canción de otoño en primavera (Modernismo Centroamericano)",
-    "author": "Rubén Darío (Nicaragua)",
-    "century": 19,
-    "expected_dialect": "CENTRAL_AMERICA",
-    "text": "Juventud, divino tesoro,\n¡ya te vas para no volver!\nCuando quiero llorar, no lloro...\ny a veces lloro sin querer."
-  },
-  {
-    "id": "gongora_soneto",
-    "title": "Luis de Góngora — Mientras por competir con tu cabello (Siglo de Oro)",
-    "author": "Luis de Góngora y Argote (España)",
-    "century": 17,
-    "expected_dialect": "DIACHRONIC_GOLDEN_AGE",
-    "text": "Mientras por competir con tu cabello,\noro bruñido al sol relumbra en vano;\nmientras con menosprecio en medio el llano\nmira tu blanca frente el lilio bello;\n\nmientras a cada labio, por cogello,\nsiguen más ojos que al clavel temprano;\ny mientras triunfa con desdén lozano\ndel luciente cristal tu gentil cuello."
-  },
-  {
-    "id": "martin_fierro",
-    "title": "José Hernández — Martín Fierro (Rioplatense Tradicional, Siglo XIX)",
-    "author": "José Hernández (Argentina)",
-    "century": 19,
-    "expected_dialect": "RIOPLATENSE_ZHEIST",
-    "text": "Aquí me pongo a cantar\nal compás de la vigüela,\nque el hombre que lo desvela\nuna pena estraordinaria,\ncomo la ave solitaria\ncon el cantar se consuela."
   }
 ]
