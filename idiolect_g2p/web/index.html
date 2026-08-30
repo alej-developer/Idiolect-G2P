@@ -156,21 +156,47 @@ del luciente cristal tu gentil cuello.</textarea>
              VISTA 2: TRANSCRIPTOR G2P & SÍNTESIS ACÚSTICA
              =================================================================== -->
         <section id="vista-transcriptor" class="vista-seccion">
-            <div style="padding: 3.5rem 4rem; max-width: 1100px;">
+            <div style="padding: 3.5rem 4rem; max-width: 1100px; margin: 0 auto;">
                 <div class="lab-section-title">
                     <span>Transductor Fonológico G2P & Síntesis Acústica Formántica</span>
-                    <span class="lab-metric-highlight">AFI Formal</span>
+                    <span class="lab-metric-highlight">Síntesis Formántica WAV</span>
                 </div>
                 <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
-                    Transducción ortográfica a representación alofónica estrecha según el modelo de geometría de rasgos de Clements & Hume (1995).
+                    Transducción grafema a fonema (G2P) a representación alofónica estrecha y síntesis acústica formántica según frecuencias de formantes F0, F1, F2 y F3 (modelo Klatt / Fant).
                 </p>
                 <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
-                    <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Texto a Transcribir:</label>
-                    <input type="text" id="g2p-quick-input" class="meta-input" style="font-size: 1.15rem; width: 100%; margin-bottom: 1.5rem;" value="Los cazadores llegaron a la casa del puerto.">
-                    <div style="display: flex; gap: 1rem;">
-                        <button id="btn-g2p-quick" class="btn-inferencia" type="button">Transcribir a AFI</button>
+                    <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
+                        <div>
+                            <label for="g2p-quick-input" class="meta-label" style="margin-bottom: 0.5rem; display: block;">Texto a Transcribir y Sintetizar:</label>
+                            <input type="text" id="g2p-quick-input" class="meta-input" style="font-size: 1.15rem; width: 100%;" value="Los cazadores llegaron a la casa del puerto.">
+                        </div>
+                        <div>
+                            <label for="g2p-dialect-select" class="meta-label" style="margin-bottom: 0.5rem; display: block;">Variedad Dialectal:</label>
+                            <select id="g2p-dialect-select" class="meta-input" style="width: 100%;">
+                                <option value="ES_PENINSULAR" selected>Castellano Peninsular</option>
+                                <option value="CARIBBEAN_CONTINENTAL">Caribeño Continental (Venezuela/Colombia)</option>
+                                <option value="CARIBBEAN_LAMBDACIST">Caribeño Lambdacista (Cuba/PR)</option>
+                                <option value="RIOPLATENSE_ZHEIST">Rioplatense (Zheísmo / Sheísmo)</option>
+                                <option value="ANDALUSIAN_RADICAL">Andaluz Radical (Ceceo / Aspiración)</option>
+                                <option value="MX_CENTRAL">Mexicano Central</option>
+                                <option value="CHILEAN">Chileno</option>
+                                <option value="DIACHRONIC_GOLDEN_AGE">Español del Siglo de Oro (Áureo)</option>
+                            </select>
+                        </div>
                     </div>
-                    <pre class="consola-afi-box" style="margin-top: 1.5rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.sa.ðo.ɾes ʝe.ɣa.ɾon a la ka.sa ðel pweɾ.to/</code></pre>
+
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                        <button id="btn-g2p-quick" class="btn-inferencia" type="button">Transcribir a AFI</button>
+                        <button id="btn-g2p-audio" class="btn-inferencia" type="button" style="border-color: var(--acento-liquen); color: var(--acento-liquen);">
+                            Sintetizar y Reproducir Audio
+                        </button>
+                    </div>
+
+                    <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Transcripción Alofónica Estrecha (AFI):</label>
+                    <pre class="consola-afi-box" style="margin-bottom: 1.5rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/</code></pre>
+
+                    <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Reproducción Acústica Formántica:</label>
+                    <audio id="g2p-audio-player" controls style="width: 100%; border-radius: var(--radius-encuadernacion); filter: sepia(20%);"></audio>
                 </div>
             </div>
         </section>

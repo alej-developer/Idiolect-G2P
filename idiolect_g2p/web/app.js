@@ -263,34 +263,68 @@ que no mi entendimiento en las riquezas.`;
     }
 
     // =========================================================================
-    // 4. Módulo Transcriptor Rápido (Vista 2)
+    // 4. Módulo Transcriptor Rápido & Síntesis Acústica (Vista 2)
     // =========================================================================
     const btnG2pQuick = document.getElementById('btn-g2p-quick');
+    const btnG2pAudio = document.getElementById('btn-g2p-audio');
     const inputG2pQuick = document.getElementById('g2p-quick-input');
+    const selectG2pDialect = document.getElementById('g2p-dialect-select');
     const outputG2pQuick = document.getElementById('g2p-quick-output');
+    const playerG2pAudio = document.getElementById('g2p-audio-player');
 
-    if (btnG2pQuick && inputG2pQuick && outputG2pQuick) {
-        btnG2pQuick.addEventListener('click', async () => {
-            const text = inputG2pQuick.value.trim();
-            if (!text) return;
-            try {
-                const res = await fetch('/api/v1/transcribe', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        text: text,
-                        dialect_code: 'ES_PENINSULAR',
-                        generate_audio: false
-                    })
-                });
-                if (res.ok) {
-                    const data = await res.json();
+    async function transcribirYSintetizarG2P(generarAudio = false) {
+        if (!inputG2pQuick) return;
+        const text = inputG2pQuick.value.trim();
+        if (!text) return;
+
+        const dialectCode = selectG2pDialect ? selectG2pDialect.value : 'ES_PENINSULAR';
+
+        if (generarAudio && btnG2pAudio) {
+            btnG2pAudio.textContent = 'Sintetizando formantes...';
+            btnG2pAudio.style.opacity = '0.7';
+        }
+
+        try {
+            const res = await fetch('/api/v1/transcribe', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    text: text,
+                    dialect_code: dialectCode,
+                    generate_audio: generarAudio
+                })
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                if (outputG2pQuick) {
                     outputG2pQuick.textContent = `/${data.full_ipa_text}/`;
                 }
-            } catch (e) {
-                outputG2pQuick.textContent = `/los ka.sa.ðo.ɾes ʝe.ɣa.ɾon a la ka.sa ðel pweɾ.to/`;
+
+                if (generarAudio && data.audio_base64 && playerG2pAudio) {
+                    playerG2pAudio.src = `data:audio/wav;base64,${data.audio_base64}`;
+                    playerG2pAudio.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
+                }
             }
-        });
+        } catch (e) {
+            console.error('Error en transducción/síntesis G2P:', e);
+            if (outputG2pQuick) {
+                outputG2pQuick.textContent = `/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/`;
+            }
+        } finally {
+            if (btnG2pAudio) {
+                btnG2pAudio.textContent = 'Sintetizar y Reproducir Audio';
+                btnG2pAudio.style.opacity = '1';
+            }
+        }
+    }
+
+    if (btnG2pQuick) {
+        btnG2pQuick.addEventListener('click', () => transcribirYSintetizarG2P(false));
+    }
+
+    if (btnG2pAudio) {
+        btnG2pAudio.addEventListener('click', () => transcribirYSintetizarG2P(true));
     }
 
     // Muestras Literarias Latinoamericanas, Españolas e Históricas
