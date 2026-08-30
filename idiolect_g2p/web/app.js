@@ -232,6 +232,7 @@ que no mi entendimiento en las riquezas.`;
                 if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
 
                 renderizarDistribucion(data.dialect_ranking.slice(0, 5));
+                ultimoDialectoPredicho = data.predicted_dialect_code;
                 await actualizarConsolaAfi(texto, data.predicted_dialect_code);
             } else {
                 simularRespuestaLocal();
@@ -244,6 +245,48 @@ que no mi entendimiento en las riquezas.`;
                 btnInferencia.style.opacity = '1';
             }
         }
+    }
+
+    let ultimoDialectoPredicho = 'DIACHRONIC_GOLDEN_AGE';
+    const btnReproducirPerfilador = document.getElementById('btn-reproducir-perfilador');
+    const audioPlayerPerfilador = document.getElementById('audio-player-perfilador');
+
+    if (btnReproducirPerfilador && audioPlayerPerfilador) {
+        btnReproducirPerfilador.addEventListener('click', async () => {
+            if (!textoInput) return;
+            const texto = textoInput.value.trim();
+            if (!texto) return;
+
+            btnReproducirPerfilador.textContent = 'Sintetizando...';
+            btnReproducirPerfilador.style.opacity = '0.7';
+
+            try {
+                // Sintetizar los primeros versos/oraciones representativos
+                const lineas = texto.split('\n').map(l => l.trim()).filter(Boolean).slice(0, 2).join('. ');
+                const res = await fetch('/api/v1/transcribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        text: lineas || texto,
+                        dialect_code: ultimoDialectoPredicho || 'DIACHRONIC_GOLDEN_AGE',
+                        generate_audio: true
+                    })
+                });
+
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.audio_base64) {
+                        audioPlayerPerfilador.src = `data:audio/wav;base64,${data.audio_base64}`;
+                        audioPlayerPerfilador.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
+                    }
+                }
+            } catch (e) {
+                console.error('Error al sintetizar audio del dictamen:', e);
+            } finally {
+                btnReproducirPerfilador.textContent = 'Escuchar Síntesis';
+                btnReproducirPerfilador.style.opacity = '1';
+            }
+        });
     }
 
     function simularRespuestaLocal() {
