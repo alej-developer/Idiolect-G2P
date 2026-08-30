@@ -58,6 +58,12 @@ def test_transcribe_endpoint(client: TestClient) -> None:
     assert data["total_words"] == 3
     assert "audio_base64" in data
     assert data["audio_base64"] is not None
+    assert "word_timings" in data
+    assert data["word_timings"] is not None
+    assert len(data["word_timings"]) == 3
+    assert data["word_timings"][0]["word"] == "caza"
+    assert data["word_timings"][0]["start_time"] >= 0.0
+    assert data["word_timings"][0]["end_time"] > data["word_timings"][0]["start_time"]
 
 
 def test_syllabify_endpoint(client: TestClient) -> None:

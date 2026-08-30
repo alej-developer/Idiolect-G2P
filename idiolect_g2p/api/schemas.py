@@ -34,6 +34,15 @@ class WordTranscriptionSchema(BaseModel):
     stress_index: int
 
 
+class WordTimingSchema(BaseModel):
+    """Marca temporal de una palabra para sincronización de audio en tiempo real."""
+    word: str
+    normalized_word: Optional[str] = None
+    ipa: str
+    start_time: float
+    end_time: float
+
+
 class TranscribeResponse(BaseModel):
     """Respuesta de transcripcion fonetica G2P."""
     dialect_code: str
@@ -42,6 +51,7 @@ class TranscribeResponse(BaseModel):
     transcriptions: List[WordTranscriptionSchema]
     full_ipa_text: str
     audio_base64: Optional[str] = None
+    word_timings: Optional[List[WordTimingSchema]] = None
 
 
 class SyllabifyRequest(BaseModel):

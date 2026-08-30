@@ -250,6 +250,116 @@ que no mi entendimiento en las riquezas.`;
     let ultimoDialectoPredicho = 'DIACHRONIC_GOLDEN_AGE';
     const btnReproducirPerfilador = document.getElementById('btn-reproducir-perfilador');
     const audioPlayerPerfilador = document.getElementById('audio-player-perfilador');
+    const manuscritoSincronizadoPerfilador = document.getElementById('manuscrito-sincronizado-perfilador');
+    const audioStatusPerfilador = document.getElementById('audio-status-perfilador');
+
+    // Motor de Sincronización Interactiva Texto-Audio (Karaoke Fonológico)
+    function configurarSincronizacionAudio({ audioEl, containerWords, containerIpa, statusBadge, wordTimings }) {
+        if (!audioEl || !wordTimings || wordTimings.length === 0) return;
+
+        if (containerWords) {
+            containerWords.innerHTML = '';
+            containerWords.style.display = 'block';
+            wordTimings.forEach((wt, idx) => {
+                const span = document.createElement('span');
+                span.className = 'synced-word';
+                span.textContent = wt.word;
+                span.dataset.wordIdx = idx;
+                span.dataset.start = wt.start_time;
+                span.dataset.end = wt.end_time;
+                span.title = `[${wt.ipa}] (${wt.start_time.toFixed(2)}s - ${wt.end_time.toFixed(2)}s) — Clic para reproducir`;
+                span.addEventListener('click', () => {
+                    audioEl.currentTime = wt.start_time;
+                    audioEl.play().catch(() => {});
+                });
+                containerWords.appendChild(span);
+                containerWords.appendChild(document.createTextNode(' '));
+            });
+        }
+
+        if (containerIpa) {
+            containerIpa.innerHTML = '';
+            containerIpa.style.display = 'flex';
+            wordTimings.forEach((wt, idx) => {
+                const span = document.createElement('span');
+                span.className = 'synced-ipa';
+                span.textContent = `/${wt.ipa}/`;
+                span.dataset.wordIdx = idx;
+                span.dataset.start = wt.start_time;
+                span.dataset.end = wt.end_time;
+                span.title = `${wt.word} (${wt.start_time.toFixed(2)}s - ${wt.end_time.toFixed(2)}s)`;
+                span.addEventListener('click', () => {
+                    audioEl.currentTime = wt.start_time;
+                    audioEl.play().catch(() => {});
+                });
+                containerIpa.appendChild(span);
+            });
+        }
+
+        function actualizarHighlight() {
+            const t = audioEl.currentTime;
+            let activeIdx = -1;
+            for (let i = 0; i < wordTimings.length; i++) {
+                const wt = wordTimings[i];
+                if (t >= wt.start_time && t <= wt.end_time + 0.05) {
+                    activeIdx = i;
+                    break;
+                }
+            }
+
+            if (containerWords) {
+                const wordSpans = containerWords.querySelectorAll('.synced-word');
+                wordSpans.forEach((s, idx) => {
+                    if (idx === activeIdx) {
+                        s.classList.add('reproduciendo');
+                    } else {
+                        s.classList.remove('reproduciendo');
+                    }
+                });
+            }
+
+            if (containerIpa) {
+                const ipaSpans = containerIpa.querySelectorAll('.synced-ipa');
+                ipaSpans.forEach((s, idx) => {
+                    if (idx === activeIdx) {
+                        s.classList.add('reproduciendo');
+                    } else {
+                        s.classList.remove('reproduciendo');
+                    }
+                });
+            }
+
+            if (statusBadge) {
+                if (audioEl.paused && !audioEl.ended) {
+                    statusBadge.textContent = 'En Pausa';
+                } else if (audioEl.ended) {
+                    statusBadge.textContent = 'Finalizado';
+                } else if (activeIdx >= 0) {
+                    statusBadge.textContent = `Pronunciando: "${wordTimings[activeIdx].word}"`;
+                } else {
+                    statusBadge.textContent = 'Reproduciendo...';
+                }
+            }
+        }
+
+        audioEl.ontimeupdate = actualizarHighlight;
+        audioEl.onplay = () => {
+            if (statusBadge) statusBadge.textContent = 'Reproduciendo...';
+            actualizarHighlight();
+        };
+        audioEl.onpause = () => {
+            if (statusBadge) statusBadge.textContent = 'En Pausa';
+        };
+        audioEl.onended = () => {
+            if (statusBadge) statusBadge.textContent = 'Finalizado';
+            if (containerWords) {
+                containerWords.querySelectorAll('.synced-word').forEach(s => s.classList.remove('reproduciendo'));
+            }
+            if (containerIpa) {
+                containerIpa.querySelectorAll('.synced-ipa').forEach(s => s.classList.remove('reproduciendo'));
+            }
+        };
+    }
 
     if (btnReproducirPerfilador && audioPlayerPerfilador) {
         btnReproducirPerfilador.addEventListener('click', async () => {
@@ -259,10 +369,10 @@ que no mi entendimiento en las riquezas.`;
 
             btnReproducirPerfilador.textContent = 'Sintetizando...';
             btnReproducirPerfilador.style.opacity = '0.7';
+            if (audioStatusPerfilador) audioStatusPerfilador.textContent = 'Sintetizando formantes...';
 
             try {
-                // Sintetizar los primeros versos/oraciones representativos
-                const lineas = texto.split('\n').map(l => l.trim()).filter(Boolean).slice(0, 2).join('. ');
+                const lineas = texto.split('\n').map(l => l.trim()).filter(Boolean).slice(0, 3).join('. ');
                 const res = await fetch('/api/v1/transcribe', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -277,13 +387,22 @@ que no mi entendimiento en las riquezas.`;
                     const data = await res.json();
                     if (data.audio_base64) {
                         audioPlayerPerfilador.src = `data:audio/wav;base64,${data.audio_base64}`;
+                        if (data.word_timings) {
+                            configurarSincronizacionAudio({
+                                audioEl: audioPlayerPerfilador,
+                                containerWords: manuscritoSincronizadoPerfilador,
+                                containerIpa: null,
+                                statusBadge: audioStatusPerfilador,
+                                wordTimings: data.word_timings
+                            });
+                        }
                         audioPlayerPerfilador.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
                     }
                 }
             } catch (e) {
                 console.error('Error al sintetizar audio del dictamen:', e);
             } finally {
-                btnReproducirPerfilador.textContent = 'Escuchar Síntesis';
+                btnReproducirPerfilador.textContent = 'Escuchar Dictamen';
                 btnReproducirPerfilador.style.opacity = '1';
             }
         });
@@ -314,6 +433,9 @@ que no mi entendimiento en las riquezas.`;
     const selectG2pDialect = document.getElementById('g2p-dialect-select');
     const outputG2pQuick = document.getElementById('g2p-quick-output');
     const playerG2pAudio = document.getElementById('g2p-audio-player');
+    const g2pKaraokeWords = document.getElementById('g2p-karaoke-words');
+    const g2pKaraokeIpa = document.getElementById('g2p-karaoke-ipa');
+    const audioStatusG2p = document.getElementById('audio-status-g2p');
 
     async function transcribirYSintetizarG2P(generarAudio = false) {
         if (!inputG2pQuick) return;
@@ -325,6 +447,7 @@ que no mi entendimiento en las riquezas.`;
         if (generarAudio && btnG2pAudio) {
             btnG2pAudio.textContent = 'Sintetizando formantes...';
             btnG2pAudio.style.opacity = '0.7';
+            if (audioStatusG2p) audioStatusG2p.textContent = 'Sintetizando formantes...';
         }
 
         try {
@@ -346,6 +469,15 @@ que no mi entendimiento en las riquezas.`;
 
                 if (generarAudio && data.audio_base64 && playerG2pAudio) {
                     playerG2pAudio.src = `data:audio/wav;base64,${data.audio_base64}`;
+                    if (data.word_timings) {
+                        configurarSincronizacionAudio({
+                            audioEl: playerG2pAudio,
+                            containerWords: g2pKaraokeWords,
+                            containerIpa: g2pKaraokeIpa,
+                            statusBadge: audioStatusG2p,
+                            wordTimings: data.word_timings
+                        });
+                    }
                     playerG2pAudio.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
                 }
             }

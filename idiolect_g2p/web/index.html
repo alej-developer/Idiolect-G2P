@@ -109,15 +109,19 @@ del luciente cristal tu gentil cuello.</textarea>
 /mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/
 /mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/</code></pre>
 
-                        <!-- Reproductor Acústico del Dictamen -->
-                        <div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 0.5rem; background: var(--fondo-manuscrito); padding: 0.85rem 1rem; border: 1px solid var(--lineas-tinta); border-radius: var(--radius-encuadernacion);">
-                            <div style="display: flex; justify-content: space-between; align-items: center;">
-                                <label class="meta-label" style="font-size: 0.72rem;">Reproducción Acústica del Dictamen:</label>
-                                <button id="btn-reproducir-perfilador" class="btn-inferencia" type="button" style="padding: 0.35rem 0.75rem; font-size: 0.72rem; border-color: var(--acento-liquen); color: var(--acento-liquen);">
-                                    Escuchar Síntesis
-                                </button>
+                        <!-- Reproductor Acústico del Dictamen con Sincronización en Tiempo Real -->
+                        <div class="audio-controls-panel">
+                            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem;">
+                                <label class="meta-label" style="font-size: 0.72rem;">SÍNTESIS ACÚSTICA & SEGUIMIENTO VISUAL:</label>
+                                <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                    <span id="audio-status-perfilador" class="audio-status-badge">Listo</span>
+                                    <button id="btn-reproducir-perfilador" class="btn-inferencia" type="button" style="padding: 0.35rem 0.85rem; font-size: 0.74rem; border-color: var(--acento-liquen); color: var(--acento-liquen);">
+                                        Escuchar Dictamen
+                                    </button>
+                                </div>
                             </div>
-                            <audio id="audio-player-perfilador" controls style="width: 100%; height: 32px; border-radius: var(--radius-encuadernacion);"></audio>
+                            <audio id="audio-player-perfilador" controls style="width: 100%; height: 34px; border-radius: var(--radius-encuadernacion);"></audio>
+                            <div id="manuscrito-sincronizado-perfilador" class="karaoke-box" style="display: none;" aria-label="Seguimiento del texto en tiempo real"></div>
                         </div>
                     </div>
 
@@ -173,7 +177,7 @@ del luciente cristal tu gentil cuello.</textarea>
                     <span class="lab-metric-highlight">Síntesis Formántica WAV</span>
                 </div>
                 <p style="color: var(--texto-sepia); font-size: 1.15rem; margin-bottom: 2rem; line-height: 1.7;">
-                    Transducción grafema a fonema (G2P) a representación alofónica estrecha y síntesis acústica formántica según frecuencias de formantes F0, F1, F2 y F3 (modelo Klatt / Fant).
+                    Transducción grafema a fonema (G2P) a representación alofónica estrecha y síntesis acústica formántica según frecuencias de formantes F0, F1, F2 y F3 (modelo Klatt / Fant / Rosenberg).
                 </p>
                 <div style="background: var(--fondo-manuscrito); border: 1px solid var(--lineas-tinta); padding: 2rem; border-radius: var(--radius-encuadernacion);">
                     <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1.25rem;">
@@ -204,10 +208,18 @@ del luciente cristal tu gentil cuello.</textarea>
                     </div>
 
                     <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Transcripción Alofónica Estrecha (AFI):</label>
-                    <pre class="consola-afi-box" style="margin-bottom: 1.5rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/</code></pre>
+                    <pre class="consola-afi-box" style="margin-bottom: 1rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/</code></pre>
 
-                    <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Reproducción Acústica Formántica:</label>
-                    <audio id="g2p-audio-player" controls style="width: 100%; border-radius: var(--radius-encuadernacion); filter: sepia(20%);"></audio>
+                    <!-- Reproductor y Sincronización en Tiempo Real -->
+                    <div class="audio-controls-panel">
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <label class="meta-label" style="font-size: 0.72rem;">REPRODUCCIÓN & SEGUIMIENTO VISUAL EN TIEMPO REAL:</label>
+                            <span id="audio-status-g2p" class="audio-status-badge">Listo</span>
+                        </div>
+                        <audio id="g2p-audio-player" controls style="width: 100%; border-radius: var(--radius-encuadernacion);"></audio>
+                        <div id="g2p-karaoke-words" class="karaoke-box" style="display: none;" aria-label="Texto con seguimiento en tiempo real"></div>
+                        <div id="g2p-karaoke-ipa" class="synced-ipa-container" style="display: none;" aria-label="AFI con seguimiento en tiempo real"></div>
+                    </div>
                 </div>
             </div>
         </section>

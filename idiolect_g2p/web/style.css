@@ -566,3 +566,102 @@ select.meta-input option {
         justify-content: center;
     }
 }
+
+/* =========================================================================
+   SINCRONIZACIÓN VISUAL TEXTO-AUDIO EN TIEMPO REAL (KARAOKE FONOLÓGICO)
+   ========================================================================= */
+.karaoke-box {
+    background: var(--fondo-viewport);
+    border: 1px solid var(--lineas-tinta);
+    border-radius: var(--radius-encuadernacion);
+    padding: 1.15rem 1.35rem;
+    margin-top: 1rem;
+    line-height: 2.1;
+    font-size: 1.25rem;
+    font-family: var(--font-literaria);
+    min-height: 80px;
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.synced-word {
+    display: inline-block;
+    padding: 0.1rem 0.35rem;
+    margin: 0.1rem 0.15rem;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    border-bottom: 2px solid transparent;
+}
+
+.synced-word:hover {
+    background: rgba(217, 115, 90, 0.12);
+    border-bottom-color: var(--acento-siena);
+}
+
+.synced-word.reproduciendo,
+.reproduciendo {
+    background-color: var(--acento-siena) !important;
+    color: #FFFFFF !important;
+    font-weight: 600 !important;
+    transform: translateY(-2px) scale(1.06);
+    box-shadow: 0 4px 12px rgba(217, 115, 90, 0.35);
+    border-bottom-color: transparent;
+}
+
+.synced-ipa-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.85rem 1rem;
+    background: var(--fondo-manuscrito);
+    border: 1px solid var(--lineas-tinta);
+    border-radius: var(--radius-encuadernacion);
+    font-family: var(--font-cientifica);
+    font-size: 0.95rem;
+    color: var(--texto-sepia);
+    margin-top: 0.75rem;
+    line-height: 1.8;
+}
+
+.synced-ipa {
+    padding: 0.15rem 0.4rem;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.synced-ipa:hover {
+    background: rgba(123, 158, 135, 0.15);
+    color: var(--acento-liquen);
+}
+
+.synced-ipa.reproduciendo {
+    background: var(--acento-liquen) !important;
+    color: #FFFFFF !important;
+    font-weight: bold;
+    transform: scale(1.08);
+    box-shadow: 0 2px 8px rgba(123, 158, 135, 0.4);
+}
+
+.audio-controls-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    background: var(--fondo-manuscrito);
+    padding: 1.15rem 1.35rem;
+    border: 1px solid var(--lineas-tinta);
+    border-radius: var(--radius-encuadernacion);
+    margin-top: 1.25rem;
+}
+
+.audio-status-badge {
+    font-family: var(--font-cientifica);
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.2rem 0.6rem;
+    border-radius: 12px;
+    background: rgba(123, 158, 135, 0.15);
+    color: var(--acento-liquen);
+    border: 1px solid var(--acento-liquen);
+}

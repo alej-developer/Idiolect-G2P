@@ -4,4 +4,4 @@ Framework for Inverse Dialectal and Diachronic Phonological Disambiguation.
 """
 
 __version__ = "1.0.0"
-__author__ = "Alejandro"
+__author__ = "Alejandro Peña"

@@ -79,6 +79,71 @@ class IPAFormantSynthesizer:
 
         return output
 
+    def _generate_glottal_pulse(
+        self,
+        f0: float,
+        num_samples: int,
+        start_phase: float = 0.0
+    ) -> Tuple[List[float], float]:
+        """
+        Genera un tren de pulsos glóticos asimétricos según el modelo acústico de Rosenberg.
+        Produce una envolvente armónica con caída natural rica y cálida sin estridencias.
+        """
+        if f0 <= 0.0:
+            return [0.0] * num_samples, start_phase
+
+        samples: List[float] = []
+        phase = start_phase
+        phase_increment = (2.0 * math.pi * f0) / self.sample_rate
+
+        for _ in range(num_samples):
+            # Normalizar ciclo a [0.0, 1.0)
+            t = (phase / (2.0 * math.pi)) % 1.0
+            if t < 0.60:
+                # Fase de apertura glótica (elevación suave)
+                g = 0.5 * (1.0 - math.cos(math.pi * t / 0.60))
+            elif t < 0.85:
+                # Fase de cierre abrupto
+                g = math.cos(math.pi * (t - 0.60) / 0.50)
+            else:
+                # Fase cerrada
+                g = 0.0
+
+            samples.append(g - 0.3)  # Remover componente DC
+            phase += phase_increment
+            if phase > 2.0 * math.pi:
+                phase -= 2.0 * math.pi
+
+        return samples, phase
+
+    def _apply_formant_resonator(
+        self,
+        input_signal: Sequence[float],
+        center_freq: float,
+        bandwidth: float
+    ) -> List[float]:
+        """Aplica un filtro resonador IIR de segundo orden (polo resonante) para un formante."""
+        if center_freq <= 0.0 or bandwidth <= 0.0 or not input_signal:
+            return list(input_signal)
+
+        r = math.exp(-math.pi * (bandwidth / self.sample_rate))
+        omega = 2.0 * math.pi * (center_freq / self.sample_rate)
+        c = 2.0 * r * math.cos(omega)
+        r2 = r * r
+        gain = 1.0 - r
+
+        y1 = 0.0
+        y2 = 0.0
+        output: List[float] = []
+
+        for x in input_signal:
+            y0 = gain * x + c * y1 - r2 * y2
+            y2 = y1
+            y1 = y0
+            output.append(y0)
+
+        return output
+
     def _synthesize_phone(
         self,
         params: AcousticParameters,
@@ -87,45 +152,42 @@ class IPAFormantSynthesizer:
     ) -> List[float]:
         """
         Sintetiza la trama temporal de audio correspondiente a un fonema individual
-        combinando osciladores formanticos (F1, F2, F3) y componentes de friccion.
+        combinando osciladores formanticos resonantes (F1, F2, F3, F4) y componentes de friccion.
         """
-        # Ajuste prosodico de duracion y frecuencia fundamental F0 para silaba tonica
         duration_factor = 1.35 if is_stressed else 1.0
         if is_end_of_word:
             duration_factor *= 1.15
 
-        actual_duration_ms = max(25.0, params.duration_ms * duration_factor)
+        actual_duration_ms = max(30.0, params.duration_ms * duration_factor)
         num_samples = int((actual_duration_ms / 1000.0) * self.sample_rate)
 
         # Curva de entonacion F0 (Frecuencia Fundamental)
         base_f0 = 135.0 if is_stressed else 115.0
         f0 = params.f0_hz if params.f0_hz > 0.0 else base_f0
         if is_stressed:
-            f0 *= 1.20  # Elevacion de tono en silaba tonica
+            f0 *= 1.20  # Elevación de tono en sílaba tónica
 
-        # 1. Generacion de formantes armonicos (Fuente glotal resonante)
+        # 1. Generación de fuente glotal y resonancias formánticas
         samples_voice = [0.0] * num_samples
         if params.voicing_amplitude > 0.0 and params.f1_hz > 0.0:
-            # Sintesis aditiva calibrada de los 4 formantes principales
-            s_f1, _ = self._generate_sine(params.f1_hz, num_samples)
-            s_f2, _ = self._generate_sine(params.f2_hz, num_samples)
-            s_f3, _ = self._generate_sine(params.f3_hz, num_samples)
-            s_f4, _ = self._generate_sine(params.f4_hz, num_samples)
-            s_f0, _ = self._generate_sine(f0, num_samples)
+            glottal_source, _ = self._generate_glottal_pulse(f0, num_samples)
+
+            # Resonadores formánticos con anchos de banda calibrados
+            res_f1 = self._apply_formant_resonator(glottal_source, params.f1_hz, bandwidth=80.0)
+            res_f2 = self._apply_formant_resonator(glottal_source, params.f2_hz, bandwidth=100.0)
+            res_f3 = self._apply_formant_resonator(glottal_source, params.f3_hz, bandwidth=120.0)
+            res_f4 = self._apply_formant_resonator(glottal_source, params.f4_hz, bandwidth=150.0)
 
             for i in range(num_samples):
-                # Ponderacion formántica con caida espectral natural (-6 dB/octava)
                 v = (
-                    0.40 * s_f1[i] +
-                    0.30 * s_f2[i] +
-                    0.20 * s_f3[i] +
-                    0.10 * s_f4[i]
+                    0.45 * res_f1[i] +
+                    0.30 * res_f2[i] +
+                    0.18 * res_f3[i] +
+                    0.07 * res_f4[i]
                 )
-                # Modulacion de amplitud glotal F0
-                v *= (0.7 + 0.3 * s_f0[i])
                 samples_voice[i] = v * params.voicing_amplitude
 
-        # 2. Generacion de componente de ruido / friccion
+        # 2. Generación de componente de ruido / fricción
         samples_noise = [0.0] * num_samples
         if params.noise_amplitude > 0.0 and params.noise_center_freq > 0.0:
             raw_noise = self._generate_filtered_noise(
@@ -136,18 +198,18 @@ class IPAFormantSynthesizer:
             for i in range(num_samples):
                 samples_noise[i] = raw_noise[i] * params.noise_amplitude
 
-        # 3. Suma y aplicacion de envolvente temporal trapezoidal (Ataque y Decaimiento)
+        # 3. Envolvente temporal suave antishock (Hann / Trapezoidal)
         combined: List[float] = []
-        attack_samples = max(1, int((params.attack_ms / 1000.0) * self.sample_rate))
-        decay_samples = max(1, int((params.decay_ms / 1000.0) * self.sample_rate))
+        attack_samples = max(2, int((params.attack_ms / 1000.0) * self.sample_rate))
+        decay_samples = max(2, int((params.decay_ms / 1000.0) * self.sample_rate))
 
         for i in range(num_samples):
-            # Calculo de ganancia de envolvente
             env = 1.0
             if i < attack_samples:
-                env = i / attack_samples
+                env = 0.5 * (1.0 - math.cos(math.pi * i / attack_samples))
             elif i > num_samples - decay_samples:
-                env = (num_samples - i) / decay_samples
+                decay_pos = (num_samples - i) / decay_samples
+                env = 0.5 * (1.0 - math.cos(math.pi * decay_pos))
 
             sample_val = (samples_voice[i] + samples_noise[i]) * env
             combined.append(sample_val)
@@ -163,13 +225,10 @@ class IPAFormantSynthesizer:
         Parsea una cadena en notacion AFI (con marcas de acento ˈ y puntos .)
         y genera el arreglo continuo de muestras PCM normalizadas.
         """
-        # Limpiar barras de transcripcion fonetica
         clean_ipa = ipa_str.strip("/[] ")
         if not clean_ipa:
             return [0.0] * int(0.05 * self.sample_rate)
 
-        # Parsear simbolos AFI y marcadores prosodicos
-        # Reconocimiento de digrafos complejos y alofonos con diacriticos
         multi_char_symbols = [
             "t͡ʃ", "t͡ʂ", "t͡ɬ", "s̺", "e̥", "o̥", "ts", "dz"
         ]
@@ -182,13 +241,11 @@ class IPAFormantSynthesizer:
         while i < n:
             char = clean_ipa[i]
 
-            # Marcador de acento prosodico primario
             if char == "ˈ":
                 is_current_stressed = True
                 i += 1
                 continue
 
-            # Frontera silabica (micro-pausa o transicion de 10 ms)
             if char == ".":
                 is_current_stressed = False
                 audio_samples.extend([0.0] * int(0.010 * self.sample_rate))
@@ -201,7 +258,6 @@ class IPAFormantSynthesizer:
                 i += 1
                 continue
 
-            # Comprobar si coincide con un simbolo multi-caracter
             matched_symbol: Optional[str] = None
             for mcs in multi_char_symbols:
                 if clean_ipa.startswith(mcs, i):
@@ -243,7 +299,6 @@ class IPAFormantSynthesizer:
             wav_file.setsampwidth(2)      # 16-bit PCM (2 bytes por muestra)
             wav_file.setframerate(self.sample_rate)
 
-            # Empaquetamiento binario optimizado con struct
             raw_frames = bytearray()
             for s in samples:
                 val = int(max(-1.0, min(1.0, s * norm_factor)) * 32767.0)
@@ -270,18 +325,47 @@ class IPAFormantSynthesizer:
         dialect: Optional[Dialect] = None
     ) -> bytes:
         """Transcribe un verso u oracion completa y genera su audio WAV continuo."""
+        wav_bytes, _ = self.synthesize_text_with_timings(text, dialect=dialect)
+        return wav_bytes
+
+    def synthesize_text_with_timings(
+        self,
+        text: str,
+        dialect: Optional[Dialect] = None
+    ) -> Tuple[bytes, List[dict]]:
+        """
+        Transcribe un texto verso a verso, genera el audio continuo WAV
+        y computa las marcas temporales exactas (start_time, end_time) para cada palabra.
+        """
         transducer = G2PTransducer(default_dialect=dialect)
         results = transducer.transcribe_text(text, dialect=dialect)
         all_samples: List[float] = []
+        word_timings: List[dict] = []
+
+        current_sample_idx = 0
 
         for idx, r in enumerate(results):
+            start_time = current_sample_idx / self.sample_rate
             word_samples = self.synthesize_ipa_string(r.syllabified_ipa)
             all_samples.extend(word_samples)
+            current_sample_idx += len(word_samples)
+            end_time = current_sample_idx / self.sample_rate
+
+            word_timings.append({
+                "word": r.prosodic_word.original_text,
+                "normalized_word": r.prosodic_word.normalized_text,
+                "ipa": r.syllabified_ipa,
+                "start_time": round(start_time, 3),
+                "end_time": round(end_time, 3)
+            })
+
             # Pausa inter-palabra de 60 ms
             if idx < len(results) - 1:
-                all_samples.extend([0.0] * int(0.060 * self.sample_rate))
+                pause_samples = int(0.060 * self.sample_rate)
+                all_samples.extend([0.0] * pause_samples)
+                current_sample_idx += pause_samples
 
-        return self.to_wav_bytes(all_samples)
+        return self.to_wav_bytes(all_samples), word_timings
 
 
 def synthesize_ipa_to_wav(

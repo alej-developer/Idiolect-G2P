@@ -13,6 +13,7 @@ from .schemas import (
     TranscribeRequest,
     TranscribeResponse,
     WordTranscriptionSchema,
+    WordTimingSchema,
     SyllabifyRequest,
     SyllabifyResponse,
     WordSyllabificationSchema,
@@ -95,10 +96,22 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
     full_ipa_text = " ".join(full_ipa_list)
 
     audio_b64: Optional[str] = None
+    timings_schemas: Optional[List[WordTimingSchema]] = None
+
     if req.generate_audio:
         synthesizer = IPAFormantSynthesizer()
-        wav_bytes = synthesizer.synthesize_text(req.text, dialect=dialect)
+        wav_bytes, word_timings = synthesizer.synthesize_text_with_timings(req.text, dialect=dialect)
         audio_b64 = base64.b64encode(wav_bytes).decode("ascii")
+        timings_schemas = [
+            WordTimingSchema(
+                word=wt["word"],
+                normalized_word=wt.get("normalized_word"),
+                ipa=wt["ipa"],
+                start_time=wt["start_time"],
+                end_time=wt["end_time"]
+            )
+            for wt in word_timings
+        ]
 
     return TranscribeResponse(
         dialect_code=dialect.code,
@@ -106,7 +119,8 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
         total_words=len(results),
         transcriptions=word_schemas,
         full_ipa_text=full_ipa_text,
-        audio_base64=audio_b64
+        audio_base64=audio_b64,
+        word_timings=timings_schemas
     )
 
 

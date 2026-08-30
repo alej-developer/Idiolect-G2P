@@ -152,7 +152,7 @@ En cumplimiento de los más altos estándares éticos de integridad académica, 
    El código fuente, los modelos matemáticos, la arquitectura de pruebas y la documentación del presente proyecto fueron desarrollados mediante una metodología de programación en parejas asistida por Inteligencia Artificial (*AI Pair-Programming*), utilizando el entorno de desarrollo integrado **Antigravity IDE** y el agente autónomo de codificación avanzada **Antigravity AI (Google DeepMind)**.
 
 2. **Supervisión, Validación Humana y Responsabilidad Intelectual:**
-   La formulación del problema lingüístico, la definición del espacio de isoglosas panhispánicas, el diseño de los algoritmos de inferencia bayesiana y la verificación de la corrección filológica y fonética fueron guiados, auditados, validados y aprobados directamente por el investigador principal (**Alejandro**). Todas las funciones computacionales, pruebas unitarias y benchmarks fueron ejecutados y validados de forma determinista sobre el entorno local.
+   La formulación del problema lingüístico, la definición del espacio de isoglosas panhispánicas, el diseño de los algoritmos de inferencia bayesiana y la verificación de la corrección filológica y fonética fueron guiados, auditados, validados y aprobados directamente por el investigador principal (**Alejandro Peña**). Todas las funciones computacionales, pruebas unitarias y benchmarks fueron ejecutados y validados de forma determinista sobre el entorno local.
 
 ---
 
