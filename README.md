@@ -53,6 +53,9 @@ flowchart TD
 5. **Síntesis Acústica Formántica en Python Puro**: Generación directa de tramas de audio WAV a 16 bits sin dependencias binarias externas.
 6. **Exportador Pericial Multi-Formato**: Generación de dictámenes en LaTeX (`.tex` con `tipa` y `booktabs`), BibTeX (`.bib`), TEI-Verse XML (`.xml`), CSV (`.csv`), HTML interactivo con SVG (`.html`), Markdown (`.md`), JSON (`.json`) y texto plano (`.txt`).
 7. **Microservicio FastAPI y Dashboard Web**: API REST con cabeceras de ciberseguridad estrictas (CSP, X-Frame-Options, protección ReDoS y límite de carga de 2 MB).
+8. **Fonotaxis Post-léxica y Sandhi Externo**: Reencadenamiento silábico interpalabra ($\text{Coda}_{\omega_1} + \text{Núcleo}_{\omega_2} \to \text{Ataque}_{\omega_2}$), resonorización asimilativa de sibilantes en juntura ($/s/ + [C, +\text{son}] \to [z]/[h]$) y asimilación homorgánica nasal conforme a Hualde (2014) y Quilis (1993).
+9. **Gramática de Máxima Entropía (MaxEnt / Stochastic OT)**: Evaluación probabilística de restricciones de fidelidad y marcación con ponderaciones continuas graduadas sobre el continuo de isoglosas (Boersma & Hayes, 2001; Goldrick, 2007).
+
 
 ---
 

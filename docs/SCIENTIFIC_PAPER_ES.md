@@ -98,29 +98,38 @@ El catálogo integra 18 variantes formales:
 
 ## 4. Arquitectura y Formalización Matemática
 
-### 4.1. Silabificación Fonotáctica y Acentuación Prosódica
+### 4.1. Silabificación Fonotáctica y Dinámica de Sandhi Externo
 El algoritmo de silabificación descompone la palabra ortográfica en una secuencia ordenada de constituyentes $\sigma = (\text{Ataque}, \text{Núcleo}, \text{Coda})$ maximizando el Principio de Sonoridad:
 
 $$\text{Oclusiva} < \text{Fricativa} < \text{Nasal} < \text{Líquida} < \text{Semivocal} < \text{Vocal}$$
 
-La detección del acento prosódico clasifica las palabras conforme a las reglas formales de la Real Academia Española (oxítonas, paroxítonas, proparoxítonas y superproparoxítonas).
+En el nivel post-léxico (habla continua y encadenamiento versal), el sistema formaliza los procesos de **sandhi externo** conforme a Hualde (2014) y Quilis (1993):
+1. **Reencadenamiento Silábico**: $(\text{Coda})_{\omega_1} + (\text{Núcleo})_{\omega_2} \to (\text{Ataque})_{\omega_2}$ ante inicio vocálico (ej. */las/ + /alas/ \to [\text{la.ˈsa.las}]*).
+2. **Resonorización Asimilativa**: Asimilación regresiva del rasgo $[+\text{sonoro}]$ en coda sibilante ante consonante sonora adyacente (ej. */los/ + /mismos/ \to [\text{loz ˈmiz.mos}]* o $*[\text{loh ˈmiz.moh}]*$).
+3. **Asimilación Homorgánica Nasal**: Transferencia de punto de articulación de $/n/$ en juntura ante consonantes bilabiales ($[m]$) y velares ($[ŋ]$).
 
-### 4.2. Inferencia Bayesiana
-Para un conjunto de pares de rima esperados $\{(v_i, v_j)\} \in R$, la distancia fonológica acumulada bajo el dialecto $D$ se formula mediante programación dinámica:
+### 4.2. Gramática de Máxima Entropía (MaxEnt) y Optimidad Estocástica
+Superando los rankings categóricos rígidos, el modelo integra una gramática de **Máxima Entropía** (Boersma & Hayes, 2001; Goldrick, 2007). Para una forma superficial candidata $y$ derivada de la forma subyacente $x$, la armonía se define como:
 
-$$d(v_i, v_j \mid D) = \text{Levenshtein}_{\text{Clements-Hume}}(\text{RimaFon}(v_i, D), \text{RimaFon}(v_j, D))$$
+$$H(y) = \sum_{k=1}^K w_k \cdot C_k(x, y)$$
 
-La verosimilitud se modela como:
+donde $\{C_k\}$ engloba restricciones de marcación (`*CODA[s]`, `*VOICELESS-BEFORE-SONORANT`, `*CODA[Liquid]`, `ONSET`) y fidelidad (`IDENT(Voice)`, `IDENT(Place)`, `MAX(C)`). Los pesos continuos $\mathbf{w} \in \mathbb{R}_+^K$ son calibrados dinámicamente mediante el vector de isoglosas $\boldsymbol{\theta}_D$, modelando la distribución de probabilidad de Gibbs:
 
-$$\log P(R \mid \text{AFI}(T, D)) = -\lambda \sum_{(v_i, v_j) \in R} d(v_i, v_j \mid D)$$
+$$P(y \mid x, \mathbf{w}) = \frac{\exp(-H(y))}{\sum_{y' \in \mathcal{Y}(x)} \exp(-H(y'))}$$
 
-donde $\lambda = 16.0$ es un factor de sensibilidad calibrado. La distribución posterior se normaliza mediante *Log-Sum-Exp*:
+### 4.3. Inferencia Bayesiana Híbrida (Geometría de Rasgos + MaxEnt)
+Para un conjunto de pares de rima esperados $\{(v_i, v_j)\} \in R$, la distancia fonológica acumulada combina la métrica de Levenshtein ponderada por Clements y Hume (1995) con la penalización armónica de la gramática estocástica del dialecto:
+
+$$\log P(R \mid \text{AFI}(T, D)) = -\lambda \sum_{(v_i, v_j) \in R} d(v_i, v_j \mid D) - \gamma \sum_{(v_i, v_j) \in R} H_{\text{MaxEnt}}(v_j \mid v_i, \mathbf{w}_D)$$
+
+donde $\lambda = 16.0$ y $\gamma = 0.005$. La distribución posterior se normaliza mediante *Log-Sum-Exp*:
 
 $$P(D \mid T, R) = \frac{\exp\left(\log P(R \mid D) + \log P(D)\right)}{\sum_{D'} \exp\left(\log P(R \mid D') + \log P(D')\right)}$$
 
 El vector continuo de isoglosas del idiolecto se estima como la esperanza matemática ponderada:
 
 $$\hat{\boldsymbol{\theta}} = \sum_{D \in \mathcal{D}} P(D \mid T, R) \cdot \boldsymbol{\theta}_D$$
+
 
 ---
 
@@ -164,6 +173,7 @@ De conformidad con las directrices éticas de la *American Psychological Associa
 
 ## 9. Referencias Bibliográficas (Normas APA 7.ª Edición)
 
+- Boersma, P., & Hayes, B. (2001). Empirical tests of the Gradual Learning Algorithm. *Linguistic Inquiry*, 32(1), 45–86. https://doi.org/10.1162/002438901554601
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Chela-Flores, G. (1982). Las teorías fonológicas y la sincronía caribeña. *Boletín de Filología de la Universidad de Chile*, 31(1), 255–269.
 - Clements, G. N., & Hume, E. V. (1995). The internal organization of speech sounds. In J. A. Goldsmith (Ed.), *The handbook of phonological theory* (pp. 245–306). Blackwell.
@@ -171,6 +181,7 @@ De conformidad con las directrices éticas de la *American Psychological Associa
 - Coulthard, M., & Johnson, A. (2007). *An introduction to forensic linguistics: Language in evidence*. Routledge. https://doi.org/10.4324/9780203969694
 - French, P., & Watt, D. (Eds.). (2018). *The Oxford handbook of forensic phonetics*. Oxford University Press. https://doi.org/10.1093/oxfordhb/9780199585694.001.0001
 - Gerdas, P. (2000). A logic programming approach to Spanish poetic scansion. *Literary and Linguistic Computing*, 15(2), 189–198. https://doi.org/10.1093/llc/15.2.189
+- Goldrick, M. (2007). Lexical representation and speech production. *Language and Linguistics Compass*, 1(5), 444–460. https://doi.org/10.1111/j.1749-818X.2007.00028.x
 - Guitart, J. M. (1978). *Aspectos del consonantismo habanero*. Ediciones Universal.
 - Hualde, J. I. (2014). *Los sonidos del español: Spanish phonetics and phonology*. Cambridge University Press. https://doi.org/10.1017/CBO9780511719943
 - Klatt, D. H. (1980). Software for a cascade/parallel formant synthesizer. *The Journal of the Acoustical Society of America*, 67(3), 971–995. https://doi.org/10.1121/1.383940
@@ -180,3 +191,4 @@ De conformidad con las directrices éticas de la *American Psychological Associa
 - Plecháč, P. (2021). *Versification and authorship attribution*. Cambridge University Press. https://doi.org/10.1017/9781108914611
 - Quilis, A. (1993). *Tratado de fonología y fonética españolas*. Gredos.
 - Real Academia Española & Asociación de Academias de la Lengua Española. (2011). *Nueva gramática de la lengua española: Fonética y fonología*. Espasa.
+
