@@ -1,0 +1,42 @@
+name: Automatizacion de Tablero de Proyectos
+
+# Control de eventos para trazabilidad de incidencias y solicitudes de extraccion
+on:
+  issues:
+    types:
+      - opened
+      - closed
+      - reopened
+  pull_request:
+    types:
+      - opened
+      - closed
+      - reopened
+
+# Principio de menor privilegio a nivel de flujo de trabajo
+permissions:
+  issues: write
+  pull-requests: write
+  contents: read
+
+jobs:
+  asignar-y-mover-tarjeta:
+    name: Sincronizar Elemento con Proyecto
+    runs-on: ubuntu-latest
+    steps:
+      - name: Asignar nuevo elemento al tablero de proyecto
+        if: github.event.action == 'opened'
+        uses: actions/add-to-project@v1.0.2
+        with:
+          project-url: https://github.com/users/${{ github.repository_owner }}/projects/1
+          github-token: ${{ secrets.PROJECT_PAT }}
+
+      - name: Mover tarjeta a Completado al cerrar o fusionar
+        if: github.event.action == 'closed'
+        uses: leonsteinhaeuser/project-beta-automations@v2.2.1
+        with:
+          gh_token: ${{ secrets.PROJECT_PAT }}
+          user: ${{ github.repository_owner }}
+          project_id: 1
+          resource_node_id: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
+          status_value: "Done"
