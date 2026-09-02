@@ -1,6 +1,6 @@
-name: Automatizacion de Tablero de Proyectos
+name: Automatización de Tablero de Proyectos
 
-# Control de eventos para trazabilidad de incidencias y solicitudes de extraccion
+# Control de eventos para trazabilidad de incidencias y solicitudes de extracción
 on:
   issues:
     types:
@@ -37,7 +37,7 @@ jobs:
           GH_TOKEN: ${{ secrets.PROJECT_PAT }}
           ITEM_NODE_ID: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
         run: |
-          # 1. Asignar o asegurar que el elemento este en el proyecto y obtener su ProjectV2Item ID
+          # 1. Asignar o asegurar que el elemento esté en el proyecto y obtener su identificador de elemento (ProjectV2Item ID)
           ITEM_ID=$(gh api graphql -f query='
             mutation($projectId: ID!, $contentId: ID!) {
               addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
@@ -47,7 +47,7 @@ jobs:
               }
             }' -f projectId="PVT_kwHOD0rXac4BiN6I" -f contentId="$ITEM_NODE_ID" --jq '.data.addProjectV2ItemById.item.id')
 
-          # 2. Actualizar el estado a Done (opcion: 98236657) en el campo Status (campo: PVTSSF_lAHOD0rXac4BiN6IzhhGwJ8)
+          # 2. Actualizar el estado a Done (opción: 98236657) en el campo Status (campo: PVTSSF_lAHOD0rXac4BiN6IzhhGwJ8)
           gh api graphql -f query='
             mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optId: String!) {
               updateProjectV2ItemFieldValue(input: {
@@ -61,3 +61,4 @@ jobs:
                 }
               }
             }' -f projectId="PVT_kwHOD0rXac4BiN6I" -f itemId="$ITEM_ID" -f fieldId="PVTSSF_lAHOD0rXac4BiN6IzhhGwJ8" -f optId="98236657"
+
