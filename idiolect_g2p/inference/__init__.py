@@ -14,6 +14,11 @@ from .forensic_explainer import (
     ForensicReport,
     generate_forensic_explanation,
 )
+from .maxent_grammar import (
+    Constraint,
+    MaxEntCandidate,
+    MaxEntGrammar,
+)
 
 __all__ = [
     "DialectProbability",
@@ -23,4 +28,8 @@ __all__ = [
     "DiscriminantEvidence",
     "ForensicReport",
     "generate_forensic_explanation",
+    "Constraint",
+    "MaxEntCandidate",
+    "MaxEntGrammar",
 ]
+

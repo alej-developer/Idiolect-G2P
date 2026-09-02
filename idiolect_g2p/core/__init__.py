@@ -29,6 +29,12 @@ from .transducer import (
     G2PTransducer,
     TransductionResult,
 )
+from .sandhi import (
+    SandhiEngine,
+    SandhiJuncture,
+    JunctureProcessType,
+    ConnectedSpeechResult,
+)
 
 __all__ = [
     "Phoneme",
@@ -51,4 +57,9 @@ __all__ = [
     "syllabify_text",
     "G2PTransducer",
     "TransductionResult",
+    "SandhiEngine",
+    "SandhiJuncture",
+    "JunctureProcessType",
+    "ConnectedSpeechResult",
 ]
+
