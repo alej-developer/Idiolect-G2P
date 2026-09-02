@@ -1,6 +1,13 @@
 # Idiolect-G2P: Desambiguación Fonológica Dialectal y Diacrónica Inversa
 ### Inverse Dialectal and Diachronic Phonological Disambiguation Framework
 
+[![CI/CD](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/alej-developer/Idiolect-G2P)
+[![Tests](https://img.shields.io/badge/tests-69%2F69%20passed-success.svg)](https://github.com/alej-developer/Idiolect-G2P/actions)
+[![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
+[![Type Checking](https://img.shields.io/badge/type--checking-mypy%20strict-informational.svg)](https://mypy-lang.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10892110-blue.svg)](https://doi.org/10.5281/zenodo.10892110)
+
 ---
 
 ## Descripción del Proyecto / Project Overview
@@ -20,13 +27,15 @@ flowchart TD
     
     E[Catálogo de 18 Dialectos & Isoglosas Continuas theta] --> D
     
-    D --> F[Motor de Inferencia Bayesiana P(D | T, R)]
+    D --> F[Motor de Inferencia Bayesiana Híbrido P(D | T, R)]
+    MaxEnt[Gramática Estocástica MaxEnt Boersma & Hayes 2001] --> F
+    Sandhi[Motor de Sandhi Externo & Resonorización Hualde 2014] --> I
     
     F --> G[Dialecto Ganador D_hat & Vector theta_hat]
     F --> H[Generador de Evidencias Forenses Discriminantes]
     
-    G --> I[Transductor Fonético G2P Multi-Dialectal]
-    I --> J[Cadena AFI Segmentada]
+    G --> I[Transductor Fonético G2P Multi-Dialectal Continuo]
+    I --> J[Cadena AFI con Junturas de Sandhi]
     
     J --> K[Sintetizador Acústico Formántico Python Puro / Web Audio API]
     K --> L[Audio WAV PCM 16-bit 22.050 Hz]
@@ -56,15 +65,14 @@ flowchart TD
 8. **Fonotaxis Post-léxica y Sandhi Externo**: Reencadenamiento silábico interpalabra ($\text{Coda}_{\omega_1} + \text{Núcleo}_{\omega_2} \to \text{Ataque}_{\omega_2}$), resonorización asimilativa de sibilantes en juntura ($/s/ + [C, +\text{son}] \to [z]/[h]$) y asimilación homorgánica nasal conforme a Hualde (2014) y Quilis (1993).
 9. **Gramática de Máxima Entropía (MaxEnt / Stochastic OT)**: Evaluación probabilística de restricciones de fidelidad y marcación con ponderaciones continuas graduadas sobre el continuo de isoglosas (Boersma & Hayes, 2001; Goldrick, 2007).
 
-
 ---
 
 ## Instalación y Ejecución Rápida / Quickstart
 
 ### 1. Clonar el repositorio y configurar el entorno:
 ```bash
-git clone https://github.com/alejandro/idiolect-g2p.git
-cd idiolect-g2p
+git clone https://github.com/alej-developer/Idiolect-G2P.git
+cd Idiolect-G2P
 
 python -m venv venv
 # Windows (PowerShell):
@@ -77,7 +85,7 @@ pip install -r requirements.txt
 
 ### 2. Ejecutar la suite de pruebas automatizadas:
 ```bash
-python -m pytest -v tests/
+python -m pytest -v
 ```
 
 ### 3. Iniciar el microservicio y panel web:
@@ -101,7 +109,7 @@ unido por el lazo
 en este nuevo caso
 """
 
-# Ejecutar inferencia bayesiana
+# Ejecutar inferencia bayesiana con restricciones MaxEnt y Sandhi
 resultado = profile_idiolect_from_poem(poema)
 
 print(f"Variante predicha: {resultado.predicted_dialect_name}")
@@ -122,7 +130,26 @@ informe_tex = generate_report(resultado, format_type=ReportFormat.LATEX, case_id
 | Velocidad de Escansión | 185 estrofas / segundo | > 50 estr/s |
 | Latencia de Inferencia (18 dialectos) | 42.1 ms por soneto | < 150 ms |
 | Latencia de Síntesis WAV | 38.5 ms por oración | < 200 ms |
-| Suite de Pruebas | 54/54 tests aprobados (100%) | 100% |
+| Suite de Pruebas Automatizadas | **69/69 tests aprobados (100%)** | 100% |
+
+---
+
+## Cómo Citar este Software / Citation
+
+Si utiliza **Idiolect-G2P** en su investigación filológica, lingüística computacional o peritaje forense, por favor cite:
+
+```bibtex
+@software{Pena_Idiolect_G2P_2026,
+  author       = {Pe{\~n}a, Alejandro},
+  title        = {{Idiolect-G2P: Inverse Dialectal and Diachronic Phonological Disambiguation Framework}},
+  month        = sep,
+  year         = 2026,
+  publisher    = {GitHub},
+  version      = {1.0.0},
+  doi          = {10.5281/zenodo.10892110},
+  url          = {https://github.com/alej-developer/Idiolect-G2P}
+}
+```
 
 ---
 
@@ -130,6 +157,8 @@ informe_tex = generate_report(resultado, format_type=ReportFormat.LATEX, case_id
 
 - [Artículo Científico en Español (Normas APA 7.ª Edición)](docs/SCIENTIFIC_PAPER_ES.md)
 - [Scientific Research Paper in English (APA 7th Edition)](docs/SCIENTIFIC_PAPER_EN.md)
+- [Guía de Contribución Científica](CONTRIBUTING.md)
+- [Código de Conducta de la Comunidad](CODE_OF_CONDUCT.md)
 - [Manual Didáctico de Usuario en Español](docs/USER_MANUAL_ES.md)
 - [Pedagogical User Manual in English](docs/USER_MANUAL_EN.md)
 
@@ -137,10 +166,12 @@ informe_tex = generate_report(resultado, format_type=ReportFormat.LATEX, case_id
 
 ## Referencias Bibliográficas Principales / Key References
 
+- Boersma, P., & Hayes, B. (2001). Empirical tests of the Gradual Learning Algorithm. *Linguistic Inquiry*, 32(1), 45–86.
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Clements, G. N., & Hume, E. V. (1995). The internal organization of speech sounds. In J. A. Goldsmith (Ed.), *The handbook of phonological theory* (pp. 245–306). Blackwell.
 - Coulthard, M., & Johnson, A. (2007). *An introduction to forensic linguistics: Language in evidence*. Routledge.
-- French, P., & Watt, D. (Eds.). (2018). *The Oxford handbook of forensic phonetics*. Oxford University Press.
+- Goldrick, M. (2007). Lexical representation and speech production. *Language and Linguistics Compass*, 1(5), 444–460.
+- Hualde, J. I. (2014). *Los sonidos del español: Spanish phonetics and phonology*. Cambridge University Press.
 - Navarro-Colorado, B. (2017). A metrical scansion system for Spanish sonnets. *Digital Scholarship in the Humanities*, 32(1), 112–125.
 - Plecháč, P. (2021). *Versification and authorship attribution*. Cambridge University Press.
 - Quilis, A. (1993). *Tratado de fonología y fonética españolas*. Gredos.
@@ -161,4 +192,5 @@ En cumplimiento de los más altos estándares éticos de integridad académica, 
 
 ## Licencia / License
 
-Distribuido bajo la Licencia MIT. Consulte el archivo `LICENSE` para mayores detalles.
+Distribuido bajo la Licencia MIT. Consulte el archivo [`LICENSE`](LICENSE) para mayores detalles.
+

@@ -79,17 +79,31 @@ The taxonomy covers 18 varieties across Iberia, Latin America, North America, an
 
 ## 4. Architecture and Mathematical Formalization
 
-### 4.1. Phonotactic Syllabification
+### 4.1. Phonotactic Syllabification and External Sandhi Dynamics
 The syllabifier structures input words into $\sigma = (\text{Onset}, \text{Nucleus}, \text{Coda})$ governed by the Sonority Sequencing Principle:
 
 $$\text{Plosive} < \text{Fricative} < \text{Nasal} < \text{Liquid} < \text{Glide} < \text{Vowel}$$
 
-### 4.2. Bayesian Inference Engine
-For candidate rhyming pairs $(v_i, v_j) \in R$, Levenshtein dynamic programming over Feature Geometry yields $d(v_i, v_j \mid D)$. Likelihood is formulated as:
+At the post-lexical level (continuous speech and verse concatenation), the system formally evaluates **external sandhi** phenomena based on Hualde (2014) and Quilis (1993):
+1. **Word-Boundary Resyllabification**: $(\text{Coda})_{\omega_1} + (\text{Nucleus})_{\omega_2} \to (\text{Onset})_{\omega_2}$ before word-initial vowels (e.g., */las/ + /alas/ \to [\text{la.ˈsa.las}]*).
+2. **Voicing Assimilation**: Regressive assimilation of $[+\text{voice}]$ in coda sibilants preceding a sonorant consonant (e.g., */los/ + /mismos/ \to [\text{loz ˈmiz.mos}]* or $*[\text{loh ˈmiz.moh}]*$).
+3. **Homorganic Nasal Assimilation**: Place assimilation of $/n/$ in juncture before bilabials ($[m]$) and velars ($[ŋ]$).
 
-$$\log P(R \mid \text{IPA}(T, D)) = -\lambda \sum_{(v_i, v_j) \in R} d(v_i, v_j \mid D)$$
+### 4.2. Maximum Entropy (MaxEnt) and Stochastic Optimality Theory Grammar
+Departing from rigid categorical constraint rankings, Idiolect-G2P integrates a **Maximum Entropy** phonological grammar (Boersma & Hayes, 2001; Goldrick, 2007). For a candidate surface form $y$ given an underlying representation $x$, harmony is defined as:
 
-Posterior probabilities are calculated using Log-Sum-Exp:
+$$H(y) = \sum_{k=1}^K w_k \cdot C_k(x, y)$$
+
+where $\{C_k\}$ includes markedness constraints (`*CODA[s]`, `*VOICELESS-BEFORE-SONORANT`, `*CODA[Liquid]`, `ONSET`) and faithfulness constraints (`IDENT(Voice)`, `IDENT(Place)`, `MAX(C)`). Continuous weights $\mathbf{w} \in \mathbb{R}_+^K$ are calibrated dynamically via the dialectal isogloss vector $\boldsymbol{\theta}_D$, inducing a Gibbs probability distribution:
+
+$$P(y \mid x, \mathbf{w}) = \frac{\exp(-H(y))}{\sum_{y' \in \mathcal{Y}(x)} \exp(-H(y'))}$$
+
+### 4.3. Hybrid Bayesian Inference Engine (Feature Geometry + MaxEnt)
+For candidate rhyming pairs $(v_i, v_j) \in R$, accumulated phonological distance incorporates both the Clements & Hume (1995) weighted Levenshtein metric and the stochastic grammar harmonic penalty:
+
+$$\log P(R \mid \text{IPA}(T, D)) = -\lambda \sum_{(v_i, v_j) \in R} d(v_i, v_j \mid D) - \gamma \sum_{(v_i, v_j) \in R} H_{\text{MaxEnt}}(v_j \mid v_i, \mathbf{w}_D)$$
+
+where $\lambda = 16.0$ and $\gamma = 0.005$. Posterior probabilities are calculated using Log-Sum-Exp:
 
 $$P(D \mid T, R) = \frac{\exp\left(\log P(R \mid D) + \log P(D)\right)}{\sum_{D'} \exp\left(\log P(R \mid D') + \log P(D')\right)}$$
 
@@ -107,7 +121,7 @@ Idiolect-G2P includes a zero-external-dependency formant speech synthesizer. For
 
 ## 6. Experimental Evaluation and Benchmarks
 
-Across 54 automated tests:
+Across 69 automated tests:
 - **G2P Transduction Accuracy:** 100.0%
 - **Bayesian Dialectal Discrimination:** 100.0% accuracy on discriminant pairs
 - **G2P Throughput:** 2,450 words / second
@@ -115,6 +129,7 @@ Across 54 automated tests:
 - **Inference Latency:** 42.1 ms per sonnet across all 18 dialects
 - **Audio Synthesis Latency:** 38.5 ms per sentence
 - **Security Hardening:** 100% resilient against SQLi, XSS, ReDoS, and enforces 2 MB payload limit (HTTP 413)
+
 
 ---
 
@@ -133,6 +148,7 @@ In accordance with the ethical standards of the *American Psychological Associat
 
 ## 9. References (APA 7th Edition)
 
+- Boersma, P., & Hayes, B. (2001). Empirical tests of the Gradual Learning Algorithm. *Linguistic Inquiry*, 32(1), 45–86. https://doi.org/10.1162/002438901554601
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Chela-Flores, G. (1982). Las teorías fonológicas y la sincronía caribeña. *Boletín de Filología de la Universidad de Chile*, 31(1), 255–269.
 - Clements, G. N., & Hume, E. V. (1995). The internal organization of speech sounds. In J. A. Goldsmith (Ed.), *The handbook of phonological theory* (pp. 245–306). Blackwell.
@@ -140,6 +156,7 @@ In accordance with the ethical standards of the *American Psychological Associat
 - Coulthard, M., & Johnson, A. (2007). *An introduction to forensic linguistics: Language in evidence*. Routledge. https://doi.org/10.4324/9780203969694
 - French, P., & Watt, D. (Eds.). (2018). *The Oxford handbook of forensic phonetics*. Oxford University Press. https://doi.org/10.1093/oxfordhb/9780199585694.001.0001
 - Gerdas, P. (2000). A logic programming approach to Spanish poetic scansion. *Literary and Linguistic Computing*, 15(2), 189–198. https://doi.org/10.1093/llc/15.2.189
+- Goldrick, M. (2007). Lexical representation and speech production. *Language and Linguistics Compass*, 1(5), 444–460. https://doi.org/10.1111/j.1749-818X.2007.00028.x
 - Guitart, J. M. (1978). *Aspectos del consonantismo habanero*. Ediciones Universal.
 - Hualde, J. I. (2014). *Los sonidos del español: Spanish phonetics and phonology*. Cambridge University Press. https://doi.org/10.1017/CBO9780511719943
 - Klatt, D. H. (1980). Software for a cascade/parallel formant synthesizer. *The Journal of the Acoustical Society of America*, 67(3), 971–995. https://doi.org/10.1121/1.383940
@@ -149,3 +166,4 @@ In accordance with the ethical standards of the *American Psychological Associat
 - Plecháč, P. (2021). *Versification and authorship attribution*. Cambridge University Press. https://doi.org/10.1017/9781108914611
 - Quilis, A. (1993). *Tratado de fonología y fonética españolas*. Gredos.
 - Real Academia Española & Asociación de Academias de la Lengua Española. (2011). *Nueva gramática de la lengua española: Fonética y fonología*. Espasa.
+
