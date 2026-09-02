@@ -13,6 +13,11 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 - **Gobernanza de Ciberseguridad y Credenciales**:
   - Implementación del principio de mínimo privilegio en el bloque de permisos (`permissions: issues: write, pull-requests: write, contents: read`).
   - Prohibición absoluta de exposición de credenciales en el código fuente y empleo exclusivo de secretos cifrados del repositorio mediante `${{ secrets.PROJECT_PAT }}`.
+- **Estructuración y Población del Tablero de Proyectos**:
+  - Creación y cierre de 10 incidencias históricas representativas del backend fonológico, seguridad de API y síntesis acústica (Issues #1 a #10).
+  - Publicación de 5 incidencias estratégicas de roadmap futuro orientadas a optimización concurrente, dialectología de contacto y estilometría forense (Issues #11 a #15).
+  - Creación del documento `PROJECT_DESCRIPTION.md` optimizado para SEO para la presentación pública del tablero.
+
 
 ---
 
