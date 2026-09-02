@@ -23,28 +23,41 @@ jobs:
   asignar-y-mover-tarjeta:
     name: Sincronizar Elemento con Proyecto
     runs-on: ubuntu-latest
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
     steps:
-
       - name: Asignar nuevo elemento al tablero de proyecto
         if: github.event.action == 'opened'
         uses: actions/add-to-project@v1.0.2
         with:
           project-url: https://github.com/users/${{ github.repository_owner }}/projects/1
           github-token: ${{ secrets.PROJECT_PAT }}
-        env:
-          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
-          GITHUB_TOKEN: ${{ secrets.PROJECT_PAT }}
 
       - name: Mover tarjeta a Completado al cerrar o fusionar
         if: github.event.action == 'closed'
-        uses: leonsteinhaeuser/project-beta-automations@v2.2.1
-        with:
-          gh_token: ${{ secrets.PROJECT_PAT }}
-          user: ${{ github.repository_owner }}
-          project_id: 1
-          resource_node_id: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
-          status_value: "Done"
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+          ITEM_NODE_ID: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
+        run: |
+          # 1. Asignar o asegurar que el elemento este en el proyecto y obtener su ProjectV2Item ID
+          ITEM_ID=$(gh api graphql -f query='
+            mutation($projectId: ID!, $contentId: ID!) {
+              addProjectV2ItemById(input: {projectId: $projectId, contentId: $contentId}) {
+                item {
+                  id
+                }
+              }
+            }' -f projectId="PVT_kwHOD0rXac4BiN6I" -f contentId="$ITEM_NODE_ID" --jq '.data.addProjectV2ItemById.item.id')
 
-
+          # 2. Actualizar el estado a Done (opcion: 98236657) en el campo Status (campo: PVTSSF_lAHOD0rXac4BiN6IzhhGwJ8)
+          gh api graphql -f query='
+            mutation($projectId: ID!, $itemId: ID!, $fieldId: ID!, $optId: String!) {
+              updateProjectV2ItemFieldValue(input: {
+                projectId: $projectId,
+                itemId: $itemId,
+                fieldId: $fieldId,
+                value: { singleSelectOptionId: $optId }
+              }) {
+                projectV2Item {
+                  id
+                }
+              }
+            }' -f projectId="PVT_kwHOD0rXac4BiN6I" -f itemId="$ITEM_ID" -f fieldId="PVTSSF_lAHOD0rXac4BiN6IzhhGwJ8" -f optId="98236657"
