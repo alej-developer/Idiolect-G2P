@@ -17,11 +17,33 @@ class DialectInfoSchema(BaseModel):
     isogloss_vector: Dict[str, float]
 
 
+class SandhiJunctureSchema(BaseModel):
+    """Información de un evento fonotáctico de frontera de palabra (sandhi externo)."""
+    word_index_left: int
+    word_index_right: int
+    process_type: str
+    input_left_coda: str
+    input_right_onset: str
+    output_phoneme: str
+    description: str
+    isogloss_condition: Optional[str] = None
+
+
+class MaxEntConstraintSchema(BaseModel):
+    """Detalle formal de una restricción fonológica evaluada por gramática MaxEnt."""
+    name: str
+    description: str
+    is_markedness: bool
+    weight: float
+    violations: int
+
+
 class TranscribeRequest(BaseModel):
     """Solicitud de transcripcion fonetica G2P."""
     text: str = Field(..., min_length=1, max_length=10000, description="Texto en espanol a transcribir.")
     dialect_code: Optional[str] = Field("ES_PENINSULAR", description="Codigo del dialecto objetivo.")
     generate_audio: bool = Field(False, description="Indica si debe sintetizarse audio WAV.")
+    apply_sandhi: bool = Field(True, description="Indica si se aplican procesos post-léxicos de sandhi.")
 
 
 class WordTranscriptionSchema(BaseModel):
@@ -52,6 +74,9 @@ class TranscribeResponse(BaseModel):
     full_ipa_text: str
     audio_base64: Optional[str] = None
     word_timings: Optional[List[WordTimingSchema]] = None
+    sandhi_applied: bool = False
+    sandhi_junctures: List[SandhiJunctureSchema] = Field(default_factory=list)
+
 
 
 class SyllabifyRequest(BaseModel):
@@ -167,6 +192,8 @@ class ProfileIdiolectResponse(BaseModel):
     discriminant_evidences: List[DiscriminantEvidenceSchema]
     sociolinguistic_conclusion: str
     optimal_transcription_sample: List[str]
+    maxent_constraints: List[MaxEntConstraintSchema] = Field(default_factory=list)
+
 
 
 class GenerateReportRequest(BaseModel):

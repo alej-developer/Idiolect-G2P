@@ -77,12 +77,14 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
         )
 
     transducer = G2PTransducer(default_dialect=dialect)
-    results = transducer.transcribe_text(req.text, dialect=dialect)
+    word_results, connected_ipa, junctures = transducer.transcribe_connected_text(
+        req.text,
+        dialect=dialect,
+        apply_sandhi=req.apply_sandhi
+    )
 
     word_schemas: List[WordTranscriptionSchema] = []
-    full_ipa_list: List[str] = []
-
-    for r in results:
+    for r in word_results:
         word_schemas.append(WordTranscriptionSchema(
             original_text=r.prosodic_word.original_text,
             normalized_text=r.prosodic_word.normalized_text,
@@ -91,9 +93,23 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
             syllables=[s.raw_text for s in r.prosodic_word.syllables],
             stress_index=r.prosodic_word.stressed_syllable_index
         ))
-        full_ipa_list.append(r.syllabified_ipa)
 
-    full_ipa_text = " ".join(full_ipa_list)
+    from .schemas import SandhiJunctureSchema
+    sandhi_schemas: List[SandhiJunctureSchema] = [
+        SandhiJunctureSchema(
+            word_index_left=j.word_index_left,
+            word_index_right=j.word_index_right,
+            process_type=j.process_type.value,
+            input_left_coda=j.input_left_coda,
+            input_right_onset=j.input_right_onset,
+            output_phoneme=j.output_phoneme,
+            description=j.description,
+            isogloss_condition=j.isogloss_condition
+        )
+        for j in junctures
+    ]
+
+    full_ipa_text = connected_ipa if req.apply_sandhi else " ".join(r.syllabified_ipa for r in word_results)
 
     audio_b64: Optional[str] = None
     timings_schemas: Optional[List[WordTimingSchema]] = None
@@ -116,12 +132,15 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
     return TranscribeResponse(
         dialect_code=dialect.code,
         dialect_name=dialect.name,
-        total_words=len(results),
+        total_words=len(word_results),
         transcriptions=word_schemas,
         full_ipa_text=full_ipa_text,
         audio_base64=audio_b64,
-        word_timings=timings_schemas
+        word_timings=timings_schemas,
+        sandhi_applied=req.apply_sandhi,
+        sandhi_junctures=sandhi_schemas
     )
+
 
 
 @router.post("/syllabify", response_model=SyllabifyResponse, summary="Silabificacion fonotactica y analisis prosodico")
@@ -239,6 +258,21 @@ def profile_idiolect(req: ProfileIdiolectRequest) -> ProfileIdiolectResponse:
         for t in result.optimal_transcriptions[:12]
     ]
 
+    from ..inference.maxent_grammar import MaxEntGrammar
+    from .schemas import MaxEntConstraintSchema
+    maxent_calc = MaxEntGrammar()
+    weights_dict = maxent_calc.calibrate_weights_from_isoglosses(result.estimated_isogloss_vector)
+    maxent_schemas = [
+        MaxEntConstraintSchema(
+            name=c.name,
+            description=c.description,
+            is_markedness=c.is_markedness,
+            weight=round(weights_dict.get(c.name, 1.0), 3),
+            violations=0
+        )
+        for c in maxent_calc.constraints
+    ]
+
     return ProfileIdiolectResponse(
         case_identifier=req.case_identifier,
         predicted_dialect_code=result.predicted_dialect_code,
@@ -248,8 +282,10 @@ def profile_idiolect(req: ProfileIdiolectRequest) -> ProfileIdiolectResponse:
         dialect_ranking=ranking_schemas,
         discriminant_evidences=evidence_schemas,
         sociolinguistic_conclusion=forensic.sociolinguistic_conclusion,
-        optimal_transcription_sample=opt_trans_samples
+        optimal_transcription_sample=opt_trans_samples,
+        maxent_constraints=maxent_schemas
     )
+
 
 
 @router.post("/generate-report", response_model=GenerateReportResponse, summary="Generacion y exportacion de informe pericial multi-formato")

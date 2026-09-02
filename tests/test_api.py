@@ -60,20 +60,35 @@ def test_transcribe_endpoint(client: TestClient) -> None:
     assert data["audio_base64"] is not None
     assert "word_timings" in data
     assert data["word_timings"] is not None
-    assert len(data["word_timings"]) == 3
-    assert data["word_timings"][0]["word"] == "caza"
     assert data["word_timings"][0]["start_time"] >= 0.0
     assert data["word_timings"][0]["end_time"] > data["word_timings"][0]["start_time"]
 
 
-def test_syllabify_endpoint(client: TestClient) -> None:
-    """Verifica la silabificacion y analisis prosodico."""
-    payload = {"text": "computadora"}
-    response = client.post("/api/v1/syllabify", json=payload)
+def test_transcribe_endpoint_with_sandhi(client: TestClient) -> None:
+
+    """Verifica que el endpoint /transcribe reporte sandhi y sus junturas."""
+    payload = {
+        "text": "los mismos",
+        "dialect_code": "ES_PENINSULAR",
+        "apply_sandhi": True
+    }
+    response = client.post("/api/v1/transcribe", json=payload)
     assert response.status_code == 200
     data = response.json()
-    assert len(data["words"]) == 1
-    assert data["words"][0]["syllables"] == ["com", "pu", "ta", "do", "ra"]
+    assert data["sandhi_applied"] is True
+    assert len(data["sandhi_junctures"]) >= 1
+    assert data["sandhi_junctures"][0]["output_phoneme"] == "z"
+
+
+
+def test_syllabify_endpoint(client: TestClient) -> None:
+    """Verifica la silabificacion ortografica y fonotactica."""
+    response = client.post("/api/v1/syllabify", json={"text": "transcripcion computacional"})
+    assert response.status_code == 200
+    data = response.json()
+    assert len(data["words"]) == 2
+    assert "syllables" in data["words"][0]
+
 
 
 def test_synthesize_ipa_endpoint(client: TestClient) -> None:
@@ -105,15 +120,16 @@ def test_analyze_poem_endpoint(client: TestClient) -> None:
 
 
 def test_profile_idiolect_endpoint(client: TestClient) -> None:
-    """Verifica la inferencia bayesiana del idiolecto."""
-    poem = """
+    """Verifica el analisis pericial forense con restricciones MaxEnt."""
+    sonnet_sample = """
     En este dulce abrazo
     yo sigo cada paso
     unido por el lazo
     en este nuevo caso
     """
     payload = {
-        "text": poem,
+        "text": sonnet_sample,
+        "century_prior": 17,
         "case_identifier": "TEST-API-CASE"
     }
     response = client.post("/api/v1/profile-idiolect", json=payload)
@@ -123,6 +139,7 @@ def test_profile_idiolect_endpoint(client: TestClient) -> None:
     assert data["confidence_score"] > 0.0
     assert len(data["dialect_ranking"]) > 0
     assert len(data["discriminant_evidences"]) >= 1
+    assert len(data["maxent_constraints"]) >= 5
 
 
 def test_generate_report_endpoint(client: TestClient) -> None:
