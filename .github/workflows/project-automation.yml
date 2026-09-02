@@ -23,6 +23,9 @@ jobs:
   asignar-y-mover-tarjeta:
     name: Sincronizar Elemento con Proyecto
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
+      GH_TOKEN: ${{ secrets.PROJECT_PAT }}
     steps:
       - name: Asignar nuevo elemento al tablero de proyecto
         if: github.event.action == 'opened'
@@ -30,6 +33,9 @@ jobs:
         with:
           project-url: https://github.com/users/${{ github.repository_owner }}/projects/1
           github-token: ${{ secrets.PROJECT_PAT }}
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.PROJECT_PAT }}
 
       - name: Mover tarjeta a Completado al cerrar o fusionar
         if: github.event.action == 'closed'
@@ -40,3 +46,7 @@ jobs:
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
           status_value: "Done"
+        env:
+          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
+          GITHUB_TOKEN: ${{ secrets.PROJECT_PAT }}
+
