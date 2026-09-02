@@ -25,8 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: "true"
-      GH_TOKEN: ${{ secrets.PROJECT_PAT }}
     steps:
+
       - name: Asignar nuevo elemento al tablero de proyecto
         if: github.event.action == 'opened'
         uses: actions/add-to-project@v1.0.2
@@ -46,7 +46,5 @@ jobs:
           project_id: 1
           resource_node_id: ${{ github.event.issue.node_id || github.event.pull_request.node_id }}
           status_value: "Done"
-        env:
-          GH_TOKEN: ${{ secrets.PROJECT_PAT }}
-          GITHUB_TOKEN: ${{ secrets.PROJECT_PAT }}
+
 
