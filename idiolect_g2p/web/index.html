@@ -104,10 +104,26 @@ del luciente cristal tu gentil cuello.</textarea>
                             <div class="veredicto-region" id="veredicto-region">Norma Histórica — Siglo XVII (Distinción y Lleísmo)</div>
                         </div>
 
+                        <div style="display: flex; gap: 0.75rem; align-items: center; margin-bottom: 0.6rem;">
+                            <label class="meta-label" style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer;">
+                                <input type="checkbox" id="check-sandhi-bayesiano" checked style="accent-color: var(--acento-liquen);">
+                                <span>Activar Fonotaxis de Sandhi Post-léxico</span>
+                            </label>
+                        </div>
+
                         <pre class="consola-afi-box"><code id="consola-afi" class="consola-afi-code">/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/
 /o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/
 /mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/
 /mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/</code></pre>
+
+                        <!-- Panel de Junturas Fonotácticas de Sandhi -->
+                        <div id="panel-junturas-sandhi" style="margin-bottom: 1.25rem; display: none;">
+                            <div class="lab-section-title" style="margin-top: 0.8rem; margin-bottom: 0.4rem;">
+                                <span>Junturas Fonotácticas Identificadas (Sandhi Externo)</span>
+                                <span id="contador-junturas" class="lab-metric-highlight">0 Eventos</span>
+                            </div>
+                            <div id="contenedor-junturas-badges" class="junturas-container"></div>
+                        </div>
 
                         <!-- Reproductor Acústico del Dictamen con Sincronización en Tiempo Real -->
                         <div class="audio-controls-panel">
@@ -161,7 +177,19 @@ del luciente cristal tu gentil cuello.</textarea>
                                 </div>
                             </li>
                         </ul>
+
+                        <!-- Panel de Restricciones Fonológicas MaxEnt -->
+                        <div style="margin-top: 1.5rem;">
+                            <div class="lab-section-title" style="margin-bottom: 0.5rem;">
+                                <span>Gramática Estocástica MaxEnt (Pesos Continuos)</span>
+                                <span style="font-size: 0.7rem; color: var(--texto-sepia);">Boersma & Hayes (2001)</span>
+                            </div>
+                            <div id="maxent-constraints-container" class="maxent-table-box">
+                                <div style="font-family: var(--font-cientifica); font-size: 0.8rem; color: var(--texto-sepia);">Ejecute la inferencia para calibrar las restricciones...</div>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
             </div>
@@ -200,12 +228,17 @@ del luciente cristal tu gentil cuello.</textarea>
                         </div>
                     </div>
 
-                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem;">
+                    <div style="display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center;">
                         <button id="btn-g2p-quick" class="btn-inferencia" type="button">Transcribir a AFI</button>
                         <button id="btn-g2p-audio" class="btn-inferencia" type="button" style="border-color: var(--acento-liquen); color: var(--acento-liquen);">
                             Sintetizar y Reproducir Audio
                         </button>
+                        <label class="meta-label" style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; margin-left: auto;">
+                            <input type="checkbox" id="check-sandhi-g2p" checked style="accent-color: var(--acento-liquen);">
+                            <span>Aplicar Sandhi de Habla Continua</span>
+                        </label>
                     </div>
+
 
                     <label class="meta-label" style="margin-bottom: 0.5rem; display: block;">Transcripción Alofónica Estrecha (AFI):</label>
                     <pre class="consola-afi-box" style="margin-bottom: 1rem;"><code id="g2p-quick-output" class="consola-afi-code">/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/</code></pre>

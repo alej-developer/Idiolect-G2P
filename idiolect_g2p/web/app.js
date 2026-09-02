@@ -166,8 +166,66 @@ que no mi entendimiento en las riquezas.`;
         animarCascada();
     }
 
+    const checkSandhiBayesiano = document.getElementById('check-sandhi-bayesiano');
+    const panelJunturasSandhi = document.getElementById('panel-junturas-sandhi');
+    const contadorJunturas = document.getElementById('contador-junturas');
+    const contenedorJunturasBadges = document.getElementById('contenedor-junturas-badges');
+    const maxentConstraintsContainer = document.getElementById('maxent-constraints-container');
+
+    function renderizarJunturasSandhi(junctures) {
+        if (!panelJunturasSandhi || !contenedorJunturasBadges) return;
+        if (!junctures || junctures.length === 0) {
+            panelJunturasSandhi.style.display = 'none';
+            contenedorJunturasBadges.innerHTML = '';
+            return;
+        }
+
+        panelJunturasSandhi.style.display = 'block';
+        if (contadorJunturas) contadorJunturas.textContent = `${junctures.length} Evento${junctures.length > 1 ? 's' : ''}`;
+
+        const badgesHtml = junctures.map(j => {
+            const tipoLabel = j.process_type === 'resyllabification' ? 'Reencadenamiento' :
+                             j.process_type === 'voicing_assimilation' ? 'Resonorización' :
+                             j.process_type === 'nasal_assimilation' ? 'Asimilación Nasal' : 'Juntura';
+            return `
+                <div class="juntura-badge" title="${j.description}">
+                    <span class="juntura-tipo">${tipoLabel}</span>
+                    <span class="juntura-cambio">/${j.input_left_coda}/ + /${j.input_right_onset}/ &rarr; [${j.output_phoneme}]</span>
+                </div>
+            `;
+        }).join('');
+
+        contenedorJunturasBadges.innerHTML = badgesHtml;
+    }
+
+    function renderizarMaxEnt(constraints) {
+        if (!maxentConstraintsContainer) return;
+        if (!constraints || constraints.length === 0) {
+            maxentConstraintsContainer.innerHTML = '<div style="font-family: var(--font-cientifica); font-size: 0.8rem; color: var(--texto-sepia);">Sin restricciones activas.</div>';
+            return;
+        }
+
+        const rowsHtml = constraints.map(c => {
+            const typeBadge = c.is_markedness
+                ? '<span class="maxent-type markedness">Marcación</span>'
+                : '<span class="maxent-type faithfulness">Fidelidad</span>';
+            return `
+                <div class="maxent-row" title="${c.description}">
+                    <div>
+                        <span class="maxent-name">${c.name}</span>
+                        ${typeBadge}
+                    </div>
+                    <span class="maxent-weight">w = ${c.weight.toFixed(2)}</span>
+                </div>
+            `;
+        }).join('');
+
+        maxentConstraintsContainer.innerHTML = rowsHtml;
+    }
+
     async function actualizarConsolaAfi(texto, dialectCode) {
         if (!consolaAfi) return;
+        const aplicarSandhi = checkSandhiBayesiano ? checkSandhiBayesiano.checked : true;
         try {
             const res = await fetch('/api/v1/transcribe', {
                 method: 'POST',
@@ -175,7 +233,8 @@ que no mi entendimiento en las riquezas.`;
                 body: JSON.stringify({
                     text: texto,
                     dialect_code: dialectCode || 'DIACHRONIC_GOLDEN_AGE',
-                    generate_audio: false
+                    generate_audio: false,
+                    apply_sandhi: aplicarSandhi
                 })
             });
 
@@ -194,10 +253,19 @@ que no mi entendimiento en las riquezas.`;
                 });
 
                 consolaAfi.textContent = lineasAfi.join('\n') || `/${data.full_ipa_text}/`;
+                renderizarJunturasSandhi(data.sandhi_junctures);
             }
         } catch (e) {
             consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/`;
         }
+    }
+
+    if (checkSandhiBayesiano) {
+        checkSandhiBayesiano.addEventListener('change', () => {
+            if (textoInput && textoInput.value.trim()) {
+                actualizarConsolaAfi(textoInput.value.trim(), ultimoDialectoPredicho);
+            }
+        });
     }
 
     async function ejecutarInferencia() {
@@ -232,6 +300,7 @@ que no mi entendimiento en las riquezas.`;
                 if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
 
                 renderizarDistribucion(data.dialect_ranking.slice(0, 5));
+                renderizarMaxEnt(data.maxent_constraints);
                 ultimoDialectoPredicho = data.predicted_dialect_code;
                 await actualizarConsolaAfi(texto, data.predicted_dialect_code);
             } else {
@@ -246,6 +315,7 @@ que no mi entendimiento en las riquezas.`;
             }
         }
     }
+
 
     let ultimoDialectoPredicho = 'DIACHRONIC_GOLDEN_AGE';
     const btnReproducirPerfilador = document.getElementById('btn-reproducir-perfilador');
@@ -450,6 +520,9 @@ que no mi entendimiento en las riquezas.`;
             if (audioStatusG2p) audioStatusG2p.textContent = 'Sintetizando formantes...';
         }
 
+        const checkSandhiG2p = document.getElementById('check-sandhi-g2p');
+        const aplicarSandhiG2p = checkSandhiG2p ? checkSandhiG2p.checked : true;
+
         try {
             const res = await fetch('/api/v1/transcribe', {
                 method: 'POST',
@@ -457,9 +530,11 @@ que no mi entendimiento en las riquezas.`;
                 body: JSON.stringify({
                     text: text,
                     dialect_code: dialectCode,
-                    generate_audio: generarAudio
+                    generate_audio: generarAudio,
+                    apply_sandhi: aplicarSandhiG2p
                 })
             });
+
 
             if (res.ok) {
                 const data = await res.json();

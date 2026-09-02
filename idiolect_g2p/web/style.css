@@ -665,3 +665,90 @@ select.meta-input option {
     color: var(--acento-liquen);
     border: 1px solid var(--acento-liquen);
 }
+
+/* =========================================
+   ESTILOS PARA SANDHI Y MAXENT (Fase 4)
+   ========================================= */
+
+.junturas-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
+.juntura-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.28rem 0.65rem;
+    border-radius: var(--radius-encuadernacion);
+    font-family: var(--font-cientifica);
+    font-size: 0.78rem;
+    background: rgba(166, 93, 71, 0.1);
+    border: 1px solid var(--acento-siena);
+    color: var(--texto-pergamino);
+}
+
+.juntura-badge .juntura-tipo {
+    color: var(--acento-siena);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.68rem;
+}
+
+.juntura-badge .juntura-cambio {
+    font-family: var(--font-literaria);
+    font-style: italic;
+    font-size: 0.9rem;
+}
+
+.maxent-table-box {
+    border: 1px solid var(--lineas-tinta);
+    background: var(--fondo-manuscrito);
+    border-radius: var(--radius-encuadernacion);
+    padding: 0.75rem 1rem;
+    max-height: 220px;
+    overflow-y: auto;
+}
+
+.maxent-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.4rem 0;
+    border-bottom: 1px solid var(--lineas-tinta);
+    font-family: var(--font-cientifica);
+    font-size: 0.78rem;
+}
+
+.maxent-row:last-child {
+    border-bottom: none;
+}
+
+.maxent-name {
+    font-weight: 600;
+    color: var(--texto-pergamino);
+}
+
+.maxent-type {
+    font-size: 0.68rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 3px;
+    margin-left: 0.4rem;
+}
+
+.maxent-type.markedness {
+    background: rgba(217, 115, 90, 0.15);
+    color: var(--acento-siena);
+}
+
+.maxent-type.faithfulness {
+    background: rgba(123, 158, 135, 0.15);
+    color: var(--acento-liquen);
+}
+
+.maxent-weight {
+    font-weight: bold;
+    color: var(--acento-liquen);
+}
