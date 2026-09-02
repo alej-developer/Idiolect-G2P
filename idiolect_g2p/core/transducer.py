@@ -9,8 +9,10 @@ Implementa un pipeline en dos fases:
 
 from __future__ import annotations
 from dataclasses import dataclass
-from typing import List, Optional, Tuple, Dict, Final, TYPE_CHECKING
+from typing import List, Optional, Tuple, Dict, Final, Any, TYPE_CHECKING
 import re
+import copy
+
 
 from .phonetics import Phoneme, get_phoneme
 from .syllabifier import ProsodicWord, Syllable, syllabify_word, syllabify_text
@@ -294,3 +296,37 @@ class G2PTransducer:
         """Transcribe una oracion o verso completo palabra por palabra."""
         words = re.findall(r"\b[\wáéíóúüàèòñ]+\b", text, flags=re.IGNORECASE)
         return [self.transcribe_word(w, dialect) for w in words]
+
+    def transcribe_connected_text(
+        self,
+        text: str,
+        dialect: Optional[Dialect] = None,
+        apply_sandhi: bool = True
+    ) -> Tuple[List[TransductionResult], str, List[Any]]:
+        """
+        Transcribe una oración o verso continuo aplicando opcionalmente fonotaxis
+        post-léxica de sandhi (reencadenamiento silábico y resonorización de frontera).
+
+        Returns:
+            Tuple con (resultados individuales, cadena AFI conectada, lista de junturas de sandhi).
+        """
+        from .sandhi import SandhiEngine
+
+        word_results = self.transcribe_text(text, dialect=dialect)
+        if not word_results:
+            return [], "", []
+
+        if not apply_sandhi or len(word_results) < 2:
+            connected_ipa = " ".join(r.syllabified_ipa for r in word_results)
+            return word_results, connected_ipa, []
+
+        engine = SandhiEngine()
+        words_syllables = [copy.deepcopy(r.syllable_phonemes) for r in word_results]
+        stresses = [r.prosodic_word.stressed_syllable_index for r in word_results]
+
+        isogloss_dict = dialect.isogloss_vector.to_dict() if dialect else None
+        modified_syllables, junctures = engine.apply_sandhi(words_syllables, isogloss_vector=isogloss_dict)
+        connected_ipa = engine.format_connected_ipa(modified_syllables, stresses=stresses)
+
+        return word_results, connected_ipa, junctures
+

@@ -123,6 +123,9 @@ class BayesianIdiolectProfiler:
         dialects = self.registry.list_all()
 
         transducer = G2PTransducer()
+        from .maxent_grammar import MaxEntGrammar
+        maxent_engine = MaxEntGrammar()
+
         dialect_evaluations: List[Dict[str, Any]] = []
         raw_log_likelihoods: List[float] = []
 
@@ -130,6 +133,8 @@ class BayesianIdiolectProfiler:
             total_dist = 0.0
             perfect_count = 0
             evaluated_matches: List[RhymeMatch] = []
+            maxent_weights = maxent_engine.calibrate_weights_from_isoglosses(dialect.isogloss_vector.to_dict())
+            total_harmony_penalty = 0.0
 
             for v1, v2 in rhyming_pairs:
                 match = evaluate_rhyme_pair(v1, v2, dialect=dialect, transducer=transducer)
@@ -138,9 +143,30 @@ class BayesianIdiolectProfiler:
                 if match.is_perfect_consonant:
                     perfect_count += 1
 
-            # Verosimilitud P(R | AFI(T, D)) = exp(-lambda * total_distance)
+                # Evaluar coherencia fonológica de la rima con la gramática MaxEnt del dialecto
+                # Si una realización superficial en la rima es altamente disonante para el dialecto,
+                # la armonía H(y) aporta una penalización probabilística suave.
+                r1_phones = match.rhyme_phones_1
+                r2_phones = match.rhyme_phones_2
+                ctx_r = {
+                    "coda_phones": [p for p in (r1_phones + r2_phones) if p in ("s", "s̺", "z", "h", "l", "ɾ")],
+                    "all_phones": r1_phones + r2_phones,
+                    "underlying_phones": r1_phones,
+                    "surface_phones": r2_phones
+                }
+                cands = maxent_engine.evaluate_candidates(
+                    underlying_seq="".join(r1_phones),
+                    candidates=[("".join(r2_phones), ctx_r)],
+                    weights_override=maxent_weights
+                )
+                if cands:
+                    # Contribución MaxEnt calibrada como modulador continuo suave
+                    total_harmony_penalty += cands[0].harmony * 0.005
+
+            # Verosimilitud P(R | AFI(T, D)) = exp(-lambda * total_distance - harmony_penalty)
             multiplier = 1.2 if poem_analysis.is_consonant_expected else 0.9
-            log_lik = -self.lambda_sensitivity * multiplier * total_dist
+            log_lik = -self.lambda_sensitivity * multiplier * total_dist - total_harmony_penalty
+
 
             # Modulador de Prior Diacronico
             if century_prior is not None:
@@ -160,6 +186,7 @@ class BayesianIdiolectProfiler:
                 "matches": evaluated_matches,
                 "log_lik": log_lik
             })
+
 
         # Normalizacion Log-Sum-Exp
         max_log_lik = max(raw_log_likelihoods) if raw_log_likelihoods else 0.0
