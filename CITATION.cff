@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software in your academic or forensic research, please cite it as below."
+title: "Idiolect-G2P: Inverse Dialectal and Diachronic Phonological Disambiguation Framework"
+version: 1.0.0
+doi: 10.5281/zenodo.10892110
+date-released: 2026-09-02
+url: "https://github.com/alej-developer/Idiolect-G2P"
+repository-code: "https://github.com/alej-developer/Idiolect-G2P"
+license: MIT
+authors:
+  - family-names: "Peña"
+    given-names: "Alejandro"
+    affiliation: "Computational Linguistics and Digital Humanities Initiative"
+    orcid: "https://orcid.org/0009-0000-0000-0000"
+keywords:
+  - computational-linguistics
+  - phonology
+  - grapheme-to-phoneme
+  - bayesian-inference
+  - forensic-linguistics
+  - optimality-theory
+  - feature-geometry
+  - post-lexical-phonotactics
+  - spanish-dialects
+abstract: >-
+  Idiolect-G2P is a formal computational framework for inverse phonological
+  disambiguation in Spanish texts. Unlike traditional feedforward G2P systems
+  that assume a monolithic prescriptive standard, Idiolect-G2P utilizes rhyme
+  constraints, post-lexical sandhi dynamics, and Clements & Hume feature geometry
+  within a Maximum Entropy / Bayesian framework to retrospectively infer the
+  author's underlying dialectal variety and continuous isogloss vector theta in [0, 1]^14.
