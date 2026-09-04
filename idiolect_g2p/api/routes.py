@@ -46,7 +46,7 @@ router = APIRouter(prefix="/api/v1", tags=["Idiolect-G2P Services"])
 @router.get("/health", summary="Estado del servicio")
 def health_check() -> Dict[str, str]:
     """Comprueba el estado de disponibilidad del microservicio."""
-    return {"status": "healthy", "service": "Idiolect-G2P", "version": "1.0.0"}
+    return {"status": "healthy", "service": "Idiolect-G2P", "version": "1.2.0"}
 
 
 @router.get("/dialects", response_model=List[DialectInfoSchema], summary="Catalogo de variantes dialectales")

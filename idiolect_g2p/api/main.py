@@ -23,7 +23,7 @@ def create_app() -> FastAPI:
             "Microservicio de desambiguacion fonologica dialectal y diacronica inversa, "
             "sintesis acustica formántica AFI y generacion de informes periciales."
         ),
-        version="1.0.0",
+        version="1.2.0",
         docs_url="/docs",
         redoc_url="/redoc",
     )
