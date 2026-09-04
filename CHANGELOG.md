@@ -5,6 +5,27 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 
 ---
 
+## [1.2.0] - 2026-09-04
+
+### Correcciones de Compatibilidad y Estabilidad
+- **Eliminación de Deprecaciones de Starlette**: Migración del import `starlette.testclient.TestClient` al módulo canónico `fastapi.testclient.TestClient` en los módulos de pruebas de ciberseguridad (`test_advanced_security.py`, `test_security.py`), eliminando la advertencia `StarletteDeprecationWarning`.
+- **Actualización del Código de Estado HTTP 413**: Transición del identificador obsoleto `HTTP_413_REQUEST_ENTITY_TOO_LARGE` al estándar vigente `HTTP_413_CONTENT_TOO_LARGE` conforme a la especificación HTTP actualizada en `idiolect_g2p/api/main.py`.
+- **Corrección de Import Faltante**: Incorporación del tipo `Optional` al módulo de rutas `idiolect_g2p/api/routes.py`, resolviendo un `NameError` latente en la ruta de transcripción con síntesis de audio deshabilitada.
+
+### Infraestructura de Integración Continua
+- **Pipeline CI/CD Matricial**: Creación del flujo de trabajo `.github/workflows/ci.yml` con ejecución automatizada de la suite de pruebas sobre una matriz de Python 3.10, 3.11 y 3.12 en Ubuntu, incluyendo reporte de cobertura de código mediante `pytest-cov` y verificación de integridad de importaciones del paquete.
+
+### Gobernanza de Tipado y Empaquetado
+- **Marcador PEP 561**: Creación del archivo `idiolect_g2p/py.typed` para que verificadores de tipos estáticos (mypy, pyright) reconozcan el paquete como completamente tipado.
+- **Sincronización de Versión 1.2.0**: Actualización coherente del número de versión en `idiolect_g2p/__init__.py`, `pyproject.toml`, la instancia `FastAPI` y el endpoint `/health`.
+
+### Documentación y Metadatos
+- **Actualización de Insignias Dinámicas**: Corrección del badge de tests en `README.md` de 69/69 a **147/147 tests aprobados (100%)**, reflejando la cobertura real del proyecto incluyendo las 7 dimensiones de auditoría de IA.
+- **Actualización de BibTeX**: Versión de citación científica actualizada a 1.2.0.
+- **Ampliación de `.gitignore`**: Incorporación de patrones para notebooks Jupyter (`.ipynb_checkpoints`), artefactos de sistema operativo (`Thumbs.db`, `Desktop.ini`) y variables de entorno locales.
+
+---
+
 ## [1.1.0] - 2026-09-02
 
 ### Infraestructura y Operaciones DevOps
