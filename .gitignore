@@ -67,3 +67,21 @@ dmypy.json
 *.wav.tmp
 temp_audio/
 scratch/
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Environment variables
+.env.local
+.env.*.local
+
+# Build artifacts
+*.manifest
+*.spec
+pip-log.txt
+pip-delete-this-directory.txt
