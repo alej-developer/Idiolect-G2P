@@ -4,7 +4,7 @@ Advanced cybersecurity tests: path traversal, unicode homoglyph/zero-width attac
 """
 
 import pytest
-from starlette.testclient import TestClient
+from fastapi.testclient import TestClient
 from idiolect_g2p.api.main import app
 from idiolect_g2p.core.transducer import G2PTransducer
 from idiolect_g2p.core.syllabifier import syllabify_text
