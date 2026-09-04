@@ -2,7 +2,7 @@
 ### Inverse Dialectal and Diachronic Phonological Disambiguation Framework
 
 [![CI/CD](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/alej-developer/Idiolect-G2P)
-[![Tests](https://img.shields.io/badge/tests-69%2F69%20passed-success.svg)](https://github.com/alej-developer/Idiolect-G2P/actions)
+[![Tests](https://img.shields.io/badge/tests-147%2F147%20passed-success.svg)](https://github.com/alej-developer/Idiolect-G2P/actions)
 [![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![Type Checking](https://img.shields.io/badge/type--checking-mypy%20strict-informational.svg)](https://mypy-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
@@ -130,7 +130,7 @@ informe_tex = generate_report(resultado, format_type=ReportFormat.LATEX, case_id
 | Velocidad de Escansión | 185 estrofas / segundo | > 50 estr/s |
 | Latencia de Inferencia (18 dialectos) | 42.1 ms por soneto | < 150 ms |
 | Latencia de Síntesis WAV | 38.5 ms por oración | < 200 ms |
-| Suite de Pruebas Automatizadas | **69/69 tests aprobados (100%)** | 100% |
+| Suite de Pruebas Automatizadas | **147/147 tests aprobados (100%)** | 100% |
 
 ---
 
@@ -145,7 +145,7 @@ Si utiliza **Idiolect-G2P** en su investigación filológica, lingüística comp
   month        = sep,
   year         = 2026,
   publisher    = {GitHub},
-  version      = {1.0.0},
+  version      = {1.2.0},
   doi          = {10.5281/zenodo.10892110},
   url          = {https://github.com/alej-developer/Idiolect-G2P}
 }
