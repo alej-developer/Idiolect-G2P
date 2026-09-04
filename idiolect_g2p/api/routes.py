@@ -5,7 +5,7 @@ REST API routes for Idiolect-G2P.
 
 from __future__ import annotations
 import base64
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from fastapi import APIRouter, HTTPException, status
 
 from .schemas import (
