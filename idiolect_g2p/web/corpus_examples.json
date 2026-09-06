@@ -118,5 +118,21 @@
     "century": 20,
     "expected_dialect": "CARIBBEAN_LAMBDACIST",
     "text": "Si me quieres, quiéreme entera,\nno por zonas de luz o sombra...\nSi me quieres, quiéreme negra\ny blanca, y gris, y verde, y rubia."
+  },
+  {
+    "id": "miguel_hernandez",
+    "title": "Miguel Hernández — Nanas de la cebolla (Orihuela, Alicante / España, Siglo XX)",
+    "author": "Miguel Hernández (Alicante, España)",
+    "century": 20,
+    "expected_dialect": "ES_PENINSULAR",
+    "text": "La cebolla es escarcha\ncerrada y pobre:\nescarcha de tus días\ny de mis noches.\nHambre y cebolla:\nhielo negro y escarcha\ngrande y redonda.\n\nEn la cuna del hambre\nmi niño estaba.\nCon sangre de cebolla\nse amamantaba.\nPero tu sangre,\nescarchada de azúcar,\ncebolla y hambre."
+  },
+  {
+    "id": "carmen_conde",
+    "title": "Carmen Conde — Ansia de la gracia (Alicante / España, Siglo XX)",
+    "author": "Carmen Conde (Alicante, España)",
+    "century": 20,
+    "expected_dialect": "ES_PENINSULAR",
+    "text": "Déjame que me hunda en tu silencio,\nque me pierda en la noche de tus ojos,\nque me queme en la llama de tus labios\ny me duerma en la paz de tus rodillas.\n\nDéjame que te siga por la senda\nque bordean los álamos sombríos,\ndonde el agua murmura entre los juncos\ny la tarde se muere sobre el río."
   }
 ]
