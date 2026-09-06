@@ -44,6 +44,8 @@ flowchart TD
     M --> N["LaTeX / BibTeX / TEI-XML / CSV / HTML / Markdown / JSON / TXT"]
 ```
 
+![Diagrama de Arquitectura de Idiolect-G2P](docs/architecture_diagram.png)
+
 ---
 
 ## Características Principales / Key Features
