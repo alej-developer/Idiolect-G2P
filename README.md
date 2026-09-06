@@ -166,17 +166,38 @@ Si utiliza **Idiolect-G2P** en su investigación filológica, lingüística comp
 
 ---
 
-## Referencias Bibliográficas Principales / Key References
+## Referencias Bibliográficas / References (APA 7th Edition)
 
-- Boersma, P., & Hayes, B. (2001). Empirical tests of the Gradual Learning Algorithm. *Linguistic Inquiry*, 32(1), 45–86.
+- Alvar, M. (Dir.). (1996). *Manual de dialectología hispánica: El español de España*. Ariel.
+- Avelino, H. (2018). Illustrations of the IPA: Mexico City Spanish. *Journal of the International Phonetic Association*, 48(2), 231–241. https://doi.org/10.1017/S0025100318000129
+- Boersma, P., & Hayes, B. (2001). Empirical tests of the Gradual Learning Algorithm. *Linguistic Inquiry*, 32(1), 45–86. https://doi.org/10.1162/002438901554601
+- Caravedo, R. (1990). *Sociolingüística del español de Lima*. Pontificia Universidad Católica del Perú.
+- Chela-Flores, G. (1982). Las teorías fonológicas y la sincronía caribeña. *Boletín de Filología de la Universidad de Chile*, 31(1), 255–269.
 - Chomsky, N., & Halle, M. (1968). *The sound pattern of English*. Harper & Row.
 - Clements, G. N., & Hume, E. V. (1995). The internal organization of speech sounds. In J. A. Goldsmith (Ed.), *The handbook of phonological theory* (pp. 245–306). Blackwell.
-- Coulthard, M., & Johnson, A. (2007). *An introduction to forensic linguistics: Language in evidence*. Routledge.
-- Goldrick, M. (2007). Lexical representation and speech production. *Language and Linguistics Compass*, 1(5), 444–460.
-- Hualde, J. I. (2014). *Los sonidos del español: Spanish phonetics and phonology*. Cambridge University Press.
-- Navarro-Colorado, B. (2017). A metrical scansion system for Spanish sonnets. *Digital Scholarship in the Humanities*, 32(1), 112–125.
-- Plecháč, P. (2021). *Versification and authorship attribution*. Cambridge University Press.
+- Coloma, G. (2018). Illustrations of the IPA: Argentine Spanish. *Journal of the International Phonetic Association*, 48(2), 243–250. https://doi.org/10.1017/S002510031700021X
+- Coulthard, M., & Johnson, A. (2007). *An introduction to forensic linguistics: Language in evidence*. Routledge. https://doi.org/10.4324/9780203969694
+- French, P., & Watt, D. (Eds.). (2018). *The Oxford handbook of forensic phonetics*. Oxford University Press. https://doi.org/10.1093/oxfordhb/9780199585694.001.0001
+- Gerdas, P. (2000). A logic programming approach to Spanish poetic scansion. *Literary and Linguistic Computing*, 15(2), 189–198. https://doi.org/10.1093/llc/15.2.189
+- Goldrick, M. (2007). Lexical representation and speech production. *Language and Linguistics Compass*, 1(5), 444–460. https://doi.org/10.1111/j.1749-818X.2007.00028.x
+- Guitart, J. M. (1978). *Aspectos del consonantismo habanero*. Ediciones Universal.
+- Hayes, B., & Wilson, C. (2008). A maximum entropy model of phonotactics and phonotactic learning. *Linguistic Inquiry*, 39(3), 379–440. https://doi.org/10.1162/ling.2008.39.3.379
+- Herrero de Haro, A., & Hajek, J. (2022). Illustrations of the IPA: Eastern Andalusian Spanish. *Journal of the International Phonetic Association*, 52(1), 165–195. https://doi.org/10.1017/S0025100320000249
+- Hualde, J. I. (2014). *Los sonidos del español: Spanish phonetics and phonology*. Cambridge University Press. https://doi.org/10.1017/CBO9780511719943
+- International Phonetic Association. (1999). *Handbook of the International Phonetic Association: A guide to the use of the International Phonetic Alphabet*. Cambridge University Press.
+- Klatt, D. H. (1980). Software for a cascade/parallel formant synthesizer. *The Journal of the Acoustical Society of America*, 67(3), 971–995. https://doi.org/10.1121/1.383940
+- Lapesa, R. (1981). *Historia de la lengua española* (9.ª ed.). Gredos.
+- Lipski, J. M. (1994). *Latin American Spanish*. Longman.
+- Martínez Celdrán, E., & Fernández Planas, A. M. (2007). *Manual de fonética española: Articulaciones y sonidos del español*. Ariel.
+- Martínez-Celdrán, E., Fernández-Planas, A. M., & Carrera-Sabaté, J. (2003). Illustrations of the IPA: Castilian Spanish. *Journal of the International Phonetic Association*, 33(2), 255–259. https://doi.org/10.1017/S0025100303001373
+- Navarro-Colorado, B. (2017). A metrical scansion system for Spanish sonnets. *Digital Scholarship in the Humanities*, 32(1), 112–125. https://doi.org/10.1093/llc/fqv067
+- Penny, R. (2002). *A history of the Spanish language* (2nd ed.). Cambridge University Press. https://doi.org/10.1017/CBO9780511815874
+- Pérez Silva, J. I. (2008). Estudios de variación fonética andina. *Lexis*, 32(1), 77–105.
+- Plecháč, P. (2021). *Versification and authorship attribution*. Cambridge University Press. https://doi.org/10.1017/9781108914611
+- Quesada Pacheco, M. A. (2000). *El español de América*. Editorial Tecnológica de Costa Rica.
 - Quilis, A. (1993). *Tratado de fonología y fonética españolas*. Gredos.
+- Real Academia Española & Asociación de Academias de la Lengua Española. (2011). *Nueva gramática de la lengua española: Fonética y fonología*. Espasa.
+- Sadowsky, S., & Salamanca, G. (2011). El alófono africado [t͡s] del fonema /t͡ʃ/ en el español de Chile. *Revista de Lingüística Aplicada*, 49(2), 47–68.
 
 ---
 
