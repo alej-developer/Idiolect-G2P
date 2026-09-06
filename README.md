@@ -20,28 +20,28 @@
 
 ```mermaid
 flowchart TD
-    A[Texto Poético / Ortografía Estándar] --> B[Silabificador Fonotáctico & Prosodia RAE]
-    B --> C[Analizador Métrico Versal & Extractor de Rimas]
+    A["Texto Poético / Ortografía Estándar"] --> B["Silabificador Fonotáctico & Prosodia RAE"]
+    B --> C["Analizador Métrico Versal & Extractor de Rimas"]
     
-    C --> D[Evaluador de Rimas por Geometría de Rasgos Clements & Hume 1995]
+    C --> D["Evaluador de Rimas por Geometría de Rasgos Clements & Hume 1995"]
     
-    E[Catálogo de 18 Dialectos & Isoglosas Continuas theta] --> D
+    E["Catálogo de 18 Dialectos & Isoglosas Continuas θ"] --> D
     
-    D --> F[Motor de Inferencia Bayesiana Híbrido P(D | T, R)]
-    MaxEnt[Gramática Estocástica MaxEnt Boersma & Hayes 2001] --> F
-    Sandhi[Motor de Sandhi Externo & Resonorización Hualde 2014] --> I
+    D --> F["Motor de Inferencia Bayesiana Híbrido P(D | T, R)"]
+    MaxEnt["Gramática Estocástica MaxEnt Boersma & Hayes 2001"] --> F
+    Sandhi["Motor de Sandhi Externo & Resonorización Hualde 2014"] --> I
     
-    F --> G[Dialecto Ganador D_hat & Vector theta_hat]
-    F --> H[Generador de Evidencias Forenses Discriminantes]
+    F --> G["Dialecto Ganador D̂ & Vector θ̂"]
+    F --> H["Generador de Evidencias Forenses Discriminantes"]
     
-    G --> I[Transductor Fonético G2P Multi-Dialectal Continuo]
-    I --> J[Cadena AFI con Junturas de Sandhi]
+    G --> I["Transductor Fonético G2P Multi-Dialectal Continuo"]
+    I --> J["Cadena AFI con Junturas de Sandhi"]
     
-    J --> K[Sintetizador Acústico Formántico Python Puro / Web Audio API]
-    K --> L[Audio WAV PCM 16-bit 22.050 Hz]
+    J --> K["Sintetizador Acústico Formántico Python Puro / Web Audio API"]
+    K --> L["Audio WAV PCM 16-bit 22.050 Hz"]
     
-    F --> M[Generador de Informes Multi-Formato]
-    M --> N[LaTeX / BibTeX / TEI-XML / CSV / HTML / Markdown / JSON / TXT]
+    F --> M["Generador de Informes Multi-Formato"]
+    M --> N["LaTeX / BibTeX / TEI-XML / CSV / HTML / Markdown / JSON / TXT"]
 ```
 
 ---
