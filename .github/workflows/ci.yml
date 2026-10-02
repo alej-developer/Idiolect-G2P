@@ -20,7 +20,7 @@ jobs:
 
     steps:
       - name: Clonar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configurar Python ${{ matrix.python-version }}
         uses: actions/setup-python@v5
@@ -47,7 +47,7 @@ jobs:
 
     steps:
       - name: Clonar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configurar Python 3.12
         uses: actions/setup-python@v5
@@ -69,7 +69,7 @@ jobs:
 
     steps:
       - name: Clonar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Configurar Python 3.12
         uses: actions/setup-python@v5
@@ -91,7 +91,7 @@ jobs:
 
     steps:
       - name: Clonar repositorio
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
 
       - name: Construir imagen de producción
         run: docker build --tag idiolect-g2p:ci .
