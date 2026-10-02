@@ -115,7 +115,7 @@ def transcribe_text(req: TranscribeRequest) -> TranscribeResponse:
     timings_schemas: Optional[List[WordTimingSchema]] = None
 
     if req.generate_audio:
-        synthesizer = IPAFormantSynthesizer()
+        synthesizer = IPAFormantSynthesizer(speech_rate=req.speech_rate)
         wav_bytes, word_timings = synthesizer.synthesize_text_with_timings(req.text, dialect=dialect)
         audio_b64 = base64.b64encode(wav_bytes).decode("ascii")
         timings_schemas = [
@@ -174,7 +174,7 @@ def syllabify_input_text(req: SyllabifyRequest) -> SyllabifyResponse:
 @router.post("/synthesize-ipa", response_model=SynthesizeIPAResponse, summary="Sintesis acustica formántica de cadena AFI")
 def synthesize_ipa(req: SynthesizeIPARequest) -> SynthesizeIPAResponse:
     """Genera audio WAV PCM lineal a partir de una secuencia en alfabeto fonetico internacional."""
-    synthesizer = IPAFormantSynthesizer(sample_rate=req.sample_rate)
+    synthesizer = IPAFormantSynthesizer(sample_rate=req.sample_rate, speech_rate=req.speech_rate)
     samples = synthesizer.synthesize_ipa_string(req.ipa_sequence)
     wav_bytes = synthesizer.to_wav_bytes(samples)
     duration_sec = len(samples) / float(req.sample_rate)

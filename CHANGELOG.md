@@ -7,6 +7,12 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 
 ## [Unreleased]
 
+### Síntesis Acústica Perceptiva
+- **Velocidad de Habla Regulable**: Nuevo parámetro `speech_rate` (0.5–2.0) en `IPAFormantSynthesizer`, `synthesize_ipa_to_wav` y en los endpoints `/transcribe` y `/synthesize-ipa`. El valor 1.0 corresponde a una lectura moderada (~4 sílabas/s); las vocales se comprimen más que las consonantes y las pausas más que ambas. Selector Pausada / Moderada / Fluida en el transcriptor web.
+- **Prosodia Derivada de la Puntuación**: Pausas breves entre palabras, medias en coma y largas en punto o salto de verso; declinación de F0, prominencia tónica, alargamiento final de frase y tonema ascendente en interrogativas.
+- **Señal Continua sin Chasquidos**: Fuente glotal continua en fase, cascada formántica de Klatt con parámetros por tramas de 2,5 ms suavizados (coarticulación) y estructura interna de oclusivas, africadas, vibrantes simple y múltiple.
+- **Sonoridad Adaptada al Oído**: Intensidad intrínseca por clase de sonido (vocales abiertas > cerradas > líquidas > nasales > sibilantes > fricativas débiles), filtro antizumbido a 60 Hz, normalización a -16 dBFS RMS y techo de pico a -1 dBFS.
+
 ### Infraestructura y Operaciones DevOps
 - **Imagen de producción multicapa**: Incorporación de un `Dockerfile` en dos etapas sobre Python 3.12 Alpine, con dependencias de producción aisladas en un entorno virtual, usuario no privilegiado y comprobación de salud en `/api/v1/health`.
 - **Despliegue de investigación**: Archivo `docker-compose.yml` para levantar el microservicio con `docker compose up --build`.

@@ -146,3 +146,44 @@ def get_acoustic_parameters(symbol: str) -> AcousticParameters:
         return IPA_ACOUSTIC_TABLE[symbol]
     # Contingencia para fonemas neutros o no catalogados
     return AcousticParameters(symbol=symbol)
+
+
+# -----------------------------------------------------------------------------
+# CLASES ARTICULATORIAS (estructura temporal interna del segmento)
+# -----------------------------------------------------------------------------
+VOWELS: Final[frozenset] = frozenset({"a", "e", "i", "o", "u", "ɛ", "ɔ", "æ", "e̥", "o̥"})
+VOICELESS_STOPS: Final[frozenset] = frozenset({"p", "t", "k", "c"})
+VOICED_STOPS: Final[frozenset] = frozenset({"b", "d", "g", "ɟ"})
+AFFRICATES: Final[frozenset] = frozenset({"t͡ʃ", "t͡ʂ", "t͡ɬ", "ts", "dz"})
+TAPS: Final[frozenset] = frozenset({"ɾ"})
+TRILLS: Final[frozenset] = frozenset({"r"})
+
+# -----------------------------------------------------------------------------
+# INTENSIDAD INTRINSECA RELATIVA (dB respecto a la vocal abierta [a])
+# Escala de sonoridad percibida del espanol: vocales abiertas > medias > cerradas
+# > liquidas > nasales > sibilantes > fricativas no sibilantes > explosiones.
+# Basado en Fry (1979), Ladefoged & Johnson (2011) y Quilis (1993).
+# -----------------------------------------------------------------------------
+RELATIVE_INTENSITY_DB: Final[Dict[str, float]] = {
+    "a": 0.0, "æ": -0.5,
+    "e": -1.5, "o": -1.5, "ɛ": -1.0, "ɔ": -1.0,
+    "i": -3.5, "u": -3.5,
+    "e̥": -14.0, "o̥": -14.0,
+    "j": -5.0, "w": -5.0,
+    "l": -6.0, "ʎ": -6.5,
+    "ɾ": -6.0, "r": -5.5,
+    "m": -8.0, "n": -8.0, "ɲ": -8.0, "ŋ": -8.0,
+    "β": -8.5, "ð": -9.0, "ɣ": -9.0, "ʝ": -9.0,
+    "s": -11.0, "s̺": -11.0, "ʃ": -10.0,
+    "z": -11.0, "ʒ": -10.5, "ř": -10.0, "ʐ": -10.0,
+    "ç": -13.0, "x": -13.0, "χ": -12.5,
+    "θ": -17.0, "f": -17.0, "h": -18.0,
+    "p": -13.0, "t": -12.0, "k": -11.5, "c": -11.5,
+    "b": -12.0, "d": -12.0, "g": -12.0, "ɟ": -12.0,
+    "t͡ʃ": -10.0, "t͡ʂ": -10.0, "ts": -10.5, "t͡ɬ": -11.5, "dz": -11.0,
+}
+
+
+def get_relative_intensity_db(symbol: str) -> float:
+    """Intensidad intrinseca percibida de un simbolo AFI relativa a [a] (dB)."""
+    return RELATIVE_INTENSITY_DB.get(symbol, -6.0)

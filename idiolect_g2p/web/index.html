@@ -233,6 +233,14 @@ del luciente cristal tu gentil cuello.</textarea>
                         <button id="btn-g2p-audio" class="btn-inferencia" type="button" style="border-color: var(--acento-liquen); color: var(--acento-liquen);">
                             Sintetizar y Reproducir Audio
                         </button>
+                        <label for="g2p-speech-rate" class="meta-label" style="display: flex; align-items: center; gap: 0.4rem;">
+                            <span>Velocidad:</span>
+                            <select id="g2p-speech-rate" class="meta-input" style="padding: 0.3rem 0.5rem;">
+                                <option value="0.75">Pausada</option>
+                                <option value="1.0" selected>Moderada</option>
+                                <option value="1.25">Fluida</option>
+                            </select>
+                        </label>
                         <label class="meta-label" style="display: flex; align-items: center; gap: 0.4rem; cursor: pointer; margin-left: auto;">
                             <input type="checkbox" id="check-sandhi-g2p" checked style="accent-color: var(--acento-liquen);">
                             <span>Aplicar Sandhi de Habla Continua</span>

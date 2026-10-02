@@ -104,6 +104,19 @@ def test_synthesize_ipa_endpoint(client: TestClient) -> None:
     assert len(data["audio_base64_wav"]) > 100
 
 
+def test_synthesize_ipa_speech_rate(client: TestClient) -> None:
+    """La velocidad de habla modifica la duracion y se valida su rango."""
+    durations = []
+    for rate in (0.75, 1.25):
+        response = client.post("/api/v1/synthesize-ipa", json={"ipa_sequence": "ˈka.sa", "speech_rate": rate})
+        assert response.status_code == 200
+        durations.append(response.json()["duration_seconds"])
+    assert durations[0] > durations[1]
+
+    response = client.post("/api/v1/synthesize-ipa", json={"ipa_sequence": "ˈka.sa", "speech_rate": 5.0})
+    assert response.status_code == 422
+
+
 def test_analyze_poem_endpoint(client: TestClient) -> None:
     """Verifica el analisis metrico de un poema."""
     poem = """
