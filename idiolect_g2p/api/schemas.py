@@ -44,6 +44,7 @@ class TranscribeRequest(BaseModel):
     dialect_code: Optional[str] = Field("ES_PENINSULAR", description="Codigo del dialecto objetivo.")
     generate_audio: bool = Field(False, description="Indica si debe sintetizarse audio WAV.")
     apply_sandhi: bool = Field(True, description="Indica si se aplican procesos post-léxicos de sandhi.")
+    speech_rate: float = Field(1.0, ge=0.5, le=2.0, description="Velocidad de habla (1.0 = moderada, ~4 sílabas/s).")
 
 
 class WordTranscriptionSchema(BaseModel):
@@ -111,6 +112,7 @@ class SynthesizeIPARequest(BaseModel):
     """Solicitud de sintesis acustica a partir de simbolos AFI."""
     ipa_sequence: str = Field(..., min_length=1, max_length=2000, description="Cadena en notacion AFI.")
     sample_rate: int = Field(22050, description="Frecuencia de muestreo (Hz).")
+    speech_rate: float = Field(1.0, ge=0.5, le=2.0, description="Velocidad de habla (1.0 = moderada, ~4 sílabas/s).")
 
 
 class SynthesizeIPAResponse(BaseModel):

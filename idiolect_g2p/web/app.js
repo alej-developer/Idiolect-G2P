@@ -522,6 +522,8 @@ que no mi entendimiento en las riquezas.`;
 
         const checkSandhiG2p = document.getElementById('check-sandhi-g2p');
         const aplicarSandhiG2p = checkSandhiG2p ? checkSandhiG2p.checked : true;
+        const selectSpeechRate = document.getElementById('g2p-speech-rate');
+        const speechRate = selectSpeechRate ? parseFloat(selectSpeechRate.value) : 1.0;
 
         try {
             const res = await fetch('/api/v1/transcribe', {
@@ -531,7 +533,8 @@ que no mi entendimiento en las riquezas.`;
                     text: text,
                     dialect_code: dialectCode,
                     generate_audio: generarAudio,
-                    apply_sandhi: aplicarSandhiG2p
+                    apply_sandhi: aplicarSandhiG2p,
+                    speech_rate: speechRate
                 })
             });
 
