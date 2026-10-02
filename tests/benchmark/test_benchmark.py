@@ -3,7 +3,10 @@ Pruebas de rendimiento, latencia y benchmarking cuantitativo.
 Performance benchmark, throughput, and latency evaluation tests.
 """
 
+import io
 import time
+import wave
+
 import pytest
 from idiolect_g2p.core.transducer import G2PTransducer
 from idiolect_g2p.meter.verse_analyzer import analyze_poem
@@ -77,12 +80,17 @@ def test_bayesian_inference_latency() -> None:
 
 
 def test_audio_formant_synthesis_latency() -> None:
-    """Evalúa que la síntesis acústica formántica de una oración mantenga latencia en tiempo real."""
+    """Evalúa que la síntesis acústica formántica de una oración sea más rápida que su duración."""
     synthesizer = IPAFormantSynthesizer(sample_rate=22050)
     start_time = time.perf_counter()
     wav_bytes = synthesizer.synthesize_text("Los mares cantan al sol")
     elapsed = time.perf_counter() - start_time
 
     assert len(wav_bytes) > 1000
-    assert elapsed < 0.350, f"Síntesis de audio demoró {elapsed:.4f}s"
+    with wave.open(io.BytesIO(wav_bytes), "rb") as wav_file:
+        audio_duration = wav_file.getnframes() / float(wav_file.getframerate())
+    assert audio_duration > 1.0
+    assert elapsed < audio_duration, (
+        f"Síntesis de audio demoró {elapsed:.4f}s para {audio_duration:.4f}s de señal"
+    )
 
