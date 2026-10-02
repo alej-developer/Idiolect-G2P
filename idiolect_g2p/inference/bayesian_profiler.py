@@ -216,12 +216,16 @@ class BayesianIdiolectProfiler:
         # Estimacion de isoglosas continuas ponderadas
         theta_estimated: Dict[str, float] = {}
         first_iso_dict = dialects[0].isogloss_vector.to_dict()
-        for iso_key in first_iso_dict.keys():
-            weighted_iso_val = sum(
-                dp.posterior_probability * (self.registry.get(dp.dialect_code).isogloss_vector.to_dict()[iso_key])
-                for dp in prob_results
-                if self.registry.get(dp.dialect_code) is not None
-            )
+        for iso_key in first_iso_dict:
+            weighted_iso_val = 0.0
+            for dp in prob_results:
+                dialect_obj = self.registry.get(dp.dialect_code)
+                if dialect_obj is None:
+                    continue
+                weighted_iso_val += (
+                    dp.posterior_probability
+                    * dialect_obj.isogloss_vector.to_dict()[iso_key]
+                )
             theta_estimated[iso_key] = round(weighted_iso_val, 4)
 
         # Transcripcion optima bajo el dialecto ganador

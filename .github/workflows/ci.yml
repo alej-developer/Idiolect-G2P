@@ -40,3 +40,69 @@ jobs:
       - name: Verificar integridad de importaciones del paquete
         run: |
           python -c "import idiolect_g2p; print(f'Idiolect-G2P v{idiolect_g2p.__version__} importado correctamente')"
+
+  tipos:
+    name: Verificación de tipos (mypy)
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias de producción y desarrollo
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Ejecutar mypy en modo estricto
+        run: python -m mypy idiolect_g2p
+
+  auditoria-dependencias:
+    name: Auditoría de seguridad de dependencias
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      - name: Instalar dependencias de producción y desarrollo
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Auditar el árbol de dependencias declarado
+        run: pip-audit -r requirements.txt --progress-spinner off
+
+  escaneo-imagen:
+    name: Construcción y escaneo de la imagen
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar repositorio
+        uses: actions/checkout@v4
+
+      - name: Construir imagen de producción
+        run: docker build --tag idiolect-g2p:ci .
+
+      # Falla el flujo solo si hay CVE HIGH o CRITICAL con corrección publicada.
+      - name: Escanear vulnerabilidades de la imagen con Trivy
+        uses: aquasecurity/trivy-action@v0.36.0
+        with:
+          image-ref: idiolect-g2p:ci
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          vuln-type: os,library
+          severity: HIGH,CRITICAL

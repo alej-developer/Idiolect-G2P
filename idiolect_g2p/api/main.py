@@ -75,7 +75,7 @@ def create_app() -> FastAPI:
         app.mount("/static", StaticFiles(directory=str(web_dir)), name="static")
 
         @app.get("/", include_in_schema=False)
-        def serve_index() -> FileResponse:
+        def serve_index() -> Response:
             index_file = web_dir / "index.html"
             if index_file.exists():
                 return FileResponse(str(index_file))

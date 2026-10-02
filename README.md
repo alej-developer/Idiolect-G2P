@@ -96,6 +96,23 @@ uvicorn idiolect_g2p.api.main:app --host 127.0.0.1 --port 8000 --reload
 ```
 Acceda a la aplicación web interactiva en: `http://127.0.0.1:8000`
 
+### 4. Despliegue en contenedor / Container deployment
+
+Imagen de producción multicapa (Python 3.12 Alpine) para entornos de investigación. El escaneo de vulnerabilidades de la imagen corre en la integración continua con Trivy.
+
+```bash
+docker compose up --build -d
+```
+
+El microservicio queda disponible en `http://127.0.0.1:8000` (salud: `http://127.0.0.1:8000/api/v1/health`). El puerto del anfitrión se puede cambiar con `IDIOLECT_PORT`.
+
+Construcción y ejecución manual:
+
+```bash
+docker build -t idiolect-g2p:latest .
+docker run --rm -p 8000:8000 idiolect-g2p:latest
+```
+
 ---
 
 ## Uso Rápido en Python / Python API Example

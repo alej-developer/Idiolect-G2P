@@ -5,6 +5,18 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 
 ---
 
+## [Unreleased]
+
+### Infraestructura y Operaciones DevOps
+- **Imagen de producción multicapa**: Incorporación de un `Dockerfile` en dos etapas sobre Python 3.12 Alpine, con dependencias de producción aisladas en un entorno virtual, usuario no privilegiado y comprobación de salud en `/api/v1/health`.
+- **Despliegue de investigación**: Archivo `docker-compose.yml` para levantar el microservicio con `docker compose up --build`.
+- **Integración continua ampliada**: El flujo `.github/workflows/ci.yml` añade, junto a la suite pytest existente, verificación de tipos con mypy, auditoría de dependencias con pip-audit y escaneo de vulnerabilidades de la imagen con Trivy en cada Pull Request.
+
+### Correcciones de Tipado
+- **Compatibilidad con mypy estricto**: Ajuste del tipo de retorno del índice web y de la estimación ponderada de isoglosas para que el chequeo estático configurado en `pyproject.toml` concluya sin errores.
+
+---
+
 ## [1.2.0] - 2026-09-04
 
 ### Correcciones de Compatibilidad y Estabilidad

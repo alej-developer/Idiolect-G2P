@@ -47,8 +47,16 @@ dev = [
     "pytest-cov>=4.1.0",
     "pytest-asyncio>=0.23.0",
     "httpx>=0.27.0",
-    "bandit>=1.7.8"
+    "bandit>=1.7.8",
+    "mypy>=1.11.0",
+    "pip-audit>=2.7.3"
 ]
+
+[tool.setuptools.packages.find]
+include = ["idiolect_g2p*"]
+
+[tool.setuptools.package-data]
+idiolect_g2p = ["py.typed", "web/*"]
 
 [tool.pytest.ini_options]
 minversion = "8.0"
