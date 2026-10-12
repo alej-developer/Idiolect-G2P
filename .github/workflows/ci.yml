@@ -28,6 +28,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
           cache: pip
 
+      - name: Configurar Node.js (pruebas del dashboard)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
       - name: Instalar dependencias de producción y desarrollo
         run: |
           python -m pip install --upgrade pip
