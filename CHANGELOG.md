@@ -14,7 +14,7 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 - **Escansión y audio tras un fallo (#34)**: la tabla de escansión y el reproductor del perfilador no conservan datos viejos.
 
 ### Conocido
-- El transductor no distingue yeísmo de lleísmo (`y` intervocálica sale como [j]); ver #28.
+- La `y` intervocálica se transcribe como semivocal [j] en lugar de ʝ (playa → ˈplaj.a): el silabeador la agrupa con la sílaba anterior; ver #28.
 
 ### Síntesis Acústica Perceptiva
 - **Velocidad de Habla Regulable**: Nuevo parámetro `speech_rate` (0.5–2.0) en `IPAFormantSynthesizer`, `synthesize_ipa_to_wav` y en los endpoints `/transcribe` y `/synthesize-ipa`. El valor 1.0 corresponde a una lectura moderada (~4 sílabas/s); las vocales se comprimen más que las consonantes y las pausas más que ambas. Selector Pausada / Moderada / Fluida en el transcriptor web.
