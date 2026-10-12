@@ -65,3 +65,12 @@ def test_exito_muestra_resultado_real_sin_aviso() -> None:
     assert r["error_texto"] == ""
     assert r["error_oculto"] is True
     assert r["boton"] == "Inferencia Inversa"
+
+
+def test_html_inicial_no_muestra_resultados_inventados() -> None:
+    """Antes de la primera inferencia solo debe haber marcadores neutros."""
+    html = (APP_JS.parent / "index.html").read_text(encoding="utf-8")
+    for valor in ("98.4%", "Peninsular Septentrional", "0.984", "d = 0.120", "d = 0.380"):
+        assert valor not in html
+    assert "Confianza: —" in html
+    assert "Marcador neutro" in html
