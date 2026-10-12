@@ -82,3 +82,17 @@ def test_informe_json_serializa_poder_nulo() -> None:
     datos = json.loads(generate_json_report(resultado))
     assert datos["discriminant_evidences"]
     assert all(e["power"] is None for e in datos["discriminant_evidences"])
+
+
+@pytest.mark.parametrize("poema", ["La valla\nla playa", "El pollo\nel poyo"])
+def test_yeismo_no_emite_evidencia_sin_contraste_real(poema: str) -> None:
+    """Limitacion conocida: el transductor renderiza la 'y' intervocalica como [j].
+
+    Las hipotesis yeista (ʝ vs j) y lleista (ʎ vs j) dan distancias casi iguales
+    (diferencia ~0.002, por debajo del umbral), asi que no se debe afirmar yeismo.
+    No hay control positivo de yeismo construible hasta que el transductor
+    distinga [ʝ] de [j].
+    """
+    informe = _informe(poema)
+    fenomenos = [ev.phonetic_phenomenon for ev in informe.discriminant_evidences]
+    assert not any("eísmo" in f or "eismo" in f.lower() for f in fenomenos)
