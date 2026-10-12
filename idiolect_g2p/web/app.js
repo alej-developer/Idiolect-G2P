@@ -107,10 +107,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Muestra un error claro y retira los resultados anteriores para que ningún
     // dictamen previo (o inventado) se confunda con el resultado de este intento.
+    // Etiqueta cualitativa a partir de la probabilidad del primer dialecto y su margen sobre el
+    // segundo. Los cortes (0.5/0.15 y 0.8/0.4) son una decisión de diseño, no están validados.
+    function etiquetaIndicio(ranking) {
+        const p1 = ranking[0].posterior_probability;
+        const p2 = ranking.length > 1 ? ranking[1].posterior_probability : 0;
+        const margen = p1 - p2;
+        if (p1 < 0.5 || margen < 0.15) return 'indicio débil';
+        if (p1 < 0.8 || margen < 0.4) return 'indicio moderado';
+        return 'indicio sólido';
+    }
+
     function mostrarErrorInferencia() {
         if (veredictoNombre) veredictoNombre.textContent = 'Sin resultado';
         if (veredictoRegion) veredictoRegion.textContent = 'La inferencia no se completó';
-        if (metricaConfianza) metricaConfianza.textContent = 'Confianza: —';
+        if (metricaConfianza) {
+            metricaConfianza.textContent = 'Confianza: —';
+            metricaConfianza.title = '';
+        }
         if (listaDistribucion) listaDistribucion.innerHTML = '';
         if (consolaAfi) consolaAfi.textContent = '';
         if (panelJunturasSandhi) panelJunturasSandhi.style.display = 'none';
@@ -375,7 +389,10 @@ que no mi entendimiento en las riquezas.`;
 
             if (veredictoNombre) veredictoNombre.textContent = data.predicted_dialect_name;
             if (veredictoRegion) veredictoRegion.textContent = `Macrorregión: ${top.region}`;
-            if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
+            if (metricaConfianza) {
+                metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}% · ${etiquetaIndicio(data.dialect_ranking)}`;
+                metricaConfianza.title = 'Indicio, no prueba: la probabilidad posterior depende del modelo y de los dialectos considerados.';
+            }
 
             renderizarDistribucion(data.dialect_ranking.slice(0, 5));
             renderizarMaxEnt(data.maxent_constraints);
