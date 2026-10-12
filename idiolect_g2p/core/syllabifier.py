@@ -218,6 +218,10 @@ def syllabify_word(word: str) -> ProsodicWord:
     prep = normalized
     prep = re.sub(r"qu([eiéí])", r"Q\1", prep)
     prep = re.sub(r"gu([eiéí])", r"G\1", prep)
+    # 'y' ante vocal (playa, mayo, yo, inyectar) es consonante de ataque, no semivocal:
+    # se protege con 'J' para que no se agrupe con las vocales vecinas. 'y' final o ante
+    # consonante (rey, hoy, muy) sigue siendo vocal.
+    prep = re.sub(r"y(?=[aeiouáéíóú])", "J", prep)
 
     # Identificar tramos vocalicos y consonanticos
     tokens: List[Tuple[str, bool]] = []
@@ -285,9 +289,9 @@ def syllabify_word(word: str) -> ProsodicWord:
     # Restaurar los marcadores 'Q' -> 'qu' y 'G' -> 'gu'
     restored_syllables: List[Tuple[str, str, str]] = []
     for ons, nuc, cod in raw_syllables:
-        r_ons = ons.replace("Q", "qu").replace("G", "gu")
-        r_nuc = nuc.replace("Q", "qu").replace("G", "gu")
-        r_cod = cod.replace("Q", "qu").replace("G", "gu")
+        r_ons = ons.replace("Q", "qu").replace("G", "gu").replace("J", "y")
+        r_nuc = nuc.replace("Q", "qu").replace("G", "gu").replace("J", "y")
+        r_cod = cod.replace("Q", "qu").replace("G", "gu").replace("J", "y")
         restored_syllables.append((r_ons, r_nuc, r_cod))
 
     # Acento prosodico
