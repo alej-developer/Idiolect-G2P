@@ -61,7 +61,7 @@ def test_error_muestra_aviso_y_no_resultados_simulados(escenario: str) -> None:
 def test_exito_muestra_resultado_real_sin_aviso() -> None:
     r = _ejecutar("ok")
     assert r["nombre"] == "Mexicano Central"
-    assert r["confianza"] == "Confianza: 50.0%"
+    assert r["confianza"] == "Confianza: 50.0% · indicio moderado"
     assert r["error_texto"] == ""
     assert r["error_oculto"] is True
     assert r["boton"] == "Inferencia Inversa"
