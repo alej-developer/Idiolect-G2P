@@ -94,6 +94,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const veredictoRegion = document.getElementById('veredicto-region');
     const metricaConfianza = document.getElementById('metrica-confianza');
     const listaDistribucion = document.getElementById('distribucion-lista');
+    const avisoErrorInferencia = document.getElementById('inferencia-error');
+
+    const MENSAJE_ERROR_INFERENCIA = 'No se pudo completar la inferencia. Inténtalo de nuevo';
+
+    // Oculta el aviso de error de inferencia (se llama al iniciar un intento y tras un éxito).
+    function ocultarErrorInferencia() {
+        if (!avisoErrorInferencia) return;
+        avisoErrorInferencia.textContent = '';
+        avisoErrorInferencia.hidden = true;
+    }
+
+    // Muestra un error claro y retira los resultados anteriores para que ningún
+    // dictamen previo (o inventado) se confunda con el resultado de este intento.
+    function mostrarErrorInferencia() {
+        if (veredictoNombre) veredictoNombre.textContent = 'Sin resultado';
+        if (veredictoRegion) veredictoRegion.textContent = 'La inferencia no se completó';
+        if (metricaConfianza) metricaConfianza.textContent = 'Confianza: —';
+        if (listaDistribucion) listaDistribucion.innerHTML = '';
+        if (consolaAfi) consolaAfi.textContent = '';
+        if (avisoErrorInferencia) {
+            avisoErrorInferencia.textContent = MENSAJE_ERROR_INFERENCIA;
+            avisoErrorInferencia.hidden = false;
+        }
+    }
 
     // Muestras Literarias
     const MUESTRA_GONGORA = `Mientras por competir con tu cabello,
@@ -284,6 +308,8 @@ que no mi entendimiento en las riquezas.`;
             century_prior: (selectPrior && selectPrior.value) ? parseInt(selectPrior.value, 10) : null
         };
 
+        ocultarErrorInferencia();
+
         try {
             const res = await fetch('/api/v1/profile-idiolect', {
                 method: 'POST',
@@ -291,23 +317,27 @@ que no mi entendimiento en las riquezas.`;
                 body: JSON.stringify(payload)
             });
 
-            if (res.ok) {
-                const data = await res.json();
-                const top = data.dialect_ranking[0];
-
-                if (veredictoNombre) veredictoNombre.textContent = data.predicted_dialect_name;
-                if (veredictoRegion) veredictoRegion.textContent = `Macrorregión: ${top.region}`;
-                if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
-
-                renderizarDistribucion(data.dialect_ranking.slice(0, 5));
-                renderizarMaxEnt(data.maxent_constraints);
-                ultimoDialectoPredicho = data.predicted_dialect_code;
-                await actualizarConsolaAfi(texto, data.predicted_dialect_code);
-            } else {
-                simularRespuestaLocal();
+            if (!res.ok) {
+                throw new Error(`HTTP ${res.status}`);
             }
+
+            const data = await res.json();
+            if (!data || !Array.isArray(data.dialect_ranking) || data.dialect_ranking.length === 0) {
+                throw new Error('Respuesta de inferencia inválida');
+            }
+            const top = data.dialect_ranking[0];
+
+            if (veredictoNombre) veredictoNombre.textContent = data.predicted_dialect_name;
+            if (veredictoRegion) veredictoRegion.textContent = `Macrorregión: ${top.region}`;
+            if (metricaConfianza) metricaConfianza.textContent = `Confianza: ${(data.confidence_score * 100).toFixed(1)}%`;
+
+            renderizarDistribucion(data.dialect_ranking.slice(0, 5));
+            renderizarMaxEnt(data.maxent_constraints);
+            ultimoDialectoPredicho = data.predicted_dialect_code;
+            await actualizarConsolaAfi(texto, data.predicted_dialect_code);
         } catch (err) {
-            simularRespuestaLocal();
+            console.error('Error de inferencia:', err);
+            mostrarErrorInferencia();
         } finally {
             if (btnInferencia) {
                 btnInferencia.textContent = 'Inferencia Inversa';
@@ -476,22 +506,6 @@ que no mi entendimiento en las riquezas.`;
                 btnReproducirPerfilador.style.opacity = '1';
             }
         });
-    }
-
-    function simularRespuestaLocal() {
-        const ranking = [
-            { name: 'Español del Siglo de Oro', posterior_probability: 0.984, phonetic_distance: 0.000 },
-            { name: 'Peninsular Septentrional', posterior_probability: 0.012, phonetic_distance: 0.120 },
-            { name: 'Andino Tradicional', posterior_probability: 0.003, phonetic_distance: 0.240 },
-            { name: 'Mexicano Central', posterior_probability: 0.001, phonetic_distance: 0.380 }
-        ];
-        if (veredictoNombre) veredictoNombre.textContent = 'Español del Siglo de Oro';
-        if (veredictoRegion) veredictoRegion.textContent = 'Norma Histórica — Siglo XVII (Distinción y Lleísmo)';
-        if (metricaConfianza) metricaConfianza.textContent = 'Confianza: 98.4%';
-        renderizarDistribucion(ranking);
-        if (consolaAfi) {
-            consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/\n/mjen.tɾas kon me.nos.pɾe.sjo en me.ðjo el ʎa.no/\n/mi.ɾa tu blan.ka fɾen.te el li.ljo βe.ʎo/`;
-        }
     }
 
     // =========================================================================
