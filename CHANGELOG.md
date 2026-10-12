@@ -7,6 +7,15 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 
 ## [Unreleased]
 
+### Corregido
+- **Inferencia sin simulación (#25)**: el dashboard ya no inventa un dictamen cuando falla la API; muestra un aviso y retira el resultado previo. Antes de la primera inferencia solo hay marcadores neutros.
+- **Evidencias forenses sustentadas por la rima (#24)**: solo se emite evidencia si el rasgo está en el segmento rimante y cambia la distancia entre hipótesis. Las puntuaciones fijas de poder discriminante se sustituyen por `null` hasta validarlas. Umbral y limitaciones documentados en `docs/forensic_threshold_sensitivity.md`.
+- **Transcripción sin IPA inventada (#29)** y **escape de HTML del API en el dashboard (#30)**.
+- **Escansión y audio tras un fallo (#34)**: la tabla de escansión y el reproductor del perfilador no conservan datos viejos.
+
+### Conocido
+- La `y` intervocálica se transcribe como semivocal [j] en lugar de ʝ (playa → ˈplaj.a): el silabeador la agrupa con la sílaba anterior; ver #28.
+
 ### Síntesis Acústica Perceptiva
 - **Velocidad de Habla Regulable**: Nuevo parámetro `speech_rate` (0.5–2.0) en `IPAFormantSynthesizer`, `synthesize_ipa_to_wav` y en los endpoints `/transcribe` y `/synthesize-ipa`. El valor 1.0 corresponde a una lectura moderada (~4 sílabas/s); las vocales se comprimen más que las consonantes y las pausas más que ambas. Selector Pausada / Moderada / Fluida en el transcriptor web.
 - **Prosodia Derivada de la Puntuación**: Pausas breves entre palabras, medias en coma y largas en punto o salto de verso; declinación de F0, prominencia tónica, alargamiento final de frase y tonema ascendente en interrogativas.
