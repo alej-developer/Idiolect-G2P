@@ -752,3 +752,20 @@ select.meta-input option {
     font-weight: bold;
     color: var(--acento-liquen);
 }
+
+/* Aviso de fallo de inferencia (sin resultados simulados) */
+.inferencia-error {
+    margin-bottom: 0.75rem;
+    padding: 0.6rem 0.85rem;
+    border: 1px solid #a33a2a;
+    border-left-width: 4px;
+    border-radius: 4px;
+    background: rgba(163, 58, 42, 0.08);
+    color: #a33a2a;
+    font-family: var(--font-cientifica);
+    font-size: 0.85rem;
+}
+
+.inferencia-error[hidden] {
+    display: none;
+}
