@@ -128,6 +128,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Vacía el reproductor del perfilador y su seguimiento de texto.
     function reiniciarAudioPerfilador() {
         if (audioPlayerPerfilador) {
+            // Sin manejadores, el evento de pausa no reescribe la insignia después del reinicio.
+            audioPlayerPerfilador.ontimeupdate = null;
+            audioPlayerPerfilador.onplay = null;
+            audioPlayerPerfilador.onpause = null;
+            audioPlayerPerfilador.onended = null;
             if (typeof audioPlayerPerfilador.pause === 'function') audioPlayerPerfilador.pause();
             audioPlayerPerfilador.removeAttribute('src');
             if (typeof audioPlayerPerfilador.load === 'function') audioPlayerPerfilador.load();
