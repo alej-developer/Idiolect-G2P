@@ -115,9 +115,27 @@ document.addEventListener('DOMContentLoaded', () => {
         if (consolaAfi) consolaAfi.textContent = '';
         if (panelJunturasSandhi) panelJunturasSandhi.style.display = 'none';
         if (maxentConstraintsContainer) maxentConstraintsContainer.innerHTML = '';
+        reiniciarAudioPerfilador();
         if (avisoErrorInferencia) {
             avisoErrorInferencia.textContent = MENSAJE_ERROR_INFERENCIA;
             avisoErrorInferencia.hidden = false;
+        }
+    }
+
+    const MENSAJE_ERROR_ESCANSION = 'No se pudo completar el análisis métrico. Inténtalo de nuevo.';
+    const MENSAJE_ERROR_AUDIO = 'No se pudo sintetizar el audio';
+
+    // Vacía el reproductor del perfilador y su seguimiento de texto.
+    function reiniciarAudioPerfilador() {
+        if (audioPlayerPerfilador) {
+            if (typeof audioPlayerPerfilador.pause === 'function') audioPlayerPerfilador.pause();
+            audioPlayerPerfilador.removeAttribute('src');
+            if (typeof audioPlayerPerfilador.load === 'function') audioPlayerPerfilador.load();
+        }
+        if (audioStatusPerfilador) audioStatusPerfilador.textContent = 'Listo';
+        if (manuscritoSincronizadoPerfilador) {
+            manuscritoSincronizadoPerfilador.innerHTML = '';
+            manuscritoSincronizadoPerfilador.style.display = 'none';
         }
     }
 
@@ -521,9 +539,12 @@ que no mi entendimiento en las riquezas.`;
                         }
                         audioPlayerPerfilador.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
                     }
+                } else {
+                    if (audioStatusPerfilador) audioStatusPerfilador.textContent = MENSAJE_ERROR_AUDIO;
                 }
             } catch (e) {
                 console.error('Error al sintetizar audio del dictamen:', e);
+                if (audioStatusPerfilador) audioStatusPerfilador.textContent = MENSAJE_ERROR_AUDIO;
             } finally {
                 btnReproducirPerfilador.textContent = 'Escuchar Dictamen';
                 btnReproducirPerfilador.style.opacity = '1';
@@ -827,6 +848,16 @@ teniendo por mejor, en mis verdades,
 consumir vanidades de la vida
 que consumir la vida en vanidades.`;
 
+    // Retira la tabla y la cabecera anteriores para que no parezcan vigentes.
+    function mostrarErrorEscansion() {
+        if (meterTotalVersesBadge) meterTotalVersesBadge.textContent = 'Sin resultado';
+        if (meterFormDisplay) meterFormDisplay.textContent = '—';
+        if (meterSchemeDisplay) meterSchemeDisplay.textContent = '—';
+        if (meterTableBody) {
+            meterTableBody.innerHTML = `<tr><td colspan="6" role="alert" style="color: var(--acento-siena);">${escaparHtml(MENSAJE_ERROR_ESCANSION)}</td></tr>`;
+        }
+    }
+
     async function ejecutarEscansion() {
         if (!poemMeterInput) return;
         const poemText = poemMeterInput.value.trim();
@@ -879,9 +910,12 @@ que consumir la vida en vanidades.`;
                     });
                     meterTableBody.innerHTML = rowsHtml;
                 }
+            } else {
+                mostrarErrorEscansion();
             }
         } catch (e) {
             console.error('Error al analizar métrica:', e);
+            mostrarErrorEscansion();
         } finally {
             if (btnRunScansion) {
                 btnRunScansion.textContent = 'Escanear Poema Completo';
