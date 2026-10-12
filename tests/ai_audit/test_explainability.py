@@ -123,13 +123,15 @@ class TestCoherenciaEvidenciaPrediccion:
 # ---------------------------------------------------------------------------
 
 class TestPoderDiscriminanteAcotado:
-    """Verifica que discriminating_power esté en [0.0, 1.0] para toda evidencia."""
+    """Verifica que discriminating_power sea None (sin calculo validado) o esté en [0.0, 1.0]."""
 
     @pytest.mark.parametrize("fixture_name", ["reporte_seseo", "reporte_lambdacismo"])
     def test_discriminating_power_en_rango(self, fixture_name: str, request) -> None:
         """∀ evidencia: discriminating_power ∈ [0.0, 1.0]."""
         reporte = request.getfixturevalue(fixture_name)
         for ev in reporte.discriminant_evidences:
+            if ev.discriminating_power is None:
+                continue
             assert 0.0 <= ev.discriminating_power <= 1.0, (
                 f"discriminating_power fuera de rango: {ev.discriminating_power} "
                 f"para {ev.phonetic_phenomenon}"
