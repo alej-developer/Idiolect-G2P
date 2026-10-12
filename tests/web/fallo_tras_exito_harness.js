@@ -85,6 +85,9 @@ vm.runInContext(code, sandbox);
     tabla: g('meter-table-body').innerHTML,
   };
   // Estado de audio del resultado anterior.
+  const reproductor = g('audio-player-perfilador');
+  reproductor.onpause = () => {};
+  reproductor.ontimeupdate = () => {};
   g('audio-status-perfilador').textContent = 'Reproduciendo';
   g('manuscrito-sincronizado-perfilador').innerHTML = '<span>palabra</span>';
   g('manuscrito-sincronizado-perfilador').style.display = 'block';
@@ -98,6 +101,7 @@ vm.runInContext(code, sandbox);
     karaoke_display: g('manuscrito-sincronizado-perfilador').style.display,
     reproductor_removidos: g('audio-player-perfilador').removidos || [],
     reproductor_pausado: g('audio-player-perfilador').pausado === true,
+    manejadores_retirados: reproductor.onpause === null && reproductor.ontimeupdate === null,
   };
   // Fallo de la síntesis de audio.
   g('audio-status-perfilador').textContent = 'Sintetizando formantes...';
