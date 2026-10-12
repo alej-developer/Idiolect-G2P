@@ -113,6 +113,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (metricaConfianza) metricaConfianza.textContent = 'Confianza: —';
         if (listaDistribucion) listaDistribucion.innerHTML = '';
         if (consolaAfi) consolaAfi.textContent = '';
+        if (panelJunturasSandhi) panelJunturasSandhi.style.display = 'none';
+        if (maxentConstraintsContainer) maxentConstraintsContainer.innerHTML = '';
         if (avisoErrorInferencia) {
             avisoErrorInferencia.textContent = MENSAJE_ERROR_INFERENCIA;
             avisoErrorInferencia.hidden = false;
@@ -247,6 +249,8 @@ que no mi entendimiento en las riquezas.`;
         maxentConstraintsContainer.innerHTML = rowsHtml;
     }
 
+    const MENSAJE_ERROR_AFI = 'No se pudo obtener la transcripción AFI. Inténtalo de nuevo.';
+
     async function actualizarConsolaAfi(texto, dialectCode) {
         if (!consolaAfi) return;
         const aplicarSandhi = checkSandhiBayesiano ? checkSandhiBayesiano.checked : true;
@@ -278,10 +282,19 @@ que no mi entendimiento en las riquezas.`;
 
                 consolaAfi.textContent = lineasAfi.join('\n') || `/${data.full_ipa_text}/`;
                 renderizarJunturasSandhi(data.sandhi_junctures);
+            } else {
+                mostrarErrorAfi();
             }
         } catch (e) {
-            consolaAfi.textContent = `/mjen.tɾas poɾ kom.pe.tiɾ kon tu ka.βe.ʎo/\n/o.ɾo βɾu.ɲi.ðo al sol re.lum.bɾa en va.no/`;
+            console.error('Error al obtener la transcripción AFI:', e);
+            mostrarErrorAfi();
         }
+    }
+
+    function mostrarErrorAfi() {
+        if (consolaAfi) consolaAfi.textContent = MENSAJE_ERROR_AFI;
+        if (panelJunturasSandhi) panelJunturasSandhi.style.display = 'none';
+        if (contenedorJunturasBadges) contenedorJunturasBadges.innerHTML = '';
     }
 
     if (checkSandhiBayesiano) {
@@ -521,6 +534,11 @@ que no mi entendimiento en las riquezas.`;
     const g2pKaraokeIpa = document.getElementById('g2p-karaoke-ipa');
     const audioStatusG2p = document.getElementById('audio-status-g2p');
 
+    function mostrarErrorG2p() {
+        if (outputG2pQuick) outputG2pQuick.textContent = 'No se pudo completar la transcripción. Inténtalo de nuevo.';
+        if (audioStatusG2p) audioStatusG2p.textContent = '';
+    }
+
     async function transcribirYSintetizarG2P(generarAudio = false) {
         if (!inputG2pQuick) return;
         const text = inputG2pQuick.value.trim();
@@ -572,12 +590,12 @@ que no mi entendimiento en las riquezas.`;
                     }
                     playerG2pAudio.play().catch(e => console.log('Autoplay bloqueado por el navegador'));
                 }
+            } else {
+                mostrarErrorG2p();
             }
         } catch (e) {
             console.error('Error en transducción/síntesis G2P:', e);
-            if (outputG2pQuick) {
-                outputG2pQuick.textContent = `/los ka.θa.ˈðo.ɾes ʝe.ˈɣa.ɾon a la ˈka.sa ðel ˈpweɾ.to/`;
-            }
+            mostrarErrorG2p();
         } finally {
             if (btnG2pAudio) {
                 btnG2pAudio.textContent = 'Sintetizar y Reproducir Audio';
