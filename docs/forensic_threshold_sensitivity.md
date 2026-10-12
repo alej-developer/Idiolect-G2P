@@ -44,3 +44,32 @@ actual no se emite evidencia de yeismo, lo cual es correcto para ruido, pero la
 ruta positiva sigue sin verificar. `test_yeismo_no_emite_evidencia_sin_contraste_real`
 fija este comportamiento. Corregirlo requiere cambiar el transductor, fuera de
 este PR.
+
+## Prueba de robustez adicional (`scripts/forensic_threshold_permutation.py`)
+
+Sobre las mismas 70 observaciones se comparo el criterio actual (diferencia de
+medias >= 0.01) con otras alternativas. Se cuentan solo evidencias que favorecen
+a la hipotesis principal.
+
+| Criterio | Evidencias |
+|---|---|
+| media >= 0.01 (actual) | 15 |
+| mediana >= 0.01 | 16 |
+| media y mediana >= 0.01 | 13 |
+| media >= 0.01 y estable al quitar cualquier dialecto (jackknife) | 15 |
+| permutacion p < 0.05 | 10 (9 coinciden con el criterio actual) |
+| permutacion p < 0.01 | 7 (todas coinciden con el criterio actual) |
+
+Lectura honesta:
+
+- Mediana y jackknife no mejoran de forma clara el criterio de la media: los 15
+  casos actuales ya son estables al quitar cualquier dialecto, y la mediana solo
+  mueve 2-3 casos en ambos sentidos.
+- Hay observaciones con delta >= 0.01 que el azar iguala con facilidad (p > 0.1,
+  dos de las 15 evidencias actuales tienen delta 0.010 y 0.015 con p = 0.12 y 0.10). Con solo 2-7 valores de
+  distancia distintos entre 18 dialectos, la media tiene poca potencia.
+- Los p-valores son descriptivos: los dialectos no son intercambiables.
+- No emerge un umbral defendible con respaldo estadistico propio. 0.01 se
+  mantiene como suelo de ruido pragmatico, y el codigo no se cambia: ninguna
+  alternativa probada lo mejora claramente. La evidencia emitida debe leerse
+  como indicio, no como prueba.
