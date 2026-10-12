@@ -1,0 +1,50 @@
+"""Caracterización del tratamiento de 'y' y 'll' en el transductor (ver #28).
+
+Los casos "actual" fijan el comportamiento de hoy para detectar cambios no deseados al
+arreglar el silabeador. Los casos xfail(strict) describen el comportamiento objetivo: al
+corregirlo pasarán a XPASS y habrá que quitarles la marca.
+"""
+
+from __future__ import annotations
+
+import pytest
+
+from idiolect_g2p.core.transducer import G2PTransducer
+from idiolect_g2p.dialects.registry import GLOBAL_DIALECT_REGISTRY
+
+T = G2PTransducer()
+
+
+def _ipa(palabra: str, codigo: str = "ES_PENINSULAR") -> str:
+    dialecto = GLOBAL_DIALECT_REGISTRY.get(codigo)
+    assert dialecto is not None
+    resultado = T.transcribe_word(palabra, dialecto)
+    return str(resultado.syllabified_ipa)
+
+
+@pytest.mark.parametrize(
+    ("palabra", "esperado"),
+    [("valla", "ˈba.ʝa"), ("calle", "ˈka.ʝe"), ("rey", None), ("muy", None), ("hoy", None)],
+)
+def test_actual_ll_y_diptongos_con_y_final(palabra: str, esperado: str | None) -> None:
+    ipa = _ipa(palabra)
+    if esperado is not None:
+        assert ipa == esperado
+    else:
+        assert "j" in ipa  # 'y' final tras vocal es semivocal: no debe cambiar
+
+
+@pytest.mark.parametrize(("palabra", "esperado"), [("playa", "ˈplaj.a"), ("mayo", "ˈmaj.o")])
+def test_actual_y_intervocalica_sale_como_semivocal(palabra: str, esperado: str) -> None:
+    assert _ipa(palabra) == esperado
+
+
+@pytest.mark.xfail(strict=True, reason="#28: la 'y' intervocálica debería ser ataque [ʝ]")
+@pytest.mark.parametrize(("palabra", "esperado"), [("playa", "ˈpla.ʝa"), ("mayo", "ˈma.ʝo")])
+def test_objetivo_y_intervocalica_es_ataque_yeista(palabra: str, esperado: str) -> None:
+    assert _ipa(palabra) == esperado
+
+
+@pytest.mark.xfail(strict=True, reason="#28: 'y' inicial ante vocal debería ser [ʝ]")
+def test_objetivo_y_inicial_es_ataque() -> None:
+    assert _ipa("yo") == "ˈʝo"
