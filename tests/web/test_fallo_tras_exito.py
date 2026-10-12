@@ -53,6 +53,8 @@ def test_fallo_de_inferencia_reinicia_el_audio_del_perfilador(escenario: str) ->
     assert audio["karaoke_display"] == "none"
     assert "src" in audio["reproductor_removidos"]
     assert audio["reproductor_pausado"] is True
+    # Sin manejadores, el evento "pause" del navegador no reescribe la insignia.
+    assert audio["manejadores_retirados"] is True
 
 
 @pytest.mark.parametrize("escenario", ["http500", "network"])
