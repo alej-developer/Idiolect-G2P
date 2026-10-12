@@ -163,6 +163,16 @@ que no mi entendimiento en las riquezas.`;
         });
     }
 
+    // Escapa texto que viene del API o del usuario antes de insertarlo con innerHTML.
+    function escaparHtml(valor) {
+        return String(valor === null || valor === undefined ? '' : valor)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
     function renderizarDistribucion(ranking) {
         if (!listaDistribucion) return;
         listaDistribucion.innerHTML = '';
@@ -177,7 +187,7 @@ que no mi entendimiento en las riquezas.`;
             const dist = item.phonetic_distance.toFixed(3);
 
             li.innerHTML = `
-                <span class="fila-nombre">${index + 1}. ${item.name}</span>
+                <span class="fila-nombre">${index + 1}. ${escaparHtml(item.name)}</span>
                 <div class="fila-datos">
                     <span class="fila-prob">${pct}%</span>
                     <span class="fila-dist">d = ${dist}</span>
@@ -212,9 +222,9 @@ que no mi entendimiento en las riquezas.`;
                              j.process_type === 'voicing_assimilation' ? 'Resonorización' :
                              j.process_type === 'nasal_assimilation' ? 'Asimilación Nasal' : 'Juntura';
             return `
-                <div class="juntura-badge" title="${j.description}">
+                <div class="juntura-badge" title="${escaparHtml(j.description)}">
                     <span class="juntura-tipo">${tipoLabel}</span>
-                    <span class="juntura-cambio">/${j.input_left_coda}/ + /${j.input_right_onset}/ &rarr; [${j.output_phoneme}]</span>
+                    <span class="juntura-cambio">/${escaparHtml(j.input_left_coda)}/ + /${escaparHtml(j.input_right_onset)}/ &rarr; [${escaparHtml(j.output_phoneme)}]</span>
                 </div>
             `;
         }).join('');
@@ -234,9 +244,9 @@ que no mi entendimiento en las riquezas.`;
                 ? '<span class="maxent-type markedness">Marcación</span>'
                 : '<span class="maxent-type faithfulness">Fidelidad</span>';
             return `
-                <div class="maxent-row" title="${c.description}">
+                <div class="maxent-row" title="${escaparHtml(c.description)}">
                     <div>
-                        <span class="maxent-name">${c.name}</span>
+                        <span class="maxent-name">${escaparHtml(c.name)}</span>
                         ${typeBadge}
                     </div>
                     <span class="maxent-weight">w = ${c.weight.toFixed(2)}</span>
@@ -839,12 +849,12 @@ que consumir la vida en vanidades.`;
 
                             rowsHtml += `
                                 <tr>
-                                    <td style="color: var(--texto-sepia); font-weight: 600;">${v.verse_number}</td>
-                                    <td style="font-family: var(--font-literaria); font-size: 1.12rem; color: var(--texto-pergamino);">${v.raw_text}</td>
-                                    <td style="color: var(--acento-liquen); font-weight: 600; text-align: center;">${v.metrical_syllables}</td>
-                                    <td style="color: var(--texto-sepia); text-align: center;">${v.sinalefas_count}</td>
-                                    <td style="color: var(--texto-sepia); text-align: center;">${compStr}</td>
-                                    <td style="text-align: right;"><span style="color: var(--acento-siena); font-weight: 600;">-${v.rhyme_segment}</span></td>
+                                    <td style="color: var(--texto-sepia); font-weight: 600;">${escaparHtml(v.verse_number)}</td>
+                                    <td style="font-family: var(--font-literaria); font-size: 1.12rem; color: var(--texto-pergamino);">${escaparHtml(v.raw_text)}</td>
+                                    <td style="color: var(--acento-liquen); font-weight: 600; text-align: center;">${escaparHtml(v.metrical_syllables)}</td>
+                                    <td style="color: var(--texto-sepia); text-align: center;">${escaparHtml(v.sinalefas_count)}</td>
+                                    <td style="color: var(--texto-sepia); text-align: center;">${escaparHtml(compStr)}</td>
+                                    <td style="text-align: right;"><span style="color: var(--acento-siena); font-weight: 600;">-${escaparHtml(v.rhyme_segment)}</span></td>
                                 </tr>
                             `;
                         });
