@@ -443,7 +443,7 @@ def generate_json_report(
                 "word_2": ev.word_2,
                 "phenomenon": ev.phonetic_phenomenon,
                 "description": ev.impact_description,
-                "power": ev.discriminating_power,
+                "power": ev.discriminating_power,  # None hasta validar su calculo
             }
             for ev in forensic.discriminant_evidences
         ],
