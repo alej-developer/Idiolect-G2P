@@ -6,7 +6,6 @@
 [![Python Version](https://img.shields.io/badge/python-3.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue.svg)](https://www.python.org/)
 [![Type Checking](https://img.shields.io/badge/type--checking-mypy%20strict-informational.svg)](https://mypy-lang.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.10892110-blue.svg)](https://doi.org/10.5281/zenodo.10892110)
 
 ---
 
@@ -165,7 +164,6 @@ Si utiliza **Idiolect-G2P** en su investigación filológica, lingüística comp
   year         = 2026,
   publisher    = {GitHub},
   version      = {1.2.0},
-  doi          = {10.5281/zenodo.10892110},
   url          = {https://github.com/alej-developer/Idiolect-G2P}
 }
 ```

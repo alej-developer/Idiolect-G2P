@@ -2,7 +2,6 @@ cff-version: 1.2.0
 message: "If you use this software in your academic or forensic research, please cite it as below."
 title: "Idiolect-G2P: Inverse Dialectal and Diachronic Phonological Disambiguation Framework"
 version: 1.0.0
-doi: 10.5281/zenodo.10892110
 date-released: 2026-09-02
 url: "https://github.com/alej-developer/Idiolect-G2P"
 repository-code: "https://github.com/alej-developer/Idiolect-G2P"
