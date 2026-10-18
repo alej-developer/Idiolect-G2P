@@ -41,7 +41,7 @@ Para incorporar una nueva variedad dialectal o diacrónica al catálogo oficial:
 
 Todo código propuesto debe adherirse a los siguientes estándares:
 
-- **Python 3.9+**: Sintaxis moderna con anotaciones de tipo exhaustivas (`typing`, `from __future__ import annotations`).
+- **Python 3.10+**: Sintaxis moderna con anotaciones de tipo exhaustivas (`typing`, `from __future__ import annotations`). La integración continua prueba 3.10, 3.11 y 3.12.
 - **Formato PEP 8**: Indentación de 4 espacios, nombres en snake_case para funciones y variables, PascalCase para clases.
 - **Documentación Bilingüe**: Docstrings formales en español y/o inglés detallando el fundamento teórico o bibliográfico del algoritmo.
 - **Sin Dependencias Pesadas Innecesarias**: Idiolect-G2P prioriza la síntesis y procesamiento en Python puro con dependencias mínimas (FastAPI, Pydantic, Pytest).
@@ -61,7 +61,7 @@ Todo código propuesto debe adherirse a los siguientes estándares:
    ```bash
    pytest -v
    ```
-   *Ningún Pull Request será aprobado si la suite de pruebas (69 tests actuales) no pasa al 100%.*
+   *Ningún Pull Request será aprobado si la suite de pruebas (203 tests; el de disponibilidad de Node solo corre con la variable CI) no pasa al 100%.*
 4. **Hacer commits semánticos con mensajes en español**:
    ```bash
    git commit -m "feat(dialects): incorporar variedad judeoespanola con lleismo conservador"

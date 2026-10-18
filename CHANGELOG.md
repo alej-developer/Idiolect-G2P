@@ -8,6 +8,7 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 ## [Unreleased]
 
 ### Corregido
+- **Documentación verificable**: se retira el identificador bibliográfico que no corresponde a este software. La insignia de construcción apunta a `.github/workflows/ci.yml`. Las versiones de Python de la insignia quedan en 3.10, 3.11 y 3.12, como la matriz de ese flujo. La suite recoge 203 tests: en Python 3.12.3, pytest aprueba 202 y omite 1 fuera de CI, y aprueba 203/203 cuando CI está definida.
 - **Inferencia sin simulación (#25)**: el dashboard ya no inventa un dictamen cuando falla la API; muestra un aviso y retira el resultado previo. Antes de la primera inferencia solo hay marcadores neutros.
 - **Evidencias forenses sustentadas por la rima (#24)**: solo se emite evidencia si el rasgo está en el segmento rimante y cambia la distancia entre hipótesis. Las puntuaciones fijas de poder discriminante se sustituyen por `null` hasta validarlas. Umbral y limitaciones documentados en `docs/forensic_threshold_sensitivity.md`.
 - **Transcripción sin IPA inventada (#29)** y **escape de HTML del API en el dashboard (#30)**.
@@ -47,7 +48,7 @@ El formato se fundamenta en las directrices de [Keep a Changelog](https://keepac
 - **Sincronización de Versión 1.2.0**: Actualización coherente del número de versión en `idiolect_g2p/__init__.py`, `pyproject.toml`, la instancia `FastAPI` y el endpoint `/health`.
 
 ### Documentación y Metadatos
-- **Actualización de Insignias Dinámicas**: Corrección del badge de tests en `README.md` de 69/69 a **147/147 tests aprobados (100%)**, reflejando la cobertura real del proyecto incluyendo las 7 dimensiones de auditoría de IA.
+- **Actualización de Insignias**: El README pasó a mostrar un recuento fijo de tests. Esa cifra no se confirma al ejecutar la suite; el recuento medido está en [Unreleased].
 - **Actualización de BibTeX**: Versión de citación científica actualizada a 1.2.0.
 - **Ampliación de `.gitignore`**: Incorporación de patrones para notebooks Jupyter (`.ipynb_checkpoints`), artefactos de sistema operativo (`Thumbs.db`, `Desktop.ini`) y variables de entorno locales.
 
