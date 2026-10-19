@@ -154,7 +154,7 @@ El marco fue sometido a la suite automatizada de 203 pruebas (en Python 3.12.3, 
 | Síntesis Acústica WAV | Latencia por oración | 38.5 ms | < 200.0 ms |
 | Seguridad ante Inyección | Resistencia SQLi / XSS | 0 vulnerabilidades detectadas | 0 fallos |
 | Mitigación ReDoS | Cadenas patológicas ($N=2000$) | Tiempo de respuesta $< 0.05$ s | Sin bloqueo |
-| Límite de Carga Útil | Enforzamiento HTTP 413 | Rechazo estricto a $> 2$ MB | HTTP 413 |
+| Límite de Carga Útil | Enforzamiento HTTP 413 | Rechazo estricto a 2 MB | HTTP 413 |
 
 ---
 

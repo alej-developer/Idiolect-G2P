@@ -151,7 +151,7 @@ The framework was evaluated with the automated suite of 203 tests (on Python 3.1
 | WAV acoustic synthesis | Latency per sentence | 38.5 ms | < 200.0 ms |
 | Injection resistance | SQLi / XSS resistance | 0 vulnerabilities detected | 0 failures |
 | ReDoS mitigation | Pathological strings ($N=2000$) | Response time $< 0.05$ s | No stall |
-| Payload limit | HTTP 413 limit enforcement | Strict rejection above $> 2$ MB | HTTP 413 |
+| Payload limit | HTTP 413 limit enforcement | Strict rejection above 2 MB | HTTP 413 |
 
 
 ---
