@@ -8,7 +8,7 @@
 
 ## Resumen
 
-La transducción convencional de grafema a fonema (G2P, *Grapheme-to-Phoneme*) en el procesamiento del lenguaje natural opera de forma unidireccional y estándar: recibe una secuencia ortográfica y produce una única transcripción en el Alfabeto Fonético Internacional (AFI) conforme a una norma canónica abstracta. Sin embargo, en disciplinas como la lingüística forense, la dialectología de corpus, la filología hispánica y la versificación computacional, este enfoque resulta insuficiente. Cuando un texto literario o pericial presenta rimas o regularidades métricas que resultan defectuosas o divergentes bajo la norma peninsular estándar, pero que se tornan perfectamente consonantes bajo una variedad dialectal específica (por ejemplo, el seseo hispanoamericano, la aspiración caribeña o el lambdacismo antillano), los modelos existentes son incapaces de inferir retrospectivamente el sistema fonotáctico subyacente del emisor. En este artículo se presenta **Idiolect-G2P**, un marco teórico y computacional pionero para la **Desambiguación Fonológica Dialectal y Diacrónica Inversa**. El sistema integra: (1) un inventario acústico-articulatorio modelado conforme a la Geometría de Rasgos de Clements y Hume (1995); (2) un silabificador fonotáctico con resolución de sonoridad máxima; (3) un transductor G2P multi-dialectal parametrizado por un vector continuo de isoglosas $\boldsymbol{\theta} \in [0, 1]^{14}$ con cobertura de 18 variedades panhispánicas y diacrónicas (incluyendo variantes septentrionales, andaluzas, canarias, mexicanas, chicanas, caribeñas, andinas, chilenas, rioplatenses, centroamericanas, del Siglo de Oro y medievales); (4) un motor de inferencia bayesiana que calcula la distribución posterior $P(D \mid T, R)$ del dialecto a partir de las restricciones de rima; (5) un sintetizador acústico formántico en Python puro; y (6) un exportador multi-formato (LaTeX, BibTeX, TEI-Verse XML, CSV, HTML, Markdown, JSON, TXT). Las pruebas empíricas de la suite automatizada (203 pruebas; en Python 3.12.3, pytest aprueba 202 y omite 1 fuera de CI, y aprueba 203/203 cuando la variable CI está definida) muestran una precisión del 100% en la identificación dialectal de pares discriminantes. La suite exige un rendimiento superior a 1.000 palabras por segundo y una latencia de inferencia inferior a 150 ms por soneto.
+La transducción convencional de grafema a fonema (G2P, *Grapheme-to-Phoneme*) en el procesamiento del lenguaje natural opera de forma unidireccional y estándar: recibe una secuencia ortográfica y produce una única transcripción en el Alfabeto Fonético Internacional (AFI) conforme a una norma canónica abstracta. Sin embargo, en disciplinas como la lingüística forense, la dialectología de corpus, la filología hispánica y la versificación computacional, este enfoque resulta insuficiente. Cuando un texto literario o pericial presenta rimas o regularidades métricas que resultan defectuosas o divergentes bajo la norma peninsular estándar, pero que se tornan perfectamente consonantes bajo una variedad dialectal específica (por ejemplo, el seseo hispanoamericano, la aspiración caribeña o el lambdacismo antillano), los modelos existentes son incapaces de inferir retrospectivamente el sistema fonotáctico subyacente del emisor. En este artículo se presenta **Idiolect-G2P**, un marco teórico y computacional pionero para la **Desambiguación Fonológica Dialectal y Diacrónica Inversa**. El sistema integra: (1) un inventario acústico-articulatorio modelado conforme a la Geometría de Rasgos de Clements y Hume (1995); (2) un silabificador fonotáctico con resolución de sonoridad máxima; (3) un transductor G2P multidialectal parametrizado por un vector continuo de isoglosas $\boldsymbol{\theta} \in [0, 1]^{14}$ con cobertura de 18 variedades panhispánicas y diacrónicas (incluyendo variantes septentrionales, andaluzas, canarias, mexicanas, chicanas, caribeñas, andinas, chilenas, rioplatenses, centroamericanas, del Siglo de Oro y medievales); (4) un motor de inferencia bayesiana que calcula la distribución posterior $P(D \mid T, R)$ del dialecto a partir de las restricciones de rima; (5) un sintetizador acústico formántico en Python puro; y (6) un exportador multiformato (LaTeX, BibTeX, TEI-Verse XML, CSV, HTML, Markdown, JSON, TXT). Las pruebas empíricas de la suite automatizada (203 pruebas; en Python 3.12.3, pytest aprueba 202 y omite 1 fuera de CI, y aprueba 203/203 cuando la variable CI está definida) muestran una precisión del 100% en la identificación dialectal de pares discriminantes. La suite exige un rendimiento superior a 1.000 palabras por segundo y una latencia de inferencia inferior a 150 ms por soneto.
 
 **Palabras clave:** Lingüística computacional, Desambiguación fonológica inversa, Inferencia bayesiana, Lingüística forense, Transducción G2P, Geometría de rasgos, Métrica versal.
 
@@ -103,9 +103,9 @@ El algoritmo de silabificación descompone la palabra ortográfica en una secuen
 
 $$\text{Oclusiva} < \text{Fricativa} < \text{Nasal} < \text{Líquida} < \text{Semivocal} < \text{Vocal}$$
 
-En el nivel post-léxico (habla continua y encadenamiento versal), el sistema formaliza los procesos de **sandhi externo** conforme a Hualde (2014) y Quilis (1993):
-1. **Reencadenamiento Silábico**: $(\text{Coda})_{\omega_1} + (\text{Núcleo})_{\omega_2} \to (\text{Ataque})_{\omega_2}$ ante inicio vocálico (ej. */las/ + /alas/ \to [\text{la.ˈsa.las}]*).
-2. **Resonorización Asimilativa**: Asimilación regresiva del rasgo $[+\text{sonoro}]$ en coda sibilante ante consonante sonora adyacente (ej. */los/ + /mismos/ \to [\text{loz ˈmiz.mos}]* o $*[\text{loh ˈmiz.moh}]*$).
+En el nivel posléxico (habla continua y encadenamiento versal), el sistema formaliza los procesos de **sandhi externo** conforme a Hualde (2014) y Quilis (1993):
+1. **Reencadenamiento Silábico**: $(\text{Coda})_{\omega_1} + (\text{Núcleo})_{\omega_2} \to (\text{Ataque})_{\omega_2}$ ante inicio vocálico (p. ej. */las/ + /alas/ \to [\text{la.ˈsa.las}]*).
+2. **Resonorización Asimilativa**: Asimilación regresiva del rasgo $[+\text{sonoro}]$ en coda sibilante ante consonante sonora adyacente (p. ej. */los/ + /mismos/ \to [\text{loz ˈmiz.mos}]* o $*[\text{loh ˈmiz.moh}]*$).
 3. **Asimilación Homorgánica Nasal**: Transferencia de punto de articulación de $/n/$ en juntura ante consonantes bilabiales ($[m]$) y velares ($[ŋ]$).
 
 ### 4.2. Gramática de Máxima Entropía (MaxEnt) y Optimidad Estocástica
@@ -154,7 +154,7 @@ El marco fue sometido a la suite automatizada de 203 pruebas (en Python 3.12.3, 
 | Síntesis Acústica WAV | Latencia por oración | 38.5 ms | < 200.0 ms |
 | Seguridad ante Inyección | Resistencia SQLi / XSS | 0 vulnerabilidades detectadas | 0 fallos |
 | Mitigación ReDoS | Cadenas patológicas ($N=2000$) | Tiempo de respuesta $< 0.05$ s | Sin bloqueo |
-| Límite de Carga Útil | Enforzamiento HTTP 413 | Rechazo estricto a 2 MB | HTTP 413 |
+| Límite de Carga Útil | Aplicación del límite HTTP 413 | Rechazo estricto a 2 MB | HTTP 413 |
 
 ---
 
@@ -162,7 +162,7 @@ El marco fue sometido a la suite automatizada de 203 pruebas (en Python 3.12.3, 
 
 Idiolect-G2P demuestra la viabilidad y el rigor de formular la desambiguación fonológica inversa como un problema de inferencia bayesiana multidimensional. El marco proporciona a la comunidad de lingüística computacional, humanidades digitales y ciencias forenses una herramienta reproducible, interoperable y de código abierto para el análisis dialectal, diacrónico y estilométrico del español.
 
-## 8. Declaración de Transparencia, Ética y Co-creación con Inteligencia Artificial
+## 8. Declaración de Transparencia, Ética y Cocreación con Inteligencia Artificial
 
 De conformidad con las directrices éticas de la *American Psychological Association* (APA, 7.ª edición) y los comités internacionales de ética en la publicación científica (COPE) respecto al uso de tecnologías de inteligencia artificial generativa:
 
