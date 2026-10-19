@@ -22,8 +22,8 @@
 Clone the repository and set up a virtual environment:
 
 ```bash
-git clone https://github.com/alejandro/idiolect-g2p.git
-cd idiolect-g2p
+git clone https://github.com/alej-developer/Idiolect-G2P.git
+cd Idiolect-G2P
 
 # Create and activate virtual environment
 python -m venv venv
@@ -46,7 +46,7 @@ To validate the entire system across phonology, metrical scansion, Bayesian infe
 python -m pytest -v tests/
 ```
 
-All 54 unit and integration tests should complete with a `passed` status.
+The suite contains 203 unit and integration tests. On Python 3.12.3, pytest passes 202 and skips 1 outside CI (the Node availability check runs only when the CI variable is set); when CI is set, all 203 complete with a `passed` status.
 
 ---
 
@@ -137,7 +137,16 @@ print(latex_content[:300])
 
 ---
 
-## 7. AI Ethics, Transparency, and Assistance
+## 7. Frequently Asked Questions and Troubleshooting
+
+- **Why does an oxytone verse add one metrical syllable?**  
+  Under the paroxytone rule of Hispanic verse (Quilis, 1993), stress on the final syllable yields an acoustic duration equivalent to one extra syllable (+1).
+- **How are phonetic distances calculated?**  
+  The system computes a weighted Levenshtein distance over the feature hierarchy of Clements and Hume (1995), assigning smaller penalties to homorganic pairs or allophones than to larger discrepancies of manner or place of articulation.
+
+---
+
+## 8. AI Ethics, Transparency, and Assistance
 
 This framework was engineered following open scientific transparency:
 - **Integrated Development Environment:** [Antigravity IDE](https://deepmind.google/technologies/antigravity/)

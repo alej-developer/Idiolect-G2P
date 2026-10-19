@@ -22,8 +22,8 @@
 Clone el repositorio y cree un entorno virtual:
 
 ```bash
-git clone https://github.com/alejandro/idiolect-g2p.git
-cd idiolect-g2p
+git clone https://github.com/alej-developer/Idiolect-G2P.git
+cd Idiolect-G2P
 
 # Crear y activar entorno virtual
 python -m venv venv
@@ -46,7 +46,7 @@ Para validar el funcionamiento completo de todos los módulos fonológicos, mét
 python -m pytest -v tests/
 ```
 
-Todas las 54 pruebas unitarias y de integración deben concluir con estado `passed`.
+La suite reúne 203 pruebas unitarias y de integración. En Python 3.12.3, pytest aprueba 202 y omite 1 fuera de CI (la comprobación de disponibilidad de Node solo corre cuando la variable CI está definida); con CI definida, las 203 concluyen con estado `passed`.
 
 ---
 
