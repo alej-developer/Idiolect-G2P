@@ -7,8 +7,8 @@
 ## 1. Áreas Principales de Contribución
 
 1. **Ampliación Dialectal y Diacrónica**:
-   - Nuevas variantes regionales (e.g., variedades patagónicas, dialectos judeoespañoles / ladino, español filipino).
-   - Variedades históricas (e.g., español renacentista del siglo XVI, judeoespañol medieval).
+   - Nuevas variantes regionales (p. ej., variedades patagónicas, dialectos judeoespañoles / ladino, español filipino).
+   - Variedades históricas (p. ej., español renacentista del siglo XVI, judeoespañol medieval).
 2. **Refinamiento Fonotáctico y Alófonos**:
    - Nuevos procesos de sandhi externo o asimilación segmental.
    - Calibración empírica de frecuencias formánticas $(F_0, F_1, F_2, F_3)$ en [`idiolect_g2p/core/phonetics.py`](idiolect_g2p/core/phonetics.py).
@@ -27,7 +27,7 @@ Para incorporar una nueva variedad dialectal o diacrónica al catálogo oficial:
    - Cree un archivo descriptivo en `idiolect_g2p/dialects/` (por ejemplo, `ladino.py`).
    - Herédese de la clase base `Dialect` en [`idiolect_g2p/dialects/base.py`](idiolect_g2p/dialects/base.py).
 2. **Definir el vector continuo de isoglosas $\boldsymbol{\theta}$**:
-   - Cada dimensión del `IsoglossVector` debe estar documentada y justificada con fuentes bibliográficas académicas (e.g., Alvar, Lipski, Penny, RAE-ASALE).
+   - Cada dimensión del `IsoglossVector` debe estar documentada y justificada con fuentes bibliográficas académicas (p. ej., Alvar, Lipski, Penny, RAE-ASALE).
 3. **Implementar reglas alofónicas**:
    - Sobrescribir el método `apply_allophonic_rules(self, word, syllables)`.
 4. **Registrar en el catálogo global**:
@@ -64,7 +64,7 @@ Todo código propuesto debe adherirse a los siguientes estándares:
    *Ningún Pull Request será aprobado si la suite de pruebas (203 tests; el de disponibilidad de Node solo corre con la variable CI) no pasa al 100%.*
 4. **Hacer commits semánticos con mensajes en español**:
    ```bash
-   git commit -m "feat(dialects): incorporar variedad judeoespanola con lleismo conservador"
+   git commit -m "feat(dialects): incorporar variedad judeoespañola con lleísmo conservador"
    ```
 5. **Enviar el Pull Request** referenciando el issue o debate metodológico pertinente.
 

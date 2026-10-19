@@ -32,13 +32,13 @@ flowchart TD
     F --> G["Dialecto Ganador D̂ & Vector θ̂"]
     F --> H["Generador de Evidencias Forenses Discriminantes"]
     
-    G --> I["Transductor Fonético G2P Multi-Dialectal Continuo"]
+    G --> I["Transductor Fonético G2P Multidialectal Continuo"]
     I --> J["Cadena AFI con Junturas de Sandhi"]
     
     J --> K["Sintetizador Acústico Formántico Python Puro / Web Audio API"]
     K --> L["Audio WAV PCM 16-bit 22.050 Hz"]
     
-    F --> M["Generador de Informes Multi-Formato"]
+    F --> M["Generador de Informes Multiformato"]
     M --> N["LaTeX / BibTeX / TEI-XML / CSV / HTML / Markdown / JSON / TXT"]
 ```
 
@@ -60,9 +60,9 @@ flowchart TD
 3. **Escansión Métrica Formal**: Conteo silábico gramatical y métrico, resolución de sinalefas y compensación por acento final (ley de paroxitonía).
 4. **Inferencia Bayesiana de Idiolectos**: Estimación de verosimilitudes $P(R \mid \text{AFI}(T, D))$ y normalización posterior mediante *Log-Sum-Exp*.
 5. **Síntesis Acústica Formántica en Python Puro**: Generación directa de tramas de audio WAV a 16 bits sin dependencias binarias externas.
-6. **Exportador Pericial Multi-Formato**: Generación de dictámenes en LaTeX (`.tex` con `tipa` y `booktabs`), BibTeX (`.bib`), TEI-Verse XML (`.xml`), CSV (`.csv`), HTML interactivo con SVG (`.html`), Markdown (`.md`), JSON (`.json`) y texto plano (`.txt`).
+6. **Exportador Pericial Multiformato**: Generación de dictámenes en LaTeX (`.tex` con `tipa` y `booktabs`), BibTeX (`.bib`), TEI-Verse XML (`.xml`), CSV (`.csv`), HTML interactivo con SVG (`.html`), Markdown (`.md`), JSON (`.json`) y texto plano (`.txt`).
 7. **Microservicio FastAPI y Dashboard Web**: API REST con cabeceras de ciberseguridad estrictas (CSP, X-Frame-Options, protección ReDoS y límite de carga de 2 MB).
-8. **Fonotaxis Post-léxica y Sandhi Externo**: Reencadenamiento silábico interpalabra ($\text{Coda}_{\omega_1} + \text{Núcleo}_{\omega_2} \to \text{Ataque}_{\omega_2}$), resonorización asimilativa de sibilantes en juntura ($/s/ + [C, +\text{son}] \to [z]/[h]$) y asimilación homorgánica nasal conforme a Hualde (2014) y Quilis (1993).
+8. **Fonotaxis Posléxica y Sandhi Externo**: Reencadenamiento silábico interpalabra ($\text{Coda}_{\omega_1} + \text{Núcleo}_{\omega_2} \to \text{Ataque}_{\omega_2}$), resonorización asimilativa de sibilantes en juntura ($/s/ + [C, +\text{son}] \to [z]/[h]$) y asimilación homorgánica nasal conforme a Hualde (2014) y Quilis (1993).
 9. **Gramática de Máxima Entropía (MaxEnt / Stochastic OT)**: Evaluación probabilística de restricciones de fidelidad y marcación con ponderaciones continuas graduadas sobre el continuo de isoglosas (Boersma & Hayes, 2001; Goldrick, 2007).
 
 ---
@@ -229,5 +229,5 @@ En cumplimiento de los más altos estándares éticos de integridad académica, 
 
 ## Licencia / License
 
-Distribuido bajo la Licencia MIT. Consulte el archivo [`LICENSE`](LICENSE) para mayores detalles.
+Distribuido bajo la Licencia MIT. Consulte el archivo [`LICENSE`](LICENSE) para más detalles.
 
