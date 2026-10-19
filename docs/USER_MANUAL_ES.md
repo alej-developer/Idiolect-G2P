@@ -46,7 +46,7 @@ Para validar el funcionamiento completo de todos los módulos fonológicos, mét
 python -m pytest -v tests/
 ```
 
-Todas las 54 pruebas unitarias e integradas deben concluir con estado `passed`.
+Todas las 54 pruebas unitarias y de integración deben concluir con estado `passed`.
 
 ---
 
@@ -80,7 +80,7 @@ Abra su navegador web e ingrese a:
 
 ### 5.2. Módulo 2: Transcriptor G2P & Síntesis Acústica AFI
 1. Ingrese a la pestaña **Transcriptor G2P & Síntesis AFI**.
-2. Seleccione la variante dialectal deseada (ej. *Caribeño Lambdacista*, *Rioplatense Sheísta*, *Mexicano Central*).
+2. Seleccione la variante dialectal deseada (p. ej. *Caribeño Lambdacista*, *Rioplatense Sheísta*, *Mexicano Central*).
 3. Ingrese una oración o palabra en español.
 4. Haga clic en **Transcribir a AFI** para ver la segmentación silábica y el acento léxico.
 5. Haga clic en **Escuchar Pronunciación** para reproducir la síntesis formántica acústica generada por el motor Web Audio API.
@@ -91,8 +91,8 @@ Abra su navegador web e ingrese a:
 3. Pulse **Escanear Métrica y Rimas**.
 4. La tabla detallará el número de sílabas gramaticales, sinalefas detectadas, compensación por acento final (+1, 0, -1) y el segmento rimante de cada verso.
 
-### 5.4. Módulo 4: Generador de Informes Multi-Formato
-1. Ingrese a la pestaña **Informes Multi-Formato**.
+### 5.4. Módulo 4: Generador de Informes Multiformato
+1. Ingrese a la pestaña **Informes Multiformato**.
 2. Seleccione el formato deseado:
    - **Markdown (.md)**: Documentación reproducible.
    - **LaTeX (.tex)**: Publicaciones académicas con paquetes TIPA y booktabs.
@@ -104,7 +104,7 @@ Abra su navegador web e ingrese a:
    - **Texto Plano (.txt)**: Dictamen pericial formal.
 3. Pulse **Generar Vista Previa** y posteriormente **Descargar Archivo**.
 
-### 5.5. Módulo 5: Corpus de Ejemplos Pre-cargados
+### 5.5. Módulo 5: Corpus de Ejemplos Precargados
 1. Ingrese a la pestaña **Corpus de Ejemplos**.
 2. Explore textos de Sor Juana Inés de la Cruz, Luis de Góngora, Nicolás Guillén, José Hernández y casos periciales de prueba.
 3. Pulse **Cargar en Perfilador Bayesiano** para transferir automáticamente el texto y ejecutar el peritaje.
@@ -149,7 +149,7 @@ print(informe_latex[:300])
 
 ## 8. Ética, Transparencia y Asistencia de Inteligencia Artificial
 
-Este framework fue desarrollado bajo un modelo de co-programación transparente:
+Este framework fue desarrollado bajo un modelo de coprogramación transparente:
 - **Entorno de Desarrollo:** [Antigravity IDE](https://deepmind.google/technologies/antigravity/)
 - **Agente de Inteligencia Artificial:** Antigravity AI (Google DeepMind)
 - **Supervisión y Auditoría:** Todos los algoritmos, reglas gramaticales, inventarios de fonemas y suites de prueba fueron formulados, verificados y auditados por el investigador humano responsable.
