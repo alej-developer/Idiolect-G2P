@@ -8,7 +8,7 @@
 
 ## Abstract
 
-Conventional Grapheme-to-Phoneme (G2P) transduction in natural language processing operates in a unidirectional, prescriptive fashion: it takes an orthographic text and produces a single International Phonetic Alphabet (IPA) representation based on a canonical standard norm. However, in forensic linguistics, corpus dialectology, Hispanic philology, and computational versification, this approach fails. When historical poetic verses or forensic forensic corpora exhibit rhymes or metrical regularities that appear divergent under the standard Peninsular norm but become perfectly consonant under a specific dialectal variety (e.g., Latin American seseo, Caribbean coda aspiration, or Antillean lambdacism), existing systems cannot retrospectively infer the underlying phonotactic system of the speaker. This paper introduces **Idiolect-G2P**, a pioneering theoretical and computational framework for **Inverse Dialectal and Diachronic Phonological Disambiguation**. The system integrates: (1) an acoustic-articulatory inventory modeled under Clements & Hume's (1995) Feature Geometry; (2) a phonotactic syllabifier with maximal onset resolution; (3) a multi-dialectal G2P transducer parameterized by a continuous isogloss vector $\boldsymbol{\theta} \in [0, 1]^{14}$ spanning 18 Pan-Hispanic and diachronic varieties; (4) a Bayesian inference engine calculating the posterior distribution $P(D \mid T, R)$ from rhyme constraints; (5) a pure Python formant acoustic synthesizer; and (6) a multi-format exporter (LaTeX, BibTeX, TEI-Verse XML, CSV, HTML, Markdown, JSON, TXT). Empirical evaluations across 54 test cases demonstrate 100% dialectal classification accuracy on discriminant pairs, throughput exceeding 2,400 words per second, and an average inference latency of 42 ms per sonnet.
+Conventional Grapheme-to-Phoneme (G2P) transduction in natural language processing operates in a unidirectional, prescriptive fashion: it takes an orthographic text and produces a single International Phonetic Alphabet (IPA) representation based on a canonical standard norm. However, in forensic linguistics, corpus dialectology, Hispanic philology, and computational versification, this approach fails. When historical poetic verses or forensic corpora exhibit rhymes or metrical regularities that appear divergent under the standard Peninsular norm but become perfectly consonant under a specific dialectal variety (e.g., Latin American seseo, Caribbean coda aspiration, or Antillean lambdacism), existing systems cannot retrospectively infer the underlying phonotactic system of the speaker. This paper introduces **Idiolect-G2P**, a pioneering theoretical and computational framework for **Inverse Dialectal and Diachronic Phonological Disambiguation**. The system integrates: (1) an acoustic-articulatory inventory modeled under Clements & Hume's (1995) Feature Geometry; (2) a phonotactic syllabifier with maximal onset resolution; (3) a multi-dialectal G2P transducer parameterized by a continuous isogloss vector $\boldsymbol{\theta} \in [0, 1]^{14}$ spanning 18 Pan-Hispanic and diachronic varieties; (4) a Bayesian inference engine calculating the posterior distribution $P(D \mid T, R)$ from rhyme constraints; (5) a pure Python formant acoustic synthesizer; and (6) a multi-format exporter (LaTeX, BibTeX, TEI-Verse XML, CSV, HTML, Markdown, JSON, TXT). Empirical checks on the automated suite (203 tests; on Python 3.12.3, pytest passes 202 and skips 1 outside CI, and passes 203/203 when the CI variable is set) show 100% dialectal classification accuracy on discriminant pairs. The suite requires throughput above 1,000 words per second and inference latency below 150 ms per sonnet.
 
 **Keywords:** Computational linguistics, Inverse phonological disambiguation, Bayesian inference, Forensic linguistics, G2P transduction, Feature geometry, Metrical scansion.
 
@@ -47,13 +47,30 @@ $$d_{\text{Clements-Hume}}(p_1, p_2) = \sum_{k=1}^{M} w_k \cdot |f_k(p_1) - f_k(
 where place of articulation ($w=0.30$), manner ($w=0.25$), and phonation ($w=0.15$) are assigned hierarchical weights.
 
 ### 2.2. Computational Scansion and Forensic Linguistics
-Following Navarro-Colorado (2017) and Plechac (2021), metrical scansion requires formal modeling of synalepha, syneresis, and stress compensation (Quilis, 1993). In forensic phonetics and stylometry, Coulthard and Johnson (2007) and French and Watt (2018) demonstrate that coda consonant neutralizations are highly diagnostic idiolectal markers.
+Following Navarro-Colorado (2017) and Plecháč (2021), metrical scansion requires formal modeling of synalepha, syneresis, and stress compensation (Quilis, 1993). In forensic phonetics and stylometry, Coulthard and Johnson (2007) and French and Watt (2018) demonstrate that coda consonant neutralizations are highly diagnostic idiolectal markers.
 
 ---
 
 ## 3. Pan-Hispanic Dialectal Taxonomy and Isogloss Vector
 
 Idiolect-G2P models the dialectal continuum through a continuous vector $\boldsymbol{\theta} = (\theta_1, \theta_2, \dots, \theta_{14}) \in [0, 1]^{14}$, representing the activation rates of 14 phonetic phenomena (seseo, coda /s/ aspiration, lambdacism, rhotacism, consonant gemination, voiced zheísmo $[ʒ]$, voiceless sheísmo $[ʃ]$, lleísmo $[ʎ]$, assibilation of /r/ $[ř, t͡ʂ]$, vowel opening $[æ, ɛ, ɔ]$, velar nasal $[ŋ]$, vowel reduction $[e̥, o̥]$, glottal /j/ $[h]$, and affricate /tl/ $[t͡ɬ]$).
+
+| Index | Isogloss | Phonological description | IPA realization |
+| :---: | :--- | :--- | :---: |
+| $\theta_1$ | `seseo` | Neutralization of $/θ/$ and $/s/$ in favor of the alveolar sibilant | $[s]$ |
+| $\theta_2$ | `aspiration_s` | Weakening and aspiration of coda $/s/$ | $[h]$ |
+| $\theta_3$ | `lambdacism` | Lateralization of the tap $/ɾ/$ in coda position | $[l]$ |
+| $\theta_4$ | `rhotacism` | Rhotacism of the lateral $/l/$ in coda position | $[ɾ]$ |
+| $\theta_5$ | `gemination` | Total assimilation and consonantal gemination after aspiration | $[C_i C_i]$ |
+| $\theta_6$ | `rehilamiento_voiced` | Voiced postalveolar fricativization (zheísmo) | $[ʒ]$ |
+| $\theta_7$ | `rehilamiento_voiceless` | Postalveolar devoicing (sheísmo) | $[ʃ]$ |
+| $\theta_8$ | `lleismo` | Conservative phonological distinction between the lateral $/ʎ/$ and the fricative $/ʝ/$ | $[ʎ] \neq [ʝ]$ |
+| $\theta_9$ | `assibilation_r` | Apico-alveolar assibilation of $/r/$ and $/tɾ/$ clusters | $[ř], [t͡ʂ]$ |
+| $\theta_{10}$ | `vowel_opening` | Vowel splitting and opening before sibilant elision | $[æ, ɛ, ɔ]$ |
+| $\theta_{11}$ | `velar_nasal` | Systematic velarization of a word-final nasal | $[ŋ]$ |
+| $\theta_{12}$ | `vocalic_reduction` | Devoicing and loss of unstressed vowels in contact with $/s/$ | $[e̥, o̥]$ |
+| $\theta_{13}$ | `glottal_j` | Realization of the graphemes 'j' and 'g' as a glottal fricative | $[h]$ |
+| $\theta_{14}$ | `affricate_tl` | Tautosyllabic alveolar lateral affricate | $[t͡ɬ]$ |
 
 The taxonomy covers 18 varieties across Iberia, Latin America, North America, and diachronic stages:
 1. `ES_PENINSULAR`: Northern/Central Peninsular with distinction $/θ/$ vs $/s̺/$.
@@ -121,14 +138,20 @@ Idiolect-G2P includes a zero-external-dependency formant speech synthesizer. For
 
 ## 6. Experimental Evaluation and Benchmarks
 
-Across 69 automated tests:
-- **G2P Transduction Accuracy:** 100.0%
-- **Bayesian Dialectal Discrimination:** 100.0% accuracy on discriminant pairs
-- **G2P Throughput:** 2,450 words / second
-- **Scansion Speed:** 185 stanzas / second
-- **Inference Latency:** 42.1 ms per sonnet across all 18 dialects
-- **Audio Synthesis Latency:** 38.5 ms per sentence
-- **Security Hardening:** 100% resilient against SQLi, XSS, ReDoS, and enforces 2 MB payload limit (HTTP 413)
+The framework was evaluated with the automated suite of 203 tests (on Python 3.12.3, pytest passes 202 and skips 1 outside CI, and passes 203/203 when the CI variable is set), covering phonetic accuracy, dialectal discrimination, throughput, and cybersecurity. Among the throughput thresholds, `tests/benchmark/test_benchmark.py` checks more than 1,000 words per second, 25 stanzas in under 0.50 s, and inference latency under 150 ms. The point estimates 2,450, 185, 42.1, and 38.5 remain in the table because they are already printed in the README; the repository does not archive the measurement they come from, and this revision does not replace them.
+
+| Test dimension | Evaluated metric | Obtained result | Reference threshold |
+| :--- | :--- | :---: | :---: |
+| G2P phonetic transduction | Phonotactic accuracy | 100.0% (18/18 tests) | > 99.0% |
+| Bayesian seseo inference | Dialect identification | 100.0% ($\hat{\theta}_{\text{seseo}} > 0.80$) | > 0.70 |
+| Lambdacism inference | Caribbean identification | 100.0% ($\hat{D} = \text{CARIBBEAN\_LAMBDACIST}$) | Rank #1 |
+| G2P throughput | Temporal throughput | 2,450 words / second | > 1,000 words/s |
+| Metrical scansion | Verse throughput | 185 stanzas / second | > 50 stanzas/s |
+| Inference latency | Time per sonnet (18 dialects) | 42.1 ms | < 150.0 ms |
+| WAV acoustic synthesis | Latency per sentence | 38.5 ms | < 200.0 ms |
+| Injection resistance | SQLi / XSS resistance | 0 vulnerabilities detected | 0 failures |
+| ReDoS mitigation | Pathological strings ($N=2000$) | Response time $< 0.05$ s | No stall |
+| Payload limit | HTTP 413 limit enforcement | Strict rejection above $> 2$ MB | HTTP 413 |
 
 
 ---
